@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% set nav_state = 'landing' %}
+
+{% block title %}Welcome Back - Link-Up{% endblock %}
+
+{% block content %}
+
+
+<style>
+  /* Force columns to stay in a row on mobile */
+  .row.mt-5 .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    margin-bottom: 1rem;
+  }
+  .how-it-works .col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Adjust font sizes and spacing for small screens */
+  @media (max-width: 575.98px) {
+    .hero h1.display-4 {
+      font-size: 1.8rem !important;
+    }
+    .hero p.lead {
+      font-size: 0.95rem !important;
+    }
+    .hero .btn {
+      font-size: 0.9rem;
+      padding: 0.5rem 1.2rem;
+    }
+    .card-body .display-1 {
+      font-size: 2.5rem !important;
+    }
+    .card-body h3 {
+      font-size: 1rem;
+    }
+    .card-body p {
+      font-size: 0.75rem;
+    }
+    .card-body .btn {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+    }
+    .how-it-works .fs-1 {
+      font-size: 1.8rem !important;
+    }
+    .how-it-works h5 {
+      font-size: 0.9rem;
+    }
+    .how-it-works p {
+      font-size: 0.7rem;
+    }
+    .container {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+
+  /* Extra small (phones < 400px) – even tighter */
+  @media (max-width: 399px) {
+    .hero h1.display-4 {
+      font-size: 1.5rem !important;
+    }
+    .card-body .display-1 {
+      font-size: 2rem !important;
+    }
+    .card-body p {
+      font-size: 0.65rem;
+    }
+    .how-it-works .fs-1 {
+      font-size: 1.5rem !important;
+    }
+    .how-it-works p {
+      font-size: 0.6rem;
+    }
+  }
+</style>
+
+<div class="hero text-center">
+    <h1 class="display-4 fw-bold">Welcome to Link-Up</h1>
+    <p class="lead">Your all-in-one platform for marketplace, services, and connections.</p>
+    <a href="{{ url_for('main.signin') }}" class="btn btn-light btn-lg mt-3">Join Now</a>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="display-1 mb-3">🛒</div>
+                <h3>Market-Center</h3>
+                <p>Buy and sell anything.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="display-1 mb-3">🔧</div>
+                <h3>Services</h3>
+                <p>Find more service providers.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 text-center">
+            <div class="card-body">
+                <div class="display-1 mb-3">🤝</div>
+                <h3>Connect</h3>
+                <p>Find mentors, and grow your community.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 how-it-works">
+    <div class="col-md-8 mx-auto">
+        <h2 class="text-center mb-4">How It Works</h2>
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="fs-1">1️⃣</div>
+                    <h5>Browse</h5>
+                    <p>Explore marketplace categories</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="fs-1">2️⃣</div>
+                    <h5>Find</h5>
+                    <p>Discover products you need</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="fs-1">3️⃣</div>
+                    <h5>Connect</h5>
+                    <p>Message service providers</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3">
+                    <div class="fs-1">4️⃣</div>
+                    <h5>Transact</h5>
+                    <p>Complete your bookings safely</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

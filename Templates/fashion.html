@@ -1,0 +1,1228 @@
+{% extends "base.html" %}
+
+{% block title %}Fashion - Marketplace | Link-Up{% endblock %}
+
+{% block content %}
+<div class="fashion-page">
+    <!-- Header - MODIFIED: removed back button and icon -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #8A2BE2 0%, #DA70D6 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Back button removed completely -->
+                    <!-- Header icon removed completely -->
+                    <div class="header-main">
+                        <h1 class="header-title">Fashion & Style</h1>
+                        <p class="dashboard-subtitle">Discover clothing, shoes, accessories, and luxury fashion</p>
+                        <!-- Three rows: Fashion & Style, description, then stats -->
+                        <div class="header-stats">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling (Instagram Style) -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse Fashion Categories</h2>
+            <p class="section-subtitle">Click on any category to explore trendy fashion items</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- Category 1: Clothing & Apparel - BOTH GENDERS -->
+                    <a href="{{ url_for('marketplace.clothing') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Clothing for Both Genders">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Clothing</h3>
+                            <p class="category-count">45 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 2: Footwear -->
+                    <a href="{{ url_for('marketplace.footwear') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Footwear">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Footwear</h3>
+                            <p class="category-count">32 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 3: Bags & Luggage - BLACK AND BLUE SUITCASES -->
+                    <a href="{{ url_for('marketplace.bags') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Black and Blue Suitcases">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Bags & Luggage</h3>
+                            <p class="category-count">28 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 4: Watches & Jewelry - WATCHES AND WRISTBANDS -->
+                    <a href="{{ url_for('marketplace.jewellery') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Watches and Wristbands">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Wearables</h3>
+                            <p class="category-count">41 items</p>
+                        </div>
+                    </a>
+
+
+                    <!-- Category 6: Sportswear - SPORTS WEAR -->
+                    <a href="{{ url_for('marketplace.activewear') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sports Wear">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Sportswear</h3>
+                            <p class="category-count">26 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 7: Formal Wear - SUITS -->
+                    <a href="{{ url_for('marketplace.formal_wear') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pyjamas">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Formal Wear</h3>
+                            <p class="category-count">18 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 8: Preloved - OKAY LIKE THAT -->
+                    <a href="{{ url_for('marketplace.preloved') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Preloved Fashion">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Preloved</h3>
+                            <p class="category-count">52 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 9: Kids Fashion - KIDS WEAR (5 YEARS OR BELOW) -->
+                    <a href="{{ url_for('marketplace.kids_fashion') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1512485694743-9c9538b4e6e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kids Wear - 5 Years or Below">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Kids Fashion</h3>
+                            <p class="category-count">31 items</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Sort -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search fashion items, brands, sizes..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="sort-dropdown">
+                    <select class="sort-select">
+                        <option>Sort by: Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest First</option>
+                        <option>Most Popular</option>
+                        <option>Size Available</option>
+                        <option>Brand Name</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Grid - MODIFIED: 2 columns, 3 rows -->
+    <div class="products-section">
+        <div class="container">
+            <h2 class="section-title">Trending Fashion Items</h2>
+            <p class="section-subtitle">Discover curated fashion pieces from our community</p>
+
+            <div class="products-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Designer Handbag">
+                        <span class="product-badge luxury">LUXURY</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Louis Vuitton Neverfull MM</h3>
+                        <p class="product-description">Authentic, excellent condition, includes dust bag</p>
+                        <div class="product-meta">
+                            <span class="product-price">$1,250</span>
+                            <span class="product-original-price">$1,800</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Beverly Hills</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Sarah Style</span>
+                            </span>
+                            <span class="product-time">3 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Nike Sneakers">
+                        <span class="product-badge trending">TRENDING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Nike Air Jordan 1 Retro</h3>
+                        <p class="product-description">Size US 10, never worn, limited edition</p>
+                        <div class="product-meta">
+                            <span class="product-price">$350</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> New York</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Mike Sneakers</span>
+                            </span>
+                            <span class="product-time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Designer Dress">
+                        <span class="product-badge new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gucci Floral Print Dress</h3>
+                        <p class="product-description">Size M, tags attached, 100% authentic</p>
+                        <div class="product-meta">
+                            <span class="product-price">$890</span>
+                            <span class="product-original-price">$1,200</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Miami</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Emma Fashion</span>
+                            </span>
+                            <span class="product-time">5 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Rolex Watch">
+                        <span class="product-badge luxury">LUXURY</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Rolex Datejust 41mm</h3>
+                        <p class="product-description">Authentic, box & papers, serviced 2023</p>
+                        <div class="product-meta">
+                            <span class="product-price">$8,500</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Chicago</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>David Collector</span>
+                            </span>
+                            <span class="product-time">2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Men's Suit">
+                        <span class="product-badge discount">-30%</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Hugo Boss Navy Suit</h3>
+                        <p class="product-description">Size 42R, perfect for weddings & business</p>
+                        <div class="product-meta">
+                            <span class="product-price">$450</span>
+                            <span class="product-original-price">$650</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Los Angeles</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>James Formal</span>
+                            </span>
+                            <span class="product-time">3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lululemon Leggings">
+                        <span class="product-badge trending">TRENDING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Lululemon Align Leggings</h3>
+                        <p class="product-description">Size 6, black, like new condition</p>
+                        <div class="product-meta">
+                            <span class="product-price">$75</span>
+                            <span class="product-original-price">$98</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Seattle</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Fitness Anna</span>
+                            </span>
+                            <span class="product-time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Load More Fashion Items
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Listing CTA -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Sell Your Fashion Items</h2>
+                <p>Have clothes, shoes, or accessories to sell? List them for free and reach fashion lovers worldwide.</p>
+                <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Listing
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Fashion Page Styles */
+    .fashion-page {
+        background: #fdf2f8;
+        min-height: 100vh;
+    }
+
+    /* Header - MODIFIED: removed back button, removed icon, three rows layout */
+    .page-header {
+        color: white;
+    }
+
+    .header-background {
+        padding: 2rem 0;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Back button completely removed */
+
+    .header-main {
+        text-align: center;
+    }
+
+    /* Header icon completely removed */
+
+    .header-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.4;
+    }
+
+    /* Three rows: Fashion & Style title, description, then stats */
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-top: 0.3rem;
+    }
+
+    /* Categories Horizontal Scrolling Section */
+    .categories-scroll-section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .categories-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .categories-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: #8A2BE2;
+    }
+
+    .left-scroll {
+        left: -20px;
+    }
+
+    .right-scroll {
+        right: -20px;
+    }
+
+    .categories-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: #8A2BE2;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3);
+    }
+
+    /* Updated Category Cards - Fashion Style */
+    .category-card {
+        flex: 0 0 220px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(138, 43, 226, 0.15);
+        border-color: #8A2BE2;
+    }
+
+    .category-image {
+        height: 140px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-content {
+        padding: 1.5rem;
+        text-align: center;
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .category-divider {
+        width: 40px;
+        height: 2px;
+        background: #8A2BE2;
+        margin: 0 auto 1rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .category-card:hover .category-divider {
+        width: 60px;
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        color: #1f2937;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .category-count {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #f3e6ff;
+        color: #8A2BE2;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+        background: #8A2BE2;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Search and Sort Section */
+    .search-sort-section {
+        background: white;
+        padding: 2rem 0;
+        margin-top: 1rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: relative;
+        z-index: 10;
+        margin: 0 auto 2rem;
+        max-width: 1200px;
+    }
+
+    .search-sort-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem 1.5rem 1rem 3.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #8A2BE2;
+        box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+    }
+
+    .search-btn {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #8A2BE2 0%, #DA70D6 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+    }
+
+    .sort-dropdown {
+        text-align: right;
+    }
+
+    .sort-select {
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+    }
+
+    /* Products Grid - MODIFIED: 2 columns */
+    .products-section {
+        padding: 3rem 0;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .product-badge.new {
+        background: #10b981;
+        color: white;
+    }
+
+    .product-badge.trending {
+        background: #f59e0b;
+        color: white;
+    }
+
+    .product-badge.discount {
+        background: #ef4444;
+        color: white;
+    }
+
+    .product-badge.luxury {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .product-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #8A2BE2;
+    }
+
+    .product-original-price {
+        text-decoration: line-through;
+        color: #9ca3af;
+        margin-left: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .product-location {
+        color: #6b7280;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .product-seller {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .seller-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .product-time {
+        font-size: 0.8rem;
+        color: #9ca3af;
+    }
+
+    .load-more {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .load-more .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #8A2BE2 0%, #DA70D6 100%);
+        border: none;
+    }
+
+    .load-more .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(138, 43, 226, 0.3);
+    }
+
+    /* Create CTA */
+    .create-cta {
+        background: linear-gradient(135deg, #8A2BE2 0%, #DA70D6 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .cta-content .btn {
+        background: white;
+        color: #8A2BE2;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .cta-content .btn:hover {
+        background: #f3e6ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 1.8rem;
+        }
+
+        .header-stats {
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+        }
+
+        .products-grid {
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            flex: 0 0 180px;
+        }
+
+        .category-image {
+            height: 120px;
+        }
+
+        .category-content {
+            padding: 1rem;
+        }
+
+        .category-title {
+            font-size: 1rem;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .sort-dropdown {
+            text-align: center;
+        }
+
+        .scroll-control {
+            display: none;
+        }
+
+        .create-cta {
+            padding: 3rem 1rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-background {
+            padding: 1.5rem 0;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-stats {
+            gap: 0.8rem;
+        }
+
+        .stat-number {
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        .category-card {
+            flex: 0 0 150px;
+        }
+
+        .category-image {
+            height: 100px;
+        }
+
+        .category-title {
+            font-size: 0.9rem;
+        }
+
+        .product-card {
+            margin: 0;
+        }
+
+        .search-sort-section {
+            margin: 0 1rem 2rem;
+        }
+
+        .products-grid {
+            padding: 0 1rem;
+        }
+    }
+
+    /* Fashion-specific enhancements */
+    .fashion-page .product-image {
+        background: linear-gradient(45deg, #fdf2f8, #fce7f3);
+    }
+
+    .fashion-page .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #8A2BE2, #DA70D6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .fashion-page .category-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Fashion badge styling */
+    .fashion-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+
+    .badge-size {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .badge-brand {
+        background: #f0f9ff;
+        color: #0c4a6e;
+    }
+
+    .badge-condition {
+        background: #f0fdf4;
+        color: #166534;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling functionality for categories
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                // Left scroll button
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                // Right scroll button
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                // Show/hide scroll buttons based on scroll position
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                // Initial update
+                updateScrollButtons();
+
+                // Update on scroll
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+
+                // Update on window resize
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        }
+
+        // Product card click
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // In a real app, this would navigate to product detail page
+                const productTitle = this.querySelector('.product-title').textContent;
+                console.log(`Opening fashion item: ${productTitle}`);
+
+                // Add click animation
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.querySelector('.search-btn');
+        const searchInput = document.querySelector('.search-input');
+
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    console.log(`Searching fashion for: ${query}`);
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        console.log(`Searching fashion for: ${query}`);
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        // Load more button
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+
+                // Simulate loading
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Fashion Items';
+                    this.disabled = false;
+
+                    // In a real app, this would load more products
+                    console.log('Loading more fashion items...');
+                    alert('More fashion items loaded!');
+                }, 1500);
+            });
+        }
+
+        // Sort dropdown
+        const sortSelect = document.querySelector('.sort-select');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                console.log(`Sorting fashion by: ${this.value}`);
+            });
+        }
+
+        // Add hover effects for fashion categories
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '20';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Fashion-specific search suggestions
+        const fashionKeywords = [
+            'dress', 'jeans', 'sneakers', 'handbag', 'watch', 'jewelry',
+            'luxury', 'designer', 'vintage', 'formal', 'casual', 'sports',
+            'size', 'brand', 'color', 'condition', 'authentic'
+        ];
+
+        searchInput.addEventListener('focus', function() {
+            console.log('Fashion search focused. Keywords:', fashionKeywords);
+        });
+
+        // Add CSS for fashion animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fashionRipple {
+                from {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes fashionFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+
+            .fashion-float {
+                animation: fashionFloat 3s ease-in-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,483 @@
+{% extends "base.html" %}
+
+{% block title %}Car Hire - Hire Zone | Link-Up{% endblock %}
+
+{% block content %}
+<div class="car-hire-page">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Car Hire</h1>
+                        <p class="dashboard-subtitle">Rent economy cars, commercial trucks, caravans, luxury vehicles, and sports cars</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse by Vehicle Type</h2>
+            <p class="section-subtitle">Click on any category to find your perfect ride</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- Economy Cars -->
+                    <a href="{{ url_for('hire.carhire_economy') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Economy Cars">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Economy Cars</h3>
+                            <p class="category-count">45 vehicles</p>
+                        </div>
+                    </a>
+
+                    <!-- Commercial Trucks -->
+                    <a href="{{ url_for('hire.carhire_commercial') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://www.freepnglogos.com/uploads/truck-png/truck-png-transparent-image-4.png" alt="Commercial Trucks">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Commercial Trucks</h3>
+                            <p class="category-count">22 vehicles</p>
+                        </div>
+                    </a>
+
+                    <!-- Caravans -->
+                    <a href="{{ url_for('hire.carhire_caravans') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop" alt="Caravans">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Caravans</h3>
+                            <p class="category-count">18 vehicles</p>
+                        </div>
+                    </a>
+
+                    <!-- Luxury Cars -->
+                    <a href="{{ url_for('hire.carhire_luxury') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Luxury Cars">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Luxury Cars</h3>
+                            <p class="category-count">24 vehicles</p>
+                        </div>
+                    </a>
+
+                    <!-- Sports Cars -->
+                    <a href="{{ url_for('hire.carhire_sports') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sports Cars">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Sports Cars</h3>
+                            <p class="category-count">18 vehicles</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search by make, model, or location..." class="search-input" id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">Price Range</option>
+                        <option value="under50">Under $50/day</option>
+                        <option value="50-100">$50 - $100/day</option>
+                        <option value="100-200">$100 - $200/day</option>
+                        <option value="200plus">$200+/day</option>
+                    </select>
+                    <select class="filter-select" id="transmissionFilter">
+                        <option value="">Transmission</option>
+                        <option value="automatic">Automatic</option>
+                        <option value="manual">Manual</option>
+                    </select>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recommended">Sort by: Recommended</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="rating">Rating: Highest First</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicles Grid - 2 columns -->
+    <div class="products-section">
+        <div class="container">
+            <h2 class="section-title">Available Vehicles</h2>
+            <p class="section-subtitle">Find your perfect rental</p>
+
+            <div class="products-grid">
+                <!-- (Static cards – keep as they are) -->
+                <!-- Economy Car 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Toyota Corolla">
+                        <span class="product-badge trending">BEST VALUE</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Toyota Corolla</h3>
+                        <p class="product-description">Fuel-efficient compact sedan, perfect for city driving</p>
+                        <div class="product-meta">
+                            <span class="product-price">$45/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Downtown</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>35 MPG</span>
+                            </span>
+                            <span class="product-time">⭐ 4.8 (342 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Automatic</span>
+                            <span class="spec-tag">5 Seats</span>
+                            <span class="spec-tag">4 Doors</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Commercial Truck - UD Truck -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://www.freepnglogos.com/uploads/truck-png/truck-png-transparent-image-4.png" alt="UD 5-10 Tonne Truck">
+                        <span class="product-badge trending">HEAVY DUTY</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">UD 5-10 Tonne Box Truck</h3>
+                        <p class="product-description">5-10 tonne capacity, enclosed box body, perfect for moving, deliveries, and freight transport</p>
+                        <div class="product-meta">
+                            <span class="product-price">$180/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Industrial Area</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Diesel</span>
+                            </span>
+                            <span class="product-time">⭐ 4.7 (189 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Manual</span>
+                            <span class="spec-tag">5-10 Tonne</span>
+                            <span class="spec-tag">Boxed Body</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Caravan -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&fit=crop" alt="Caravan">
+                        <span class="product-badge trending">CAMPING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">6-Berth Caravan</h3>
+                        <p class="product-description">Fully equipped caravan with kitchen, bathroom, and sleeping for 6 people</p>
+                        <div class="product-meta">
+                            <span class="product-price">$180/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Camping Grounds</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>Diesel</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (203 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Automatic</span>
+                            <span class="spec-tag">6 Berth</span>
+                            <span class="spec-tag">Kitchen & Bathroom</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Luxury Car -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BMW 7 Series">
+                        <span class="product-badge new">LUXURY</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">BMW 7 Series</h3>
+                        <p class="product-description">Premium luxury sedan with leather interior and advanced technology</p>
+                        <div class="product-meta">
+                            <span class="product-price">$150/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> City Center</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>25 MPG</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (245 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Automatic</span>
+                            <span class="spec-tag">5 Seats</span>
+                            <span class="spec-tag">Leather Interior</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sports Car -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Porsche 911">
+                        <span class="product-badge trending">SPORT</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Porsche 911</h3>
+                        <p class="product-description">Iconic sports car with powerful engine and stunning performance</p>
+                        <div class="product-meta">
+                            <span class="product-price">$250/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Luxury District</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>20 MPG</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (312 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Automatic</span>
+                            <span class="spec-tag">2+2 Seats</span>
+                            <span class="spec-tag">Convertible</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Economy Car 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Honda Civic">
+                        <span class="product-badge new">ECO</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Honda Civic</h3>
+                        <p class="product-description">Reliable and fuel-efficient compact car with modern features</p>
+                        <div class="product-meta">
+                            <span class="product-price">$42/day</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Airport</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-gas-pump"></i>
+                                <span>36 MPG</span>
+                            </span>
+                            <span class="product-time">⭐ 4.8 (278 reviews)</span>
+                        </div>
+                        <div class="vehicle-specs">
+                            <span class="spec-tag">Automatic</span>
+                            <span class="spec-tag">5 Seats</span>
+                            <span class="spec-tag">4 Doors</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Load More Vehicles
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rent Vehicle CTA (pointing to listings.hirezone for consistency) -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Need a Vehicle?</h2>
+                <p>Rent a car, commercial truck, caravan, or luxury vehicle today with flexible rental options.</p>
+                <a href="{{ url_for('listings.hirezone') }}" class="btn btn-primary">
+                    <i class="fas fa-car"></i> Rent Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* All styles – same as your original file, unchanged */
+    .car-hire-page { background: #f8fafc; min-height: 100vh; }
+    .page-header { color: white; }
+    .header-background { padding: 2rem 0; border-radius: 0 0 20px 20px; }
+    .header-content { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    .header-main { text-align: center; }
+    .header-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .dashboard-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.4; }
+    .header-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
+    .stat { text-align: center; }
+    .stat-number { display: block; font-size: 1.8rem; font-weight: 700; }
+    .stat-label { display: block; font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem; }
+    .categories-scroll-section { padding: 2rem 0; }
+    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #1f2937; }
+    .section-subtitle { text-align: center; color: #6b7280; margin-bottom: 2rem; font-size: 1.1rem; }
+    .categories-scroll-container { position: relative; margin: 2rem 0; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .categories-scroll { display: flex; gap: 1rem; padding: 1rem 0; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+    .categories-scroll::-webkit-scrollbar { display: none; }
+    .scroll-control { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; opacity: 0; transition: all 0.3s; font-size: 1.2rem; color: #0ea5e9; }
+    .left-scroll { left: -20px; }
+    .right-scroll { right: -20px; }
+    .categories-scroll-container:hover .scroll-control { opacity: 1; }
+    .scroll-control:hover { background: #0ea5e9; color: white; transform: translateY(-50%) scale(1.1); }
+    .category-card { flex: 0 0 200px; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s; border: 2px solid transparent; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .category-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(14,165,233,0.15); border-color: #0ea5e9; }
+    .category-image { height: 120px; overflow: hidden; }
+    .category-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .category-card:hover .category-image img { transform: scale(1.05); }
+    .category-content { padding: 1rem; text-align: center; background: white; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .category-divider { width: 40px; height: 2px; background: #0ea5e9; margin: 0 auto 0.8rem auto; border-radius: 2px; transition: width 0.3s; }
+    .category-card:hover .category-divider { width: 60px; }
+    .category-title { font-size: 1rem; font-weight: 700; margin: 0 0 0.3rem; color: #1f2937; }
+    .category-count { display: inline-block; padding: 0.2rem 0.6rem; background: #e0f2fe; color: #0369a1; border-radius: 20px; font-size: 0.75rem; font-weight: 600; transition: all 0.3s; }
+    .category-card:hover .category-count { background: #0ea5e9; color: white; transform: scale(1.05); }
+    .search-sort-section { background: white; padding: 2rem 0; margin-top: 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .search-sort-container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .search-box { position: relative; display: flex; gap: 1rem; }
+    .search-box i { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: #6b7280; }
+    .search-input { flex: 1; padding: 1rem 1.5rem 1rem 3.5rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; }
+    .search-input:focus { outline: none; border-color: #0ea5e9; }
+    .search-btn { padding: 1rem 2rem; background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    .search-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
+    .filter-dropdowns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .filter-select, .sort-select { padding: 0.8rem 2rem 0.8rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; font-size: 0.9rem; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 1rem; flex: 1; }
+    .products-section { padding: 3rem 0; }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+    .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .product-image { height: 200px; position: relative; overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .product-card:hover .product-image img { transform: scale(1.05); }
+    .product-badge { position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+    .product-badge.new { background: #10b981; color: white; }
+    .product-badge.trending { background: #f59e0b; color: white; }
+    .product-info { padding: 1.5rem; }
+    .product-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #1f2937; }
+    .product-description { color: #6b7280; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.4; }
+    .product-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .product-price { font-size: 1.3rem; font-weight: 700; color: #0369a1; }
+    .product-location { color: #6b7280; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem; }
+    .product-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; border-top: 1px solid #e5e7eb; margin-bottom: 0.8rem; }
+    .product-seller { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #6b7280; }
+    .product-time { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
+    .vehicle-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .spec-tag { background: #f1f5f9; color: #475569; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 500; }
+    .load-more { text-align: center; margin-top: 3rem; }
+    .load-more .btn { padding: 1rem 2.5rem; font-size: 1.1rem; background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); border: none; color: white; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+    .load-more .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
+    .create-cta { background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); color: white; padding: 4rem 0; margin-top: 3rem; text-align: center; border-radius: 20px 20px 0 0; }
+    .cta-content { max-width: 600px; margin: 0 auto; padding: 0 1rem; }
+    .cta-content h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .cta-content p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+    .cta-content .btn { background: white; color: #0ea5e9; border: none; padding: 1rem 2.5rem; font-weight: 600; font-size: 1.1rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.3s; }
+    .cta-content .btn:hover { background: #e0f2fe; transform: translateY(-2px); }
+    .car-hire-page .category-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #0ea5e9, #0369a1); opacity: 0; transition: opacity 0.3s; }
+    .car-hire-page .category-card:hover::before { opacity: 1; }
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+    @media (max-width: 768px) { .header-title { font-size: 1.8rem; } .header-stats { flex-direction: row; gap: 1rem; flex-wrap: wrap; } .stat-number { font-size: 1.3rem; } .stat-label { font-size: 0.8rem; } .products-grid { grid-template-columns: 1fr; gap: 1.5rem; } .category-card { flex: 0 0 160px; } .category-image { height: 100px; } .category-content { padding: 0.8rem; } .category-title { font-size: 0.9rem; } .search-box { flex-direction: column; } .search-input { width: 100%; } .search-btn { width: 100%; justify-content: center; } .filter-dropdowns { flex-direction: column; } .scroll-control { display: none; } .create-cta { padding: 3rem 1rem; } .cta-content h2 { font-size: 2rem; } }
+    @media (max-width: 480px) { .header-background { padding: 1.5rem 0; } .header-title { font-size: 1.5rem; } .dashboard-subtitle { font-size: 0.9rem; margin-bottom: 1rem; } .header-stats { gap: 0.8rem; } .stat-number { font-size: 1.1rem; } .stat-label { font-size: 0.7rem; } .category-card { flex: 0 0 140px; } .category-image { height: 90px; } .category-title { font-size: 0.8rem; } .product-card { margin: 0; } .search-sort-section { margin: 0 1rem 2rem; } .products-grid { padding: 0 1rem; } }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling for categories
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollEl = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+            if (scrollEl && leftBtn && rightBtn) {
+                const scrollAmount = 300;
+                leftBtn.addEventListener('click', (e) => { e.preventDefault(); scrollEl.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
+                rightBtn.addEventListener('click', (e) => { e.preventDefault(); scrollEl.scrollBy({ left: scrollAmount, behavior: 'smooth' }); });
+                const update = () => {
+                    leftBtn.style.opacity = scrollEl.scrollLeft > 0 ? '1' : '0';
+                    leftBtn.style.pointerEvents = scrollEl.scrollLeft > 0 ? 'auto' : 'none';
+                    const maxScroll = scrollEl.scrollWidth - scrollEl.clientWidth;
+                    rightBtn.style.opacity = scrollEl.scrollLeft < maxScroll - 10 ? '1' : '0';
+                    rightBtn.style.pointerEvents = scrollEl.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                };
+                scrollEl.addEventListener('scroll', update);
+                window.addEventListener('resize', update);
+                update();
+            }
+        }
+        // Vehicle card click
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const name = this.querySelector('.product-title').textContent;
+                console.log(`Viewing vehicle: ${name}`);
+                alert(`Viewing details for ${name}`);
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => this.style.transform = '', 200);
+            });
+        });
+        // Search
+        const searchBtn = document.querySelector('#searchBtn');
+        const searchInput = document.querySelector('#searchInput');
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', () => { if (searchInput.value.trim()) alert(`Searching for: ${searchInput.value.trim()}`); });
+            searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && e.target.value.trim()) alert(`Searching for: ${e.target.value.trim()}`); });
+        }
+        // Filters and sort
+        const priceFilter = document.querySelector('#priceFilter');
+        const transmissionFilter = document.querySelector('#transmissionFilter');
+        const sortSelect = document.querySelector('#sortSelect');
+        if (priceFilter) priceFilter.addEventListener('change', (e) => alert(`Filtering by: ${e.target.options[e.target.selectedIndex].text}`));
+        if (transmissionFilter) transmissionFilter.addEventListener('change', (e) => alert(`Filtering by: ${e.target.options[e.target.selectedIndex].text}`));
+        if (sortSelect) sortSelect.addEventListener('change', (e) => alert(`Sorting by: ${e.target.options[e.target.selectedIndex].text}`));
+        // Load more
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+                setTimeout(() => { this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Vehicles'; this.disabled = false; alert('More vehicles loaded!'); }, 1500);
+            });
+        }
+        // Hover effects
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() { this.style.zIndex = '20'; });
+            card.addEventListener('mouseleave', function() { this.style.zIndex = '1'; });
+        });
+    });
+</script>
+{% endblock %}

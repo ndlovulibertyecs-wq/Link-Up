@@ -1,0 +1,2123 @@
+{% extends "base.html" %}
+
+{% set hide_navbar = true %}
+
+{% block title %}Profile - Link-Up{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+        background: #fafafa;
+        padding-top: 0;
+    }
+
+    .profile-container-wrapper {
+        max-width: 975px;
+        margin: 0 auto;
+        padding: 20px 20px 0;
+    }
+
+    .profile-container {
+        max-width: 975px;
+        margin: 0 auto;
+    }
+
+    /* Fixed Top Bar */
+    .top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #dbdbdb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+        z-index: 1000;
+    }
+
+    .top-bar-content {
+        max-width: 975px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .top-bar .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .top-bar-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .settings-icon {
+        font-size: 22px;
+        color: #000;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+        position: relative;
+    }
+
+    .settings-icon:hover {
+        opacity: 0.7;
+    }
+
+    /* Dark Settings Dropdown */
+    .settings-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 10px;
+        background: #1a1a2e;
+        border-radius: 8px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        width: 250px;
+        display: none;
+        z-index: 1001;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .settings-dropdown.active {
+        display: block;
+    }
+
+    .settings-dropdown-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 14px;
+        color: #e2e8f0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .settings-dropdown-item:last-child {
+        border-bottom: none;
+    }
+
+    .settings-dropdown-item:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    .settings-dropdown-item i {
+        width: 18px;
+        color: #94a3b8;
+    }
+
+    /* Square Profile Picture - Reduced size */
+    .profile-avatar {
+        width: 130px;
+        height: 130px;
+        border-radius: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #e5e7eb;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .profile-avatar-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 44px;
+        font-weight: 700;
+        border: none;
+    }
+
+    /* Profile Header - Side by side */
+    .profile-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+        margin-bottom: 16px;
+        margin-top: 80px;
+    }
+
+    .profile-avatar-wrapper {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        min-width: 130px;
+    }
+
+    .profile-name-below {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        text-align: center;
+    }
+
+    .profile-info {
+        flex: 1;
+        padding-top: 0;
+        min-width: 0;
+    }
+
+    /* ============ HOST DASHBOARD STYLES ============ */
+    .dashboard-container {
+        padding: 0;
+        background: transparent;
+        min-height: auto;
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .dashboard-header {
+        margin-bottom: 0.3rem;
+        padding: 0;
+        background: none;
+        border-radius: 0;
+        margin-top: 0;
+    }
+
+    .dashboard-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        word-wrap: break-word;
+        color: #1f2937;
+        line-height: 1.2;
+    }
+
+    .dashboard-title small {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #6b7280;
+        display: block;
+        margin-top: 2px;
+        line-height: 1.4;
+    }
+
+    /* Stats - Active and Pending */
+    .header-stats {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin-top: 0.3rem;
+    }
+
+    .stat-badge {
+        padding: 0.35rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .stat-badge i { margin-right: 0.2rem; }
+
+    .stat-active { background: #dcfce7; color: #16a34a; }
+    .stat-pending { background: #fef3c7; color: #d97706; }
+
+    /* Quick Actions - 2 columns */
+    .quick-actions {
+        padding: 0.5rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        text-decoration: none;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .btn-primary:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-secondary {
+        background: #6b7280;
+        color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+        background: #4b5563;
+        transform: translateY(-2px);
+    }
+
+    .btn-danger {
+        background: #dc2626;
+        color: #ffffff;
+    }
+
+    .btn-danger:hover {
+        background: #b91c1c;
+        transform: translateY(-2px);
+    }
+
+    /* Filter Section - 2 columns */
+    .filter-section {
+        padding: 0.6rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        align-items: end;
+        margin-bottom: 0.8rem;
+        border-bottom: 1px solid #e5e7eb;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 0.5rem;
+        padding-top: 0.8rem;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .filter-group label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-group select {
+        padding: 0.4rem 0.8rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 1rem;
+        background: #f8fafc;
+        transition: border-color 0.3s ease;
+        width: 100%;
+    }
+
+    .filter-group select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    /* Listings Grid - 2 columns, full width, max 5 rows */
+    .listings-grid {
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        width: 100%;
+        max-height: 950px;
+        overflow-y: auto;
+    }
+
+    .listings-grid::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .listings-grid::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+    }
+
+    .listings-grid::-webkit-scrollbar-thumb {
+        background: #c1c7cd;
+        border-radius: 2px;
+    }
+
+    .listing-card {
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+        position: relative;
+    }
+
+    .listing-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .listing-image {
+        height: 160px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .section-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+    }
+
+    .section-badge.marketplace { background: #d97706; }
+    .section-badge.servicehub { background: #0ea5e9; }
+    .section-badge.hirezone { background: #0284c7; }
+    .section-badge.housing { background: #dc2626; }
+    .section-badge.farmers { background: #d97706; }
+    .section-badge.jobs { background: #7c3aed; }
+    .section-badge.events { background: #db2777; }
+    .section-badge.community { background: #a855f7; }
+
+    .listing-content {
+        padding: 0.8rem 1rem;
+    }
+
+    .listing-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 0.3rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.2;
+    }
+
+    .listing-category {
+        font-size: 0.9rem;
+        color: #6b7280;
+        margin-bottom: 0.3rem;
+    }
+
+    .listing-price {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #2563eb;
+        margin-bottom: 0.3rem;
+    }
+
+    .listing-description {
+        font-size: 0.9rem;
+        color: #6b7280;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .listing-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+        border-top: 1px solid #e5e7eb;
+        flex-wrap: nowrap;
+        gap: 0.3rem;
+    }
+
+    .listing-footer-left {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .listing-status {
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .listing-status.active {
+        background: #dcfce7;
+        color: #16a34a;
+    }
+
+    .listing-status.pending {
+        background: #fef3c7;
+        color: #d97706;
+    }
+
+    .listing-status.draft {
+        background: #e5e7eb;
+        color: #6b7280;
+    }
+
+    .listing-status.expired {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .listing-status.sold {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .listing-status.hired {
+        background: #fef3c7;
+        color: #d97706;
+    }
+
+    .listing-status.rented {
+        background: #fef3c7;
+        color: #d97706;
+    }
+
+    .listing-status.booked {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+
+    .listing-status.completed {
+        background: #dcfce7;
+        color: #16a34a;
+    }
+
+    .listing-likes {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-size: 0.9rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .listing-likes:hover {
+        color: #dc2626;
+    }
+
+    .listing-likes.liked {
+        color: #dc2626;
+    }
+
+    .listing-likes i {
+        font-size: 0.95rem;
+    }
+
+    .listing-actions-right {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        flex-shrink: 0;
+    }
+
+    .listing-actions-right button {
+        padding: 0.25rem 0.4rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-info {
+        color: #3b82f6;
+        font-size: 1.4rem;
+    }
+
+    .btn-info:hover {
+        background: #dbeafe;
+    }
+
+    /* Dark 3-dot Dropdown - Positioned at top-left (north-west) */
+    .dropdown-menu-btn {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+        position: relative;
+    }
+
+    .dropdown-menu-btn:hover {
+        background: #f3f4f6;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        margin-bottom: 6px;
+        background: #1a1a2e;
+        border-radius: 8px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        min-width: 180px;
+        z-index: 100;
+        padding: 4px 0;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dropdown-menu.active {
+        display: block;
+    }
+
+    .dropdown-item {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        color: #e2e8f0;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(255,255,255,0.08);
+    }
+
+    .dropdown-item.danger {
+        color: #ef4444;
+    }
+
+    .dropdown-item i {
+        width: 18px;
+        font-size: 0.9rem;
+        color: #94a3b8;
+    }
+
+    .dropdown-item.danger i {
+        color: #ef4444;
+    }
+
+    .menu-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Info Modal */
+    .info-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 10001;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+        padding: 20px;
+    }
+
+    .info-modal-overlay.active {
+        display: flex;
+    }
+
+    .info-modal {
+        background: white;
+        border-radius: 16px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideUp 0.3s ease;
+        padding: 24px;
+    }
+
+    .info-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .info-modal-header h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .info-modal-close {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 0 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    .info-modal-close:hover {
+        color: #1f2937;
+    }
+
+    .info-modal-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 16px;
+    }
+
+    .info-modal-detail {
+        margin-bottom: 10px;
+    }
+
+    .info-modal-detail-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    .info-modal-detail-value {
+        font-size: 1rem;
+        color: #1f2937;
+    }
+
+    .info-modal-detail-value.price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2563eb;
+    }
+
+    /* Pagination */
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem 0;
+        margin-top: 0.5rem;
+    }
+
+    .page-btn {
+        padding: 0.5rem 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        background: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .page-btn:hover {
+        background: #2563eb;
+        color: #ffffff;
+        border-color: #2563eb;
+    }
+
+    .page-info {
+        font-size: 0.9rem;
+        color: #6b7280;
+    }
+
+    /* Modal for host dashboard */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal.show {
+        display: flex;
+    }
+
+    .modal-content {
+        background: #ffffff;
+        border-radius: 16px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideUp 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: #6b7280;
+        transition: color 0.3s ease;
+        padding: 0 0.5rem;
+    }
+
+    .close-btn:hover {
+        color: #1f2937;
+    }
+
+    .modal-content form {
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #1f2937;
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .form-group.half {
+        flex: 1;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    /* Toast */
+    .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 1rem 1.5rem;
+        background: #1f2937;
+        color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 99999;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        max-width: 90%;
+        font-size: 1rem;
+    }
+
+    .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .toast.success { background: #16a34a; }
+    .toast.error { background: #dc2626; }
+    .toast.warning { background: #f59e0b; }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 2px dashed #e5e7eb;
+        grid-column: 1 / -1;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #6b7280;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+    }
+
+    /* ============ RESPONSIVE - ALL DEVICES ============ */
+
+    /* Desktop */
+    @media (min-width: 769px) {
+        .profile-header {
+            gap: 50px;
+            margin-top: 80px;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile-avatar-inner {
+            font-size: 52px;
+        }
+
+        .profile-avatar-wrapper {
+            min-width: 150px;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+        }
+
+        .listings-grid {
+            gap: 1.5rem;
+            max-height: 1100px;
+        }
+
+        .listing-image {
+            height: 200px;
+        }
+    }
+
+    /* Tablet */
+    @media (max-width: 768px) {
+        .profile-header {
+            gap: 30px;
+            margin-top: 70px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .profile-avatar-inner {
+            font-size: 40px;
+        }
+
+        .profile-avatar-wrapper {
+            min-width: 120px;
+        }
+
+        .profile-name-below {
+            font-size: 16px;
+        }
+
+        .dashboard-title {
+            font-size: 1.6rem;
+        }
+
+        .dashboard-title small {
+            font-size: 0.9rem;
+        }
+
+        .stat-badge {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .filter-section {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .listings-grid {
+            gap: 0.8rem;
+            max-height: 900px;
+        }
+
+        .listing-image {
+            height: 140px;
+        }
+
+        .listing-content {
+            padding: 0.6rem 0.8rem;
+        }
+
+        .listing-title {
+            font-size: 1rem;
+        }
+
+        .listing-price {
+            font-size: 1rem;
+        }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+        .profile-container-wrapper {
+            padding: 12px 8px 0;
+        }
+
+        .profile-header {
+            gap: 16px;
+            margin-top: 60px;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .profile-avatar-inner {
+            font-size: 34px;
+        }
+
+        .profile-avatar-wrapper {
+            min-width: 100px;
+        }
+
+        .profile-name-below {
+            font-size: 14px;
+        }
+
+        .profile-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dashboard-title {
+            font-size: 1.3rem;
+        }
+
+        .dashboard-title small {
+            font-size: 0.75rem;
+        }
+
+        .header-stats {
+            gap: 0.4rem;
+        }
+
+        .stat-badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+        }
+
+        .quick-actions {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+            padding: 0.3rem 0;
+        }
+
+        .btn {
+            font-size: 0.8rem;
+            padding: 0.35rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .btn i {
+            font-size: 0.7rem;
+        }
+
+        .filter-section {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+            padding: 0.4rem 0;
+        }
+
+        .filter-group label {
+            font-size: 0.7rem;
+        }
+
+        .filter-group select {
+            font-size: 0.85rem;
+            padding: 0.3rem 0.5rem;
+        }
+
+        .listings-grid {
+            gap: 0.5rem;
+            padding: 0;
+            max-height: 800px;
+        }
+
+        .listing-card {
+            border-radius: 8px;
+        }
+
+        .listing-image {
+            height: 110px;
+        }
+
+        .section-badge {
+            font-size: 0.55rem;
+            padding: 0.15rem 0.5rem;
+            top: 5px;
+            right: 5px;
+        }
+
+        .listing-content {
+            padding: 0.5rem 0.6rem;
+        }
+
+        .listing-title {
+            font-size: 0.85rem;
+        }
+
+        .listing-category {
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .listing-price {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .listing-description {
+            font-size: 0.75rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .listing-footer {
+            padding-top: 0.3rem;
+            flex-wrap: nowrap;
+        }
+
+        .listing-footer-left {
+            gap: 0.3rem;
+        }
+
+        .listing-status {
+            font-size: 0.55rem;
+            padding: 0.12rem 0.4rem;
+        }
+
+        .listing-likes {
+            font-size: 0.75rem;
+        }
+
+        .listing-likes i {
+            font-size: 0.75rem;
+        }
+
+        .listing-actions-right {
+            gap: 0.2rem;
+        }
+
+        .listing-actions-right button {
+            font-size: 0.75rem;
+            padding: 0.15rem 0.3rem;
+        }
+
+        .btn-info {
+            font-size: 1.1rem;
+        }
+
+        .dropdown-menu-btn {
+            font-size: 1rem;
+            padding: 0.15rem 0.25rem;
+        }
+
+        .dropdown-item {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+        }
+
+        .dropdown-item i {
+            font-size: 0.8rem;
+        }
+
+        .info-modal {
+            padding: 16px;
+        }
+
+        .info-modal-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .info-modal-image {
+            height: 180px;
+        }
+
+        .info-modal-detail-value {
+            font-size: 0.9rem;
+        }
+
+        .info-modal-detail-value.price {
+            font-size: 1.1rem;
+        }
+
+        .pagination-container {
+            gap: 0.6rem;
+            padding: 1rem 0;
+        }
+
+        .page-btn {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .page-info {
+            font-size: 0.8rem;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 0.5rem;
+            border-radius: 12px;
+        }
+
+        .modal-header {
+            padding: 1rem 1rem 0.3rem 1rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .modal-content form {
+            padding: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+            gap: 0.5rem;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+        }
+
+        .profile-avatar-inner {
+            font-size: 28px;
+        }
+
+        .profile-avatar-wrapper {
+            min-width: 80px;
+        }
+
+        .profile-name-below {
+            font-size: 12px;
+        }
+
+        .dashboard-title {
+            font-size: 1.1rem;
+        }
+
+        .listing-image {
+            height: 90px;
+        }
+
+        .listing-title {
+            font-size: 0.75rem;
+        }
+
+        .listing-price {
+            font-size: 0.8rem;
+        }
+
+        .listing-status {
+            font-size: 0.5rem;
+            padding: 0.1rem 0.3rem;
+        }
+
+        .btn {
+            font-size: 0.7rem;
+            padding: 0.3rem 0.4rem;
+        }
+    }
+</style>
+
+<!-- Fixed Top Bar -->
+<div class="top-bar">
+    <div class="top-bar-content">
+        <a href="{{ url_for('main.index') }}" class="logo">Link-Up</a>
+        <div class="top-bar-actions">
+            <div class="settings-icon" id="settingsIcon">
+                <i class="fas fa-cog"></i>
+                <div class="settings-dropdown" id="settingsDropdown">
+                    <div class="settings-dropdown-item" id="settingsProfile">
+                        <i class="fas fa-user-cog"></i> Settings
+                    </div>
+                    <div class="settings-dropdown-item" id="logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-container-wrapper">
+    <div class="profile-container">
+        <!-- Profile Header - Side by side -->
+        <div class="profile-header">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                    <div class="profile-avatar-inner">JD</div>
+                </div>
+                <div class="profile-name-below">John Doe</div>
+            </div>
+            <div class="profile-info">
+                <!-- Dashboard Header -->
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        My Host Dashboard
+                        <small>Handyman & Community Helper | 🔧 Fixing things & making neighbors happy | Available for services and selling quality items</small>
+                    </div>
+                    <!-- Stats - Active and Pending -->
+                    <div class="header-stats">
+                        <span class="stat-badge stat-active"><i class="fas fa-store"></i> Active: 5</span>
+                        <span class="stat-badge stat-pending"><i class="fas fa-clock"></i> Pending: 2</span>
+                    </div>
+                    <!-- Quick Actions - 2 columns -->
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" onclick="openPostModalHost()">
+                            <i class="fas fa-plus-circle"></i> New Listing
+                        </button>
+                        <button class="btn btn-secondary" onclick="openBulkUpload()">
+                            <i class="fas fa-upload"></i> Bulk Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Host Dashboard Content -->
+        <div class="dashboard-container">
+
+            <!-- Filters - 2 columns -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>Section</label>
+                    <select id="sectionFilter" onchange="filterListings()">
+                        <option value="all">All Sections</option>
+                        <option value="marketplace">Market-Center</option>
+                        <option value="servicehub">Service Hub</option>
+                        <option value="hirezone">Hire Zone</option>
+                        <option value="housing">Housing</option>
+                        <option value="farmers">Farmers' Room</option>
+                        <option value="jobs">Jobs & Gigs</option>
+                        <option value="events">Events</option>
+                        <option value="community">Community</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="statusFilter" onchange="filterListings()">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="draft">Draft</option>
+                        <option value="expired">Expired</option>
+                        <option value="sold">Sold</option>
+                        <option value="hired">Hired</option>
+                        <option value="rented">Rented</option>
+                        <option value="booked">Booked</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Listings Grid - 2 columns, max 5 rows -->
+            <div class="listings-grid" id="listingsGrid">
+                <!-- Listing cards will be dynamically rendered -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <button class="page-btn" onclick="changePage('prev')"><i class="fas fa-chevron-left"></i></button>
+                <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">10</span></span>
+                <button class="page-btn" onclick="changePage('next')"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Modal -->
+<div class="info-modal-overlay" id="infoModal">
+    <div class="info-modal">
+        <div class="info-modal-header">
+            <h2 id="infoModalTitle">Item Details</h2>
+            <button class="info-modal-close" onclick="closeInfoModal()">&times;</button>
+        </div>
+        <img class="info-modal-image" id="infoModalImage" src="" alt="Item">
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Title</div>
+            <div class="info-modal-detail-value" id="infoModalItemTitle">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Category</div>
+            <div class="info-modal-detail-value" id="infoModalCategory">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Section</div>
+            <div class="info-modal-detail-value" id="infoModalSection">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Price</div>
+            <div class="info-modal-detail-value price" id="infoModalPrice">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Status</div>
+            <div class="info-modal-detail-value" id="infoModalStatus">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Description</div>
+            <div class="info-modal-detail-value" id="infoModalDescription">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Created</div>
+            <div class="info-modal-detail-value" id="infoModalCreated">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Likes</div>
+            <div class="info-modal-detail-value" id="infoModalLikes">-</div>
+        </div>
+    </div>
+</div>
+
+<!-- Host Dashboard Modal -->
+<div class="modal" id="hostPostModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">New Listing</h2>
+            <button class="close-btn" onclick="closeModalHost()">&times;</button>
+        </div>
+        <form id="listingForm" onsubmit="saveListing(event)">
+            <input type="hidden" id="listingId" value="">
+
+            <div class="form-group">
+                <label>Section</label>
+                <select id="sectionSelect" required>
+                    <option value="">Select Section</option>
+                    <option value="marketplace">Market-Center</option>
+                    <option value="servicehub">Service Hub</option>
+                    <option value="hirezone">Hire Zone</option>
+                    <option value="housing">Housing</option>
+                    <option value="farmers">Farmers' Room</option>
+                    <option value="jobs">Jobs & Gigs</option>
+                    <option value="events">Events</option>
+                    <option value="community">Community</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="listingTitle" placeholder="Enter listing title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+                <input type="text" id="listingCategory" placeholder="e.g., Electronics, Fitness, Apartments" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label>Price/Amount</label>
+                    <input type="number" id="listingPrice" placeholder="0.00" step="0.01">
+                </div>
+                <div class="form-group half">
+                    <label>Status</label>
+                    <select id="listingStatus">
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="listingDescription" rows="4" placeholder="Describe your listing..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Image URL</label>
+                <input type="url" id="listingImage" placeholder="https://images.unsplash.com/...">
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModalHost()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Listing</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" id="deleteModal">
+    <div class="modal-content delete-modal">
+        <div class="modal-header">
+            <h2>Delete Listing</h2>
+            <button class="close-btn" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <p>Are you sure you want to delete this listing? This action cannot be undone.</p>
+        <div class="form-actions">
+            <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+// Host Dashboard Data
+let listings = [
+    {
+        id: 1,
+        section: 'marketplace',
+        sectionLabel: 'Market-Center',
+        title: 'iPhone 15 Pro Max - Like New',
+        category: 'Electronics',
+        price: '₦850,000',
+        description: 'Excellent condition, 256GB, Space Black, with original box and accessories. Comes with charger and case.',
+        image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600',
+        status: 'active',
+        created: '2026-07-28',
+        likes: 24,
+        liked: false
+    },
+    {
+        id: 2,
+        section: 'servicehub',
+        sectionLabel: 'Service Hub',
+        title: 'Professional Yoga Classes',
+        category: 'Fitness & Training',
+        price: '₦15,000/session',
+        description: 'Certified instructor with 5 years experience. Private and group classes available.',
+        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600',
+        status: 'active',
+        created: '2026-07-25',
+        likes: 18,
+        liked: false
+    },
+    {
+        id: 3,
+        section: 'hirezone',
+        sectionLabel: 'Hire Zone',
+        title: 'Toyota Camry 2022 for Hire',
+        category: 'Car Hire',
+        price: '₦45,000/day',
+        description: 'Clean, well-maintained vehicle with full insurance. Perfect for business trips.',
+        image: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600',
+        status: 'pending',
+        created: '2026-07-30',
+        likes: 12,
+        liked: false
+    },
+    {
+        id: 4,
+        section: 'housing',
+        sectionLabel: 'Housing',
+        title: '2-Bedroom Apartment in Lekki',
+        category: 'Apartments',
+        price: '₦2,500,000/year',
+        description: 'Spacious apartment with 24/7 security, parking, and access to amenities.',
+        image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600',
+        status: 'active',
+        created: '2026-07-20',
+        likes: 42,
+        liked: false
+    },
+    {
+        id: 5,
+        section: 'farmers',
+        sectionLabel: 'Farmers\' Room',
+        title: 'Organic Produce Bundle',
+        category: 'Crops',
+        price: '₦25,000',
+        description: 'Fresh organic vegetables and fruits delivered weekly. Farm-to-table quality.',
+        image: 'https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=600',
+        status: 'draft',
+        created: '2026-07-29',
+        likes: 8,
+        liked: false
+    },
+    {
+        id: 6,
+        section: 'jobs',
+        sectionLabel: 'Jobs & Gigs',
+        title: 'Senior Software Engineer',
+        category: 'Full-time',
+        price: '₦800,000/month',
+        description: 'Lead developer for fintech startup. React, Node.js, and AWS experience required.',
+        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600',
+        status: 'active',
+        created: '2026-07-28',
+        likes: 31,
+        liked: false
+    },
+    {
+        id: 7,
+        section: 'events',
+        sectionLabel: 'Events',
+        title: 'Tech Connect Conference 2026',
+        category: 'Workshops',
+        price: '₦50,000/ticket',
+        description: 'Annual tech conference featuring industry leaders, workshops, and networking.',
+        image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600',
+        status: 'pending',
+        created: '2026-08-01',
+        likes: 56,
+        liked: false
+    },
+    {
+        id: 8,
+        section: 'community',
+        sectionLabel: 'Community',
+        title: 'Neighborhood Watch Group',
+        category: 'Local Groups',
+        price: 'Free',
+        description: 'Join our community safety initiative. Monthly meetings and patrol schedules.',
+        image: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600',
+        status: 'active',
+        created: '2026-07-26',
+        likes: 19,
+        liked: false
+    }
+];
+
+let currentPage = 1;
+const itemsPerPage = 4;
+let deleteTargetId = null;
+let currentFilter = 'all';
+let currentStatus = 'all';
+let activeDropdown = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Settings dropdown
+    const settingsIcon = document.getElementById('settingsIcon');
+    const settingsDropdown = document.getElementById('settingsDropdown');
+
+    settingsIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        settingsDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function() {
+        settingsDropdown.classList.remove('active');
+        closeAllDropdowns();
+    });
+
+    // Initialize host dashboard
+    renderListings();
+    updateStats();
+});
+
+function closeAllDropdowns() {
+    document.querySelectorAll('.dropdown-menu').forEach(el => {
+        el.classList.remove('active');
+    });
+    activeDropdown = null;
+}
+
+// Host Dashboard Functions
+function renderListings() {
+    const grid = document.getElementById('listingsGrid');
+    if (!grid) return;
+
+    const filtered = getFilteredListings();
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const pageItems = filtered.slice(start, start + itemsPerPage);
+
+    const totalPagesSpan = document.getElementById('totalPages');
+    const currentPageSpan = document.getElementById('currentPage');
+    if (totalPagesSpan) totalPagesSpan.textContent = totalPages || 1;
+    if (currentPageSpan) currentPageSpan.textContent = currentPage;
+
+    if (pageItems.length === 0) {
+        grid.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <h3>No listings found</h3>
+                <p>Start by creating your first listing!</p>
+                <button class="btn btn-primary" onclick="openPostModalHost()">
+                    <i class="fas fa-plus-circle"></i> Create Listing
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = pageItems.map(listing => {
+        // Get status options based on section
+        let statusOptions = '';
+        if (listing.section === 'marketplace') {
+            statusOptions = `
+                <button class="dropdown-item" onclick="markAsSold(${listing.id})"><i class="fas fa-check-circle"></i> Mark as Sold</button>
+            `;
+        } else if (listing.section === 'hirezone') {
+            statusOptions = `
+                <button class="dropdown-item" onclick="markAsHired(${listing.id})"><i class="fas fa-check-circle"></i> Mark as Hired</button>
+            `;
+        } else if (listing.section === 'housing') {
+            statusOptions = `
+                <button class="dropdown-item" onclick="markAsRented(${listing.id})"><i class="fas fa-check-circle"></i> Mark as Rented</button>
+            `;
+        } else if (listing.section === 'servicehub') {
+            statusOptions = `
+                <button class="dropdown-item" onclick="markAsBooked(${listing.id})"><i class="fas fa-check-circle"></i> Mark as Booked</button>
+            `;
+        } else {
+            statusOptions = `
+                <button class="dropdown-item" onclick="markAsCompleted(${listing.id})"><i class="fas fa-check-circle"></i> Mark as Completed</button>
+            `;
+        }
+
+        return `
+        <div class="listing-card" data-id="${listing.id}">
+            <div class="listing-image">
+                <img src="${listing.image}" alt="${listing.title}" loading="lazy">
+                <span class="section-badge ${listing.section}">${listing.sectionLabel}</span>
+            </div>
+            <div class="listing-content">
+                <h3 class="listing-title">${listing.title}</h3>
+                <p class="listing-category"><i class="fas fa-tag"></i> ${listing.category}</p>
+                <p class="listing-price">${listing.price}</p>
+                <p class="listing-description">${listing.description}</p>
+                <div class="listing-footer">
+                    <div class="listing-footer-left">
+                        <span class="listing-status ${listing.status}">${listing.status}</span>
+                        <span class="listing-likes ${listing.liked ? 'liked' : ''}" onclick="toggleLike(${listing.id})">
+                            <i class="${listing.liked ? 'fas' : 'far'} fa-heart"></i>
+                            <span id="likes-count-${listing.id}">${listing.likes || 0}</span>
+                        </span>
+                    </div>
+                    <div class="listing-actions-right">
+                        <button class="btn-info" onclick="openInfoModal(${listing.id})" title="View Details">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                        <div class="menu-wrapper">
+                            <button class="dropdown-menu-btn" onclick="toggleDropdown(event, ${listing.id})">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu" id="dropdown-${listing.id}">
+                                <button class="dropdown-item" onclick="editListing(${listing.id})"><i class="fas fa-edit"></i> Edit</button>
+                                ${statusOptions}
+                                <button class="dropdown-item danger" onclick="openDeleteModal(${listing.id})"><i class="fas fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `}).join('');
+}
+
+function toggleDropdown(event, id) {
+    event.stopPropagation();
+    const dropdown = document.getElementById(`dropdown-${id}`);
+    const isActive = dropdown.classList.contains('active');
+
+    // Close all dropdowns
+    closeAllDropdowns();
+
+    if (!isActive) {
+        dropdown.classList.add('active');
+        activeDropdown = dropdown;
+    }
+}
+
+function toggleLike(id) {
+    const listing = listings.find(l => l.id === id);
+    if (listing) {
+        listing.liked = !listing.liked;
+        listing.likes = listing.liked ? (listing.likes || 0) + 1 : (listing.likes || 0) - 1;
+        renderListings();
+    }
+}
+
+// Info Modal Functions
+function openInfoModal(id) {
+    const listing = listings.find(l => l.id === id);
+    if (!listing) return;
+
+    document.getElementById('infoModalTitle').textContent = listing.title;
+    document.getElementById('infoModalImage').src = listing.image;
+    document.getElementById('infoModalItemTitle').textContent = listing.title;
+    document.getElementById('infoModalCategory').textContent = listing.category;
+    document.getElementById('infoModalSection').textContent = listing.sectionLabel;
+    document.getElementById('infoModalPrice').textContent = listing.price;
+    document.getElementById('infoModalStatus').textContent = listing.status.charAt(0).toUpperCase() + listing.status.slice(1);
+    document.getElementById('infoModalDescription').textContent = listing.description;
+    document.getElementById('infoModalCreated').textContent = listing.created;
+    document.getElementById('infoModalLikes').textContent = listing.likes || 0;
+
+    document.getElementById('infoModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    closeAllDropdowns();
+}
+
+function closeInfoModal() {
+    document.getElementById('infoModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Status update functions
+function markAsSold(id) {
+    updateListingStatus(id, 'sold', 'Item marked as sold!');
+    closeAllDropdowns();
+}
+
+function markAsHired(id) {
+    updateListingStatus(id, 'hired', 'Item marked as hired!');
+    closeAllDropdowns();
+}
+
+function markAsRented(id) {
+    updateListingStatus(id, 'rented', 'Property marked as rented!');
+    closeAllDropdowns();
+}
+
+function markAsBooked(id) {
+    updateListingStatus(id, 'booked', 'Service marked as booked!');
+    closeAllDropdowns();
+}
+
+function markAsCompleted(id) {
+    updateListingStatus(id, 'completed', 'Marked as completed!');
+    closeAllDropdowns();
+}
+
+function updateListingStatus(id, status, message) {
+    const listing = listings.find(l => l.id === id);
+    if (listing) {
+        listing.status = status;
+        renderListings();
+        updateStats();
+        showToast(message, 'success');
+    }
+}
+
+function getFilteredListings() {
+    let filtered = listings;
+
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(l => l.section === currentFilter);
+    }
+
+    if (currentStatus !== 'all') {
+        filtered = filtered.filter(l => l.status === currentStatus);
+    }
+
+    return filtered;
+}
+
+function filterListings() {
+    const sectionFilter = document.getElementById('sectionFilter');
+    const statusFilter = document.getElementById('statusFilter');
+
+    if (sectionFilter) currentFilter = sectionFilter.value;
+    if (statusFilter) currentStatus = statusFilter.value;
+
+    currentPage = 1;
+    renderListings();
+}
+
+function changePage(direction) {
+    const filtered = getFilteredListings();
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+    if (direction === 'prev' && currentPage > 1) {
+        currentPage--;
+    } else if (direction === 'next' && currentPage < totalPages) {
+        currentPage++;
+    }
+
+    renderListings();
+}
+
+function updateStats() {
+    const active = listings.filter(l => l.status === 'active' || l.status === 'available').length;
+    const pending = listings.filter(l => l.status === 'pending').length;
+    const statActive = document.querySelector('.stat-active');
+    const statPending = document.querySelector('.stat-pending');
+
+    if (statActive) statActive.innerHTML = `<i class="fas fa-store"></i> Active: ${active}`;
+    if (statPending) statPending.innerHTML = `<i class="fas fa-clock"></i> Pending: ${pending}`;
+}
+
+function openPostModalHost(listing = null) {
+    const modal = document.getElementById('hostPostModal');
+    const title = document.getElementById('modalTitle');
+    const form = document.getElementById('listingForm');
+
+    if (!modal) return;
+
+    if (listing) {
+        title.textContent = 'Edit Listing';
+        document.getElementById('listingId').value = listing.id;
+        document.getElementById('sectionSelect').value = listing.section;
+        document.getElementById('listingTitle').value = listing.title;
+        document.getElementById('listingCategory').value = listing.category;
+        document.getElementById('listingPrice').value = listing.price.replace(/[^0-9.]/g, '');
+        document.getElementById('listingStatus').value = listing.status === 'active' || listing.status === 'available' ? 'active' : listing.status;
+        document.getElementById('listingDescription').value = listing.description;
+        document.getElementById('listingImage').value = listing.image;
+    } else {
+        title.textContent = 'New Listing';
+        form.reset();
+        document.getElementById('listingId').value = '';
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    closeAllDropdowns();
+}
+
+function closeModalHost() {
+    const modal = document.getElementById('hostPostModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+function editListing(id) {
+    const listing = listings.find(l => l.id === id);
+    if (listing) {
+        openPostModalHost(listing);
+    }
+    closeAllDropdowns();
+}
+
+function saveListing(e) {
+    e.preventDefault();
+
+    const id = document.getElementById('listingId').value;
+    const data = {
+        section: document.getElementById('sectionSelect').value,
+        sectionLabel: document.getElementById('sectionSelect').options[document.getElementById('sectionSelect').selectedIndex].text,
+        title: document.getElementById('listingTitle').value,
+        category: document.getElementById('listingCategory').value,
+        price: document.getElementById('listingPrice').value ? `₦${parseFloat(document.getElementById('listingPrice').value).toLocaleString()}` : 'Free',
+        description: document.getElementById('listingDescription').value,
+        image: document.getElementById('listingImage').value || 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600',
+        status: document.getElementById('listingStatus').value,
+        created: new Date().toISOString().split('T')[0],
+        likes: 0,
+        liked: false
+    };
+
+    if (id) {
+        const index = listings.findIndex(l => l.id === parseInt(id));
+        listings[index] = { ...listings[index], ...data };
+        showToast('Listing updated successfully!', 'success');
+    } else {
+        data.id = listings.length ? Math.max(...listings.map(l => l.id)) + 1 : 1;
+        listings.push(data);
+        showToast('Listing created successfully!', 'success');
+    }
+
+    closeModalHost();
+    updateStats();
+    renderListings();
+}
+
+function openDeleteModal(id) {
+    deleteTargetId = id;
+    const modal = document.getElementById('deleteModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('confirmDeleteBtn').onclick = function() {
+            deleteListing(id);
+        };
+    }
+    closeAllDropdowns();
+}
+
+function closeDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+    deleteTargetId = null;
+}
+
+function deleteListing(id) {
+    listings = listings.filter(l => l.id !== id);
+    closeDeleteModal();
+    updateStats();
+    renderListings();
+    showToast('Listing deleted successfully!', 'warning');
+}
+
+function openBulkUpload() {
+    showToast('Bulk upload feature coming soon!', 'warning');
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    toast.textContent = message;
+    toast.className = 'toast ' + type;
+    toast.classList.add('show');
+
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Close modals on outside click
+window.onclick = function(event) {
+    const hostModal = document.getElementById('hostPostModal');
+    const deleteModal = document.getElementById('deleteModal');
+    const infoModal = document.getElementById('infoModal');
+
+    if (event.target === hostModal) {
+        closeModalHost();
+    }
+    if (event.target === deleteModal) {
+        closeDeleteModal();
+    }
+    if (event.target === infoModal) {
+        closeInfoModal();
+    }
+    if (!event.target.closest('.menu-wrapper')) {
+        closeAllDropdowns();
+    }
+};
+</script>
+{% endblock %}

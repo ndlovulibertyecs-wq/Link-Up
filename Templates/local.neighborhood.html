@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ category }} | Local Groups | Link-Up{% endblock %}
+{% block content %}
+<div class="category-page">
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
+            <div class="container">
+                <h1 class="header-title">{{ category }}</h1>
+                <p class="dashboard-subtitle">Connect with neighbors and build community</p>
+            </div>
+        </div>
+    </div>
+    <div class="groups-grid-section">
+        <div class="container">
+            <div class="groups-grid">
+                <!-- Add dynamic group cards here -->
+                <p>Groups in this category will appear here.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

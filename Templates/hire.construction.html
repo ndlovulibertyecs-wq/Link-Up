@@ -1,0 +1,1089 @@
+{% extends "base.html" %}
+
+{% block title %}Construction Professionals - Hire Builders, Engineers & Contractors | Link-Up{% endblock %}
+
+{% block content %}
+<div class="construction-pro-page">
+    <!-- Header - EXACT same structure as equipment page -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Construction Professionals</h1>
+                        <p class="dashboard-subtitle">Hire experienced builders, engineers, architects, and skilled construction workers for your project</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling - ONLY 5 MAIN CATEGORIES with counts -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse by Category</h2>
+            <p class="section-subtitle">Find the right construction experts for your project</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- 1. Building Constructors -->
+                    <a href="{{ url_for('construction.building_constructors') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1503387762-592b58a01efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Building Constructors">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Building Constructors</h3>
+                            <p class="category-count">42 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- 2. Construction Specialists -->
+                    <a href="{{ url_for('construction.construction_specialists') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Construction Specialists">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Construction Specialists</h3>
+                            <p class="category-count">38 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- 3. Engineering Disciplines -->
+                    <a href="{{ url_for('construction.engineering_disciplines') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Engineering Disciplines">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Engineering Disciplines</h3>
+                            <p class="category-count">35 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- 4. Professional Services -->
+                    <a href="{{ url_for('construction.professional_services') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Professional Services">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Professional Services</h3>
+                            <p class="category-count">29 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- 5. Site Workers -->
+                     <a href="{{ url_for('construction.renovation_specialists') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Construction Specialists">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Renovation Specialists</h3>
+                            <p class="category-count">38 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- 6. Site Workers -->
+                    <a href="{{ url_for('construction.site_workers') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1541137703098-b5c5579d3c35?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Site Workers">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Site Workers</h3>
+                            <p class="category-count">51 professionals</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Sort - IDENTICAL to equipment page -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search professionals by name, skill, or location..." class="search-input" id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="builder">Building Constructors (42)</option>
+                        <option value="specialist">Construction Specialists (38)</option>
+                        <option value="engineer">Engineering Disciplines (35)</option>
+                        <option value="services">Professional Services (29)</option>
+                        <option value="worker">Site Workers (51)</option>
+                    </select>
+                    <select class="filter-select" id="experienceFilter">
+                        <option value="">Experience Level</option>
+                        <option value="0-5">0-5 years</option>
+                        <option value="5-10">5-10 years</option>
+                        <option value="10-20">10-20 years</option>
+                        <option value="20+">20+ years</option>
+                    </select>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recommended">Sort by: Recommended</option>
+                        <option value="rating">Top Rated</option>
+                        <option value="experience">Most Experienced</option>
+                        <option value="hourly_low">Hourly: Low to High</option>
+                        <option value="hourly_high">Hourly: High to Low</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Professionals Grid - SAME card structure as equipment products -->
+    <div class="professionals-section">
+        <div class="container">
+            <h2 class="section-title">Featured Construction Professionals</h2>
+            <p class="section-subtitle">Top-rated experts ready for your next project</p>
+
+            <div class="professionals-grid">
+                <!-- Professional 1: Master Builder (Building Constructors - 42 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Master Builder">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">James Henderson</h3>
+                        <p class="professional-title">Master Builder & General Contractor</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$85<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> Dallas, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-hard-hat"></i>
+                                <span>Building Constructors</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.9 (234 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-trophy"></i> 200+ projects</span>
+                            <span class="spec-tag"><i class="fas fa-certificate"></i> Licensed</span>
+                            <span class="spec-tag"><i class="fas fa-clock"></i> 24h response</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional 2: Structural Engineer (Engineering Disciplines - 35 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Engineer">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Sarah Chen, P.E.</h3>
+                        <p class="professional-title">Structural Engineer</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$120<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> Houston, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-drafting-compass"></i>
+                                <span>Engineering Disciplines</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.8 (189 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-building"></i> PE Licensed</span>
+                            <span class="spec-tag"><i class="fas fa-chart-line"></i> 150+ projects</span>
+                            <span class="spec-tag"><i class="fas fa-calculator"></i> SAP2000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional 3: Concrete Specialist (Construction Specialists - 38 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Concrete Specialist">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">David Thompson</h3>
+                        <p class="professional-title">Concrete & Foundation Expert</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$65<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> Fort Worth, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-trowel"></i>
+                                <span>Construction Specialists</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.7 (156 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-weight-hanging"></i> 500+ yards</span>
+                            <span class="spec-tag"><i class="fas fa-palette"></i> Decorative</span>
+                            <span class="spec-tag"><i class="fas fa-truck"></i> Pump service</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional 4: Project Manager (Professional Services - 29 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Project Manager">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Lisa Wong, PMP</h3>
+                        <p class="professional-title">Construction Project Manager</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$110<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> Dallas, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Professional Services</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.8 (203 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-chart-pie"></i> Budget Control</span>
+                            <span class="spec-tag"><i class="fas fa-tasks"></i> Agile/Waterfall</span>
+                            <span class="spec-tag"><i class="fas fa-people-arrows"></i> Team Lead</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional 5: Master Electrician (Site Workers - 51 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Electrician">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Robert Martinez</h3>
+                        <p class="professional-title">Master Electrician</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$95<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> San Antonio, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-bolt"></i>
+                                <span>Site Workers</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.9 (278 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-microchip"></i> Automation</span>
+                            <span class="spec-tag"><i class="fas fa-solar-panel"></i> Solar Certified</span>
+                            <span class="spec-tag"><i class="fas fa-shield-alt"></i> Licensed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional 6: Architect (Engineering Disciplines - 35 available) -->
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://images.unsplash.com/photo-1503387762-592b58a01efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Architect">
+                        <span class="pro-badge verified">VERIFIED</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3 class="professional-name">Michael Richardson</h3>
+                        <p class="professional-title">Registered Architect, AIA</p>
+                        <div class="professional-meta">
+                            <span class="professional-rate">$150<span>/hr</span></span>
+                            <span class="professional-location"><i class="fas fa-map-marker-alt"></i> Austin, TX</span>
+                        </div>
+                        <div class="professional-footer">
+                            <span class="professional-seller">
+                                <i class="fas fa-pencil-ruler"></i>
+                                <span>Engineering Disciplines</span>
+                            </span>
+                            <span class="professional-rating">⭐ 4.9 (312 reviews)</span>
+                        </div>
+                        <div class="professional-specs">
+                            <span class="spec-tag"><i class="fas fa-cube"></i> BIM Expert</span>
+                            <span class="spec-tag"><i class="fas fa-leaf"></i> LEED AP</span>
+                            <span class="spec-tag"><i class="fas fa-images"></i> 3D Rendering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary" id="loadMoreBtn">
+                    <i class="fas fa-sync-alt"></i> Load More Professionals
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Project CTA - YOUR ORIGINAL ROUTE PRESERVED -->
+    <div class="post-project-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Looking to Hire Construction Professionals?</h2>
+                <p>Post your project details and get quotes from qualified builders, engineers, and contractors.</p>
+                <a href="{{ url_for('hire.hire_now') }}" class="btn btn-primary">
+                    <i class="fas fa-file-alt"></i> Post a Project
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ===== IDENTICAL STYLES TO EQUIPMENT PAGE ===== */
+    .construction-pro-page {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        color: white;
+    }
+
+    .header-background {
+        padding: 2rem 0;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .header-main {
+        text-align: center;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.4;
+    }
+
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-top: 0.3rem;
+    }
+
+    /* Categories Horizontal Scroll - EXACT same as equipment */
+    .categories-scroll-section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .categories-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .categories-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: #2563eb;
+    }
+
+    .left-scroll {
+        left: -20px;
+    }
+
+    .right-scroll {
+        right: -20px;
+    }
+
+    .categories-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: #2563eb;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .category-card {
+        flex: 0 0 220px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+        border-color: #2563eb;
+    }
+
+    .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #1d4ed8);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover::before {
+        opacity: 1;
+    }
+
+    .category-image {
+        height: 140px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-content {
+        padding: 1rem;
+        text-align: center;
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .category-divider {
+        width: 40px;
+        height: 2px;
+        background: #2563eb;
+        margin: 0 auto 0.8rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .category-card:hover .category-divider {
+        width: 60px;
+    }
+
+    .category-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        color: #1f2937;
+    }
+
+    .category-count {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.3rem;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+        background: #2563eb;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Search Section - IDENTICAL */
+    .search-sort-section {
+        background: white;
+        padding: 2rem 0;
+        margin-top: 1rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: relative;
+        z-index: 10;
+        margin: 0 auto 2rem;
+        max-width: 1200px;
+    }
+
+    .search-sort-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem 1.5rem 1rem 3.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .search-btn {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .filter-dropdowns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-select, .sort-select {
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+        flex: 1;
+    }
+
+    /* Professionals Grid - SAME card structure as equipment products */
+    .professionals-section {
+        padding: 3rem 0;
+    }
+
+    .professionals-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .professional-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .professional-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .professional-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .professional-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .professional-card:hover .professional-image img {
+        transform: scale(1.05);
+    }
+
+    .pro-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: #10b981;
+        color: white;
+    }
+
+    .professional-info {
+        padding: 1.5rem;
+    }
+
+    .professional-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        color: #1f2937;
+    }
+
+    .professional-title {
+        color: #2563eb;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+    .professional-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .professional-rate {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1d4ed8;
+    }
+
+    .professional-rate span {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #6b7280;
+    }
+
+    .professional-location {
+        color: #6b7280;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .professional-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.8rem;
+        border-top: 1px solid #e5e7eb;
+        margin-bottom: 0.8rem;
+    }
+
+    .professional-seller {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: #1f2937;
+        font-weight: 500;
+    }
+
+    .professional-rating {
+        font-size: 0.8rem;
+        color: #f59e0b;
+        font-weight: 600;
+    }
+
+    .professional-specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .spec-tag {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .spec-tag i {
+        font-size: 0.7rem;
+    }
+
+    .load-more {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .load-more .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        border: none;
+        color: white;
+        border-radius: 40px;
+        cursor: pointer;
+    }
+
+    .load-more .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .post-project-cta {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .cta-content .btn {
+        background: white;
+        color: #2563eb;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        border-radius: 40px;
+    }
+
+    .cta-content .btn:hover {
+        background: #eff6ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 1.8rem;
+        }
+        .header-stats {
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .stat-number {
+            font-size: 1.3rem;
+        }
+        .professionals-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        .category-card {
+            flex: 0 0 180px;
+        }
+        .category-image {
+            height: 120px;
+        }
+        .search-box {
+            flex-direction: column;
+        }
+        .search-input {
+            width: 100%;
+        }
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+        }
+        .filter-dropdowns {
+            flex-direction: column;
+        }
+        .scroll-control {
+            display: none;
+        }
+        .post-project-cta {
+            padding: 3rem 1rem;
+        }
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-background {
+            padding: 1.5rem 0;
+        }
+        .header-title {
+            font-size: 1.5rem;
+        }
+        .dashboard-subtitle {
+            font-size: 0.9rem;
+        }
+        .category-card {
+            flex: 0 0 160px;
+        }
+        .category-image {
+            height: 100px;
+        }
+        .professional-image {
+            height: 180px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling for categories - IDENTICAL to equipment page
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    });
+                }
+
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    });
+                }
+
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                updateScrollButtons();
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        }
+
+        // Professional card click - same as product cards
+        document.querySelectorAll('.professional-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const proName = this.querySelector('.professional-name').textContent;
+                alert(`Viewing details for ${proName}`);
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => { this.style.transform = ''; }, 200);
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.querySelector('#searchBtn');
+        const searchInput = document.querySelector('#searchInput');
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) alert(`Searching for: ${query}`);
+            });
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = e.target.value.trim();
+                    if (query) alert(`Searching for: ${query}`);
+                }
+            });
+        }
+
+        // Filter dropdowns
+        const categoryFilter = document.querySelector('#categoryFilter');
+        const experienceFilter = document.querySelector('#experienceFilter');
+        const sortSelect = document.querySelector('#sortSelect');
+
+        if (categoryFilter) {
+            categoryFilter.addEventListener('change', function() {
+                if (this.value) alert(`Filtering by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+        if (experienceFilter) {
+            experienceFilter.addEventListener('change', function() {
+                if (this.value) alert(`Filtering by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                alert(`Sorting by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+
+        // Load more button
+        const loadMoreBtn = document.querySelector('#loadMoreBtn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Professionals';
+                    this.disabled = false;
+                    alert('More professionals loaded!');
+                }, 1500);
+            });
+        }
+
+        // Category hover effects
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() { this.style.zIndex = '20'; });
+            card.addEventListener('mouseleave', function() { this.style.zIndex = '1'; });
+        });
+    });
+</script>
+{% endblock %}

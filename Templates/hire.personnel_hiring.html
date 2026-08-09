@@ -1,0 +1,1229 @@
+{% extends "base.html" %}
+
+{% block title %}Personnel Hiring - Hire Zone | Link-Up{% endblock %}
+
+{% block content %}
+<div class="personnel-hiring-page">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Personnel Hiring</h1>
+                        <p class="dashboard-subtitle">Find skilled professionals, temporary staff, and permanent employees for your business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse by Role</h2>
+            <p class="section-subtitle">Click on any category to find professionals</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- Administrative -->
+                    <a href="{{ url_for('hire.admin_staff') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Administrative">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Administrative</h3>
+                            <p class="category-count">32 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Household Assistants (SECOND POSITION) -->
+                    <a href="{{ url_for('hire.home_helpers') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Household Assistants">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Household Assistants</h3>
+                            <p class="category-count">56 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Customer Service -->
+                    <a href="{{ url_for('hire.customer_service') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Customer Service">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Customer Service</h3>
+                            <p class="category-count">28 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Sales & Marketing -->
+                    <a href="{{ url_for('hire.sales_marketing') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1552581234-26160f608093?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sales & Marketing">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Sales & Marketing</h3>
+                            <p class="category-count">45 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- IT & Tech -->
+                    <a href="{{ url_for('hire.ittech') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="IT & Tech">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">IT & Tech</h3>
+                            <p class="category-count">56 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Accounting & Finance -->
+                    <a href="{{ url_for('hire.accounting_finance') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1554224154-26032ffc0c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Accounting">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Accounting & Finance</h3>
+                            <p class="category-count">24 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Human Resources -->
+                    <a href="{{ url_for('hire.human_resources') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1551836022-8b2858c9c69b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="HR">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Human Resources</h3>
+                            <p class="category-count">18 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Skilled Trades -->
+                    <a href="{{ url_for('hire.skilled_trades') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Skilled Trades">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Skilled Trades</h3>
+                            <p class="category-count">42 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Healthcare -->
+                    <a href="{{ url_for('hire.healthcare') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Healthcare">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Healthcare</h3>
+                            <p class="category-count">35 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Hospitality -->
+                    <a href="{{ url_for('hire.hospitality') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Hospitality">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Hospitality</h3>
+                            <p class="category-count">22 professionals</p>
+                        </div>
+                    </a>
+
+                    <!-- Education -->
+                    <a href="{{ url_for('hire.education') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Education">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Education</h3>
+                            <p class="category-count">30 professionals</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search by job title, skills, or location..." class="search-input" id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="experienceFilter">
+                        <option value="">Experience Level</option>
+                        <option value="entry">Entry Level (0-2 years)</option>
+                        <option value="mid">Mid Level (3-5 years)</option>
+                        <option value="senior">Senior Level (5+ years)</option>
+                        <option value="expert">Expert (10+ years)</option>
+                    </select>
+                    <select class="filter-select" id="employmentFilter">
+                        <option value="">Employment Type</option>
+                        <option value="fulltime">Full-time</option>
+                        <option value="parttime">Part-time</option>
+                        <option value="contract">Contract</option>
+                        <option value="temporary">Temporary</option>
+                        <option value="remote">Remote</option>
+                    </select>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recommended">Sort by: Recommended</option>
+                        <option value="rating">Rating: Highest First</option>
+                        <option value="experience">Experience: Most Experienced</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professionals Grid - 2 columns -->
+    <div class="products-section">
+        <div class="container">
+            <h2 class="section-title">Available Professionals</h2>
+            <p class="section-subtitle">Find the perfect candidate for your team</p>
+
+            <div class="products-grid">
+                <!-- Professional Card 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge trending">TOP RATED</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sarah Johnson</h3>
+                        <p class="product-description">Senior Administrative Assistant with 8+ years experience in corporate environments</p>
+                        <div class="product-meta">
+                            <span class="product-price">$35/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> New York, NY</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>8 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (124 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Office Management</span>
+                            <span class="skill-tag">MS Office</span>
+                            <span class="skill-tag">Communication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Card 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Michael Chen</h3>
+                        <p class="product-description">Full-stack developer specializing in React, Python, and cloud architecture</p>
+                        <div class="product-meta">
+                            <span class="product-price">$65/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>5 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.8 (89 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Card 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge trending">TRENDING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Jessica Williams</h3>
+                        <p class="product-description">Experienced HR Manager specializing in recruitment, employee relations, and training</p>
+                        <div class="product-meta">
+                            <span class="product-price">$45/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Chicago, IL</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>10 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (156 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Recruitment</span>
+                            <span class="skill-tag">Employee Relations</span>
+                            <span class="skill-tag">HRIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Card 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge discount">AVAILABLE</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">David Martinez</h3>
+                        <p class="product-description">Sales Manager with proven track record in B2B sales and team leadership</p>
+                        <div class="product-meta">
+                            <span class="product-price">$50/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Austin, TX</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>7 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.7 (92 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">B2B Sales</span>
+                            <span class="skill-tag">CRM</span>
+                            <span class="skill-tag">Leadership</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Card 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Emily Rodriguez</h3>
+                        <p class="product-description">Customer Service Specialist fluent in English and Spanish, expert in conflict resolution</p>
+                        <div class="product-meta">
+                            <span class="product-price">$28/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Miami, FL</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>4 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.9 (67 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Bilingual</span>
+                            <span class="skill-tag">Zendesk</span>
+                            <span class="skill-tag">Conflict Resolution</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Card 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Professional">
+                        <span class="product-badge trending">TRENDING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">James Wilson</h3>
+                        <p class="product-description">Certified Electrician with 12 years experience in residential and commercial projects</p>
+                        <div class="product-meta">
+                            <span class="product-price">$55/hour</span>
+                            <span class="product-location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <i class="fas fa-briefcase"></i>
+                                <span>12 years exp</span>
+                            </span>
+                            <span class="product-time">⭐ 4.8 (203 reviews)</span>
+                        </div>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Licensed Electrician</span>
+                            <span class="skill-tag">Wiring</span>
+                            <span class="skill-tag">Safety Compliance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Load More Professionals
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Job CTA -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Need to Hire?</h2>
+                <p>Post your job opening and connect with qualified professionals today.</p>
+                <a href="{{ url_for('hire.hire_now') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Post a Job
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Personnel Hiring Page Styles - Same structure as electronics */
+    .personnel-hiring-page {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+
+    .page-header {
+        color: white;
+    }
+
+    .header-background {
+        padding: 2rem 0;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .header-main {
+        text-align: center;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.4;
+    }
+
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-top: 0.3rem;
+    }
+
+    .categories-scroll-section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .categories-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .categories-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: #0ea5e9;
+    }
+
+    .left-scroll {
+        left: -20px;
+    }
+
+    .right-scroll {
+        right: -20px;
+    }
+
+    .categories-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: #0ea5e9;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+    }
+
+    .category-card {
+        flex: 0 0 200px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        border-color: #0ea5e9;
+    }
+
+    .category-image {
+        height: 120px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-content {
+        padding: 1rem;
+        text-align: center;
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .category-divider {
+        width: 40px;
+        height: 2px;
+        background: #0ea5e9;
+        margin: 0 auto 0.8rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .category-card:hover .category-divider {
+        width: 60px;
+    }
+
+    .category-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 0 0 0.3rem;
+        color: #1f2937;
+    }
+
+    .category-count {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: #e0f2fe;
+        color: #0369a1;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-top: 0.3rem;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+        background: #0ea5e9;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .search-sort-section {
+        background: white;
+        padding: 2rem 0;
+        margin-top: 1rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: relative;
+        z-index: 10;
+        margin: 0 auto 2rem;
+        max-width: 1200px;
+    }
+
+    .search-sort-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem 1.5rem 1rem 3.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
+    .search-btn {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+
+    .filter-dropdowns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-select, .sort-select {
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+        flex: 1;
+    }
+
+    .filter-select:hover, .sort-select:hover {
+        border-color: #0ea5e9;
+    }
+
+    .products-section {
+        padding: 3rem 0;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .product-badge.new {
+        background: #10b981;
+        color: white;
+    }
+
+    .product-badge.trending {
+        background: #f59e0b;
+        color: white;
+    }
+
+    .product-badge.discount {
+        background: #0ea5e9;
+        color: white;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .product-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0369a1;
+    }
+
+    .product-location {
+        color: #6b7280;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.8rem;
+        border-top: 1px solid #e5e7eb;
+        margin-bottom: 0.8rem;
+    }
+
+    .product-seller {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .product-time {
+        font-size: 0.8rem;
+        color: #f59e0b;
+        font-weight: 600;
+    }
+
+    .skills-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skill-tag {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .load-more {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .load-more .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        border: none;
+    }
+
+    .load-more .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    }
+
+    .create-cta {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .cta-content .btn {
+        background: white;
+        color: #0ea5e9;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .cta-content .btn:hover {
+        background: #e0f2fe;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    .personnel-hiring-page .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #0ea5e9, #0369a1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .personnel-hiring-page .category-card:hover::before {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 1.8rem;
+        }
+
+        .header-stats {
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+        }
+
+        .products-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            flex: 0 0 160px;
+        }
+
+        .category-image {
+            height: 100px;
+        }
+
+        .category-content {
+            padding: 0.8rem;
+        }
+
+        .category-title {
+            font-size: 0.9rem;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .filter-dropdowns {
+            flex-direction: column;
+        }
+
+        .scroll-control {
+            display: none;
+        }
+
+        .create-cta {
+            padding: 3rem 1rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-background {
+            padding: 1.5rem 0;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-stats {
+            gap: 0.8rem;
+        }
+
+        .stat-number {
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        .category-card {
+            flex: 0 0 140px;
+        }
+
+        .category-image {
+            height: 90px;
+        }
+
+        .category-title {
+            font-size: 0.8rem;
+        }
+
+        .product-card {
+            margin: 0;
+        }
+
+        .search-sort-section {
+            margin: 0 1rem 2rem;
+        }
+
+        .products-grid {
+            padding: 0 1rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling functionality for categories
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                updateScrollButtons();
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        }
+
+        // Professional card click
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const professionalName = this.querySelector('.product-title').textContent;
+                console.log(`Viewing professional: ${professionalName}`);
+                alert(`Viewing profile of ${professionalName}`);
+
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.querySelector('#searchBtn');
+        const searchInput = document.querySelector('#searchInput');
+
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    console.log(`Searching for: ${query}`);
+                    alert(`Searching for professionals matching: ${query}`);
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        console.log(`Searching for: ${query}`);
+                        alert(`Searching for professionals matching: ${query}`);
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        // Filter dropdowns
+        const experienceFilter = document.querySelector('#experienceFilter');
+        const employmentFilter = document.querySelector('#employmentFilter');
+        const sortSelect = document.querySelector('#sortSelect');
+
+        if (experienceFilter) {
+            experienceFilter.addEventListener('change', function() {
+                console.log(`Filter by experience: ${this.value}`);
+                alert(`Filtering by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+
+        if (employmentFilter) {
+            employmentFilter.addEventListener('change', function() {
+                console.log(`Filter by employment: ${this.value}`);
+                alert(`Filtering by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                console.log(`Sorting by: ${this.value}`);
+                alert(`Sorting by: ${this.options[this.selectedIndex].text}`);
+            });
+        }
+
+        // Load more button
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Professionals';
+                    this.disabled = false;
+                    console.log('Loading more professionals...');
+                    alert('More professionals loaded!');
+                }, 1500);
+            });
+        }
+
+        // Category hover effects
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '20';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    });
+</script>
+{% endblock %}

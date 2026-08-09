@@ -1,0 +1,1327 @@
+{% extends "base.html" %}1
+
+{% block title %}Dashboard - Link-Up{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header text-center mb-5">
+        <div class="header-gradient">
+            <h1 class="dashboard-title">All Activities in One Place</h1>
+            <div class="header-stats">
+                <span class="stat-badge">🎯 Active</span>
+                <span class="stat-badge">🚀 Growing</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single Column Activities -->
+    <div class="activities-column">
+        <!-- Activity 1: Market-Center -->
+        <div class="activity-card marketplace-card">
+            <div class="activity-header">
+                <div class="activity-icon">🛒</div>
+                <div class="activity-title">
+                    <h3>Market-Center</h3>
+                    <p>Buy & Sell Products</p>
+                </div>
+                <span class="activity-badge active">12 Active</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('marketplace.electronics') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Electronics">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Electronics</h4>
+                            <p>Phones, laptops, gadgets</p>
+                            <span class="phase-count">42 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('marketplace.fashion') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fashion">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Fashion</h4>
+                            <p>Clothing, shoes, accessories</p>
+                            <span class="phase-count">38 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('marketplace.vehicles') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vehicles">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Vehicles</h4>
+                            <p>Cars, bikes, parts</p>
+                            <span class="phase-count">15 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('marketplace.home_garden') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Home & Garden">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Home & Garden</h4>
+                            <p>Furniture, decor, tools</p>
+                            <span class="phase-count">27 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('marketplace.books_media') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Books & Media">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Books & Media</h4>
+                            <p>Books, movies, music</p>
+                            <span class="phase-count">53 items</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.marketcenter') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-plus"></i> Sell Something
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 2: Service Hub -->
+        <div class="activity-card service-card">
+            <div class="activity-header">
+                <div class="activity-icon">🔧</div>
+                <div class="activity-title">
+                    <h3>Service Hub</h3>
+                    <p>Offer & Book Services</p>
+                </div>
+                <span class="activity-badge trending">Trending</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('services.fitness') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fitness & Training">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Fitness & Training</h4>
+                            <p>Gym, yoga, personal training</p>
+                            <span class="phase-count">18 services</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('services.auto_repair') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Auto Repair">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Auto Repair</h4>
+                            <p>Car maintenance, repairs</p>
+                            <span class="phase-count">12 services</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('services.tutoring') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tutoring">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Tutoring</h4>
+                            <p>Academic support, lessons</p>
+                            <span class="phase-count">24 services</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('services.beauty_wellness') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Beauty & Wellness">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Beauty & Wellness</h4>
+                            <p>Spa, massage, hair care</p>
+                            <span class="phase-count">16 services</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('services.home_service') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Home Services">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Home Services</h4>
+                            <p>Cleaning, repairs, plumbing</p>
+                            <span class="phase-count">22 services</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.servicehub') }}" class="btn btn-outline-success">
+                    <i class="fas fa-briefcase"></i> Offer Service
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 3: Hire Zone -->
+        <div class="activity-card hire-card">
+            <div class="activity-header">
+                <div class="activity-icon">👷‍♂️</div>
+                <div class="activity-title">
+                    <h3>Hire Zone</h3>
+                    <p>Rent or Hire</p>
+                </div>
+                <span class="activity-badge active">24 Available</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('hire.personnel_hiring') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Personnel Hiring">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Personnel Hiring</h4>
+                            <p>Skilled professionals, labor</p>
+                            <span class="phase-count">15 pros</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('hire.car_hire') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Car">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Car</h4>
+                            <p>Vehicle rental & hire</p>
+                            <span class="phase-count">12 vehicles</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('hire.machinery') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Machinery">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Machinery</h4>
+                            <p>Industrial equipment rental</p>
+                            <span class="phase-count">9 machines</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('hire.construction') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Construction">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Construction</h4>
+                            <p>Builders, contractors</p>
+                            <span class="phase-count">8 pros</span>
+                        </div>
+                    </a>
+
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.hirezone') }}" class="btn btn-outline-teal">
+                    <i class="fas fa-handshake"></i> Hire Now
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 4: Housing (WITH ACTION BUTTON ADDED) -->
+        <div class="activity-card housing-card">
+            <div class="activity-header">
+                <div class="activity-icon">🏠</div>
+                <div class="activity-title">
+                    <h3>Housing</h3>
+                    <p>Find & List Properties</p>
+                </div>
+                <span class="activity-badge hot">284 Listings</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('housing.apartments') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modern Apartment">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Apartments</h4>
+                            <p>Rentals & Leases</p>
+                            <span class="phase-count">284 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('housing.houses') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Family House">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Houses</h4>
+                            <p>Buy or Rent Homes</p>
+                            <span class="phase-count">156 listings</span>
+                        </div>
+                    </a>
+                     <a href="{{ url_for('housing.student') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Family House">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Students Accomodation</h4>
+                            <p>Buy or Rent Homes</p>
+                            <span class="phase-count">136 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('housing.vacation_rentals') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vacation Rental">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Vacation Rentals</h4>
+                            <p>Short-term Stays</p>
+                            <span class="phase-count">98 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('housing.commercial') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Commercial Property">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Commercial</h4>
+                            <p>Business Properties</p>
+                            <span class="phase-count">67 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('housing.roommates') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1555854871-db586f45256a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Roommate Sharing">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Roommates</h4>
+                            <p>Shared Living Spaces</p>
+                            <span class="phase-count">123 listings</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.housing') }}" class="btn btn-outline-danger">
+                    <i class="fas fa-home"></i> List Property
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 5: Farmers' Room -->
+        <div class="activity-card farmers-card">
+            <div class="activity-header">
+                <div class="activity-icon">🌾</div>
+                <div class="activity-title">
+                    <h3>Farmers' Room</h3>
+                    <p>Agriculture & Farming</p>
+                </div>
+                <span class="activity-badge trending">Growing Community</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('farmers.crops') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Crops">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Crops</h4>
+                            <p>Fresh produce, grains</p>
+                            <span class="phase-count">45 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('farmers.livestock') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Livestock">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Livestock</h4>
+                            <p>Animals, poultry, cattle</p>
+                            <span class="phase-count">28 listings</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('farmers.equipment') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Farming Equipment">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Farming Equipment</h4>
+                            <p>Tractors, tools, machinery</p>
+                            <span class="phase-count">34 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('farmers.supplies') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fertilizers & Seedlings">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Fertilizers & Seedlings</h4>
+                            <p>Supplies for farming</p>
+                            <span class="phase-count">52 items</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('farmers.services') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1592417817098-5b92b14abf49?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Farm Services">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Farm Services</h4>
+                            <p>Veterinary, consulting</p>
+                            <span class="phase-count">19 services</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.farmersroom') }}" class="btn btn-outline-green">
+                    <i class="fas fa-seedling"></i> Post Farming Needs
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 6: Jobs & Gigs -->
+        <div class="activity-card jobs-card">
+            <div class="activity-header">
+                <div class="activity-icon">💼</div>
+                <div class="activity-title">
+                    <h3>Jobs & Gigs</h3>
+                    <p>Find Work Opportunities</p>
+                </div>
+                <span class="activity-badge trending">42 Openings</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('jobs.fulltime') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Full-time">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Full-time</h4>
+                            <p>Permanent positions</p>
+                            <span class="phase-count">18 jobs</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('jobs.parttime') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Part-time">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Part-time</h4>
+                            <p>Flexible hours</p>
+                            <span class="phase-count">24 jobs</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('jobs.attachment') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Attachment">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Attachment</h4>
+                            <p>Get attachment today</p>
+                            <span class="phase-count">28 jobs</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('jobs.freelance') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Freelance">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Freelance</h4>
+                            <p>Independent work</p>
+                            <span class="phase-count">32 jobs</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('jobs.quickgigs') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Quick Gigs">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Quick Gigs</h4>
+                            <p>Short-term tasks</p>
+                            <span class="phase-count">45 gigs</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.jobsgigs') }}" class="btn btn-outline-indigo">
+                    <i class="fas fa-user-plus"></i> Post Job
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 7: Events -->
+        <div class="activity-card events-card">
+            <div class="activity-header">
+                <div class="activity-icon">🎉</div>
+                <div class="activity-title">
+                    <h3>Events</h3>
+                    <p>Discover & Create Events</p>
+                </div>
+                <span class="activity-badge new">8 Upcoming</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('events.concerts') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Concerts">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Concerts</h4>
+                            <p>Live music performances</p>
+                            <span class="phase-count">6 events</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('events.theater_arts') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Theater & Arts">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Theater & Arts</h4>
+                            <p>Plays, exhibitions, shows</p>
+                            <span class="phase-count">8 events</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('events.sportevents') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sports Events">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Sports Events</h4>
+                            <p>Games, matches, tournaments</p>
+                            <span class="phase-count">12 events</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('events.workshops') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Workshops">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Workshops</h4>
+                            <p>Learning sessions, training</p>
+                            <span class="phase-count">15 events</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('events.food_festivals') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Food Festivals">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Food Festivals</h4>
+                            <p>Culinary events, tastings</p>
+                            <span class="phase-count">7 events</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.events') }}" class="btn btn-outline-pink">
+                    <i class="fas fa-plus-square"></i> Create Event
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity 8: Community -->
+        <div class="activity-card community-card">
+            <div class="activity-header">
+                <div class="activity-icon">👥</div>
+                <div class="activity-title">
+                    <h3>Community</h3>
+                    <p>Connect & Share</p>
+                </div>
+                <span class="activity-badge new">Growing</span>
+            </div>
+
+            <div class="phases-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="phases-scroll">
+                    <a href="{{ url_for('community.local_groups') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Local Groups">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Local Groups</h4>
+                            <p>Connect with neighbors</p>
+                            <span class="phase-count">12 groups</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('community.list_discussions') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Discussions">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Discussions</h4>
+                            <p>Join conversations</p>
+                            <span class="phase-count">45 topics</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('community.list_events_meetups') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Events & Meetups">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Events & Meetups</h4>
+                            <p>Local gatherings</p>
+                            <span class="phase-count">8 events</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('community.list_volunteer') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Volunteer">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Volunteer</h4>
+                            <p>Give back to community</p>
+                            <span class="phase-count">6 opportunities</span>
+                        </div>
+                    </a>
+                    <a href="{{ url_for('community.list_lost_found') }}" class="phase-card">
+                        <div class="phase-image">
+                            <img src="https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Lost & Found">
+                        </div>
+                        <div class="phase-content">
+                            <div class="category-divider"></div>
+                            <h4>Lost & Found</h4>
+                            <p>Help find lost items</p>
+                            <span class="phase-count">14 items</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="activity-actions">
+                <a href="{{ url_for('listings.community') }}" class="btn btn-outline-purple">
+                    <i class="fas fa-plus-circle"></i> Start a Group
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ========== SINGLE COLUMN DASHBOARD ========== */
+    .dashboard-container {
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        min-height: 100vh;
+    }
+
+    /* Header Gradient */
+    .header-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2.5rem 1.5rem;
+        border-radius: 20px;
+        color: white;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        margin-bottom: 2rem;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .dashboard-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        word-wrap: break-word;
+    }
+
+    .dashboard-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+    }
+
+    .header-stats {
+        display: flex;
+        gap: 0.8rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .stat-badge {
+        background: rgba(255,255,255,0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+        font-size: 0.9rem;
+    }
+
+    /* Activities Column */
+    .activities-column {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    /* Activity Cards */
+    .activity-card {
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .activity-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    .activity-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .marketplace-card::before { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+    .service-card::before { background: linear-gradient(90deg, #10b981, #059669); }
+    .advert-card::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+    .events-card::before { background: linear-gradient(90deg, #ec4899, #db2777); }
+    .housing-card::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+    .hire-card::before { background: linear-gradient(90deg, #0ea5e9, #0369a1); }
+    .farmers-card::before { background: linear-gradient(90deg, #22c55e, #15803d); }
+    .jobs-card::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+    .community-card::before { background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+
+    /* Activity Header */
+    .activity-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        flex-wrap: nowrap;
+    }
+
+    .activity-icon {
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, var(--card-color), var(--card-color-dark));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        flex-shrink: 0;
+        line-height: 1;
+        margin-right: 1rem;
+    }
+
+    .activity-title {
+        flex: 1;
+    }
+
+    .activity-title h3 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--card-color);
+        line-height: 1.2;
+    }
+
+    .activity-title p {
+        color: #6b7280;
+        margin: 0.25rem 0 0;
+        font-size: 0.9rem;
+    }
+
+    .activity-badge {
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        margin-left: 1rem;
+    }
+
+    .activity-badge.active { background: #dbeafe; color: #1d4ed8; }
+    .activity-badge.trending { background: #fef3c7; color: #d97706; }
+    .activity-badge.new { background: #d1fae5; color: #047857; }
+    .activity-badge.hot { background: #fee2e2; color: #dc2626; }
+
+    /* Horizontal Scrolling Container */
+    .phases-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        width: 100%;
+    }
+
+    .phases-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        width: 100%;
+    }
+
+    .phases-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: var(--card-color);
+    }
+
+    .left-scroll {
+        left: -15px;
+    }
+
+    .right-scroll {
+        right: -15px;
+    }
+
+    .phases-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: var(--card-color);
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(var(--card-color-rgb, 59, 130, 246), 0.3);
+    }
+
+    /* PHASE CARD - REDUCED BY 15% FOR BETTER MOBILE VIEWING */
+    .phase-card {
+        flex: 0 0 212px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+        text-decoration: none !important;
+        color: inherit !important;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        height: 272px;
+    }
+
+    .phase-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(var(--card-color-rgb, 59, 130, 246), 0.15);
+        border-color: var(--card-color);
+        text-decoration: none !important;
+    }
+
+    .phase-card:active {
+        transform: translateY(-2px);
+    }
+
+    .phase-image {
+        height: 136px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .phase-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .phase-card:hover .phase-image img {
+        transform: scale(1.05);
+    }
+
+    .phase-content {
+        padding: 1rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .category-divider {
+        width: 34px;
+        height: 2px;
+        background: var(--card-color);
+        margin: 0 auto 0.8rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .phase-card:hover .category-divider {
+        width: 50px;
+    }
+
+    .phase-card h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin: 0 0 0.4rem 0;
+        color: #1f2937;
+        line-height: 1.3;
+    }
+
+    .phase-card p {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin: 0 0 0.8rem 0;
+        line-height: 1.4;
+        flex-grow: 1;
+    }
+
+    .phase-count {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        background: var(--card-color-light);
+        color: var(--card-color-dark);
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-top: auto;
+        transition: all 0.3s ease;
+    }
+
+    .phase-card:hover .phase-count {
+        background: var(--card-color);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Activity Actions */
+    .activity-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .activity-actions .btn {
+        flex: 1;
+        min-width: 140px;
+        padding: 0.9rem 1.2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+        font-size: 0.95rem;
+        text-decoration: none;
+    }
+
+    /* Hide first buttons */
+    .btn-primary,
+    .btn-success,
+    .btn-teal,
+    .btn-danger,
+    .btn-warning,
+    .btn-indigo,
+    .btn-pink,
+    .btn-purple,
+    .btn-green {
+        display: none !important;
+    }
+
+    /* Show and style second buttons */
+    .btn-outline-primary,
+    .btn-outline-success,
+    .btn-outline-teal,
+    .btn-outline-danger,
+    .btn-outline-warning,
+    .btn-outline-indigo,
+    .btn-outline-pink,
+    .btn-outline-purple,
+    .btn-outline-green {
+        display: flex !important;
+        background: white;
+    }
+
+    /* Button Colors */
+    .btn-outline-primary { border-color: #3b82f6; color: #3b82f6; background: white; }
+    .btn-outline-success { border-color: #10b981; color: #10b981; background: white; }
+    .btn-outline-warning { border-color: #f59e0b; color: #f59e0b; background: white; }
+    .btn-outline-purple { border-color: #8b5cf6; color: #8b5cf6; background: white; }
+    .btn-outline-danger { border-color: #ef4444; color: #ef4444; background: white; }
+    .btn-outline-teal { border-color: #0ea5e9; color: #0ea5e9; background: white; }
+    .btn-outline-indigo { border-color: #8b5cf6; color: #8b5cf6; background: white; }
+    .btn-outline-pink { border-color: #ec4899; color: #ec4899; background: white; }
+    .btn-outline-green { border-color: #22c55e; color: #22c55e; background: white; }
+
+    /* Button Hover Effects */
+    .activity-actions .btn-outline-primary:hover { background: #3b82f6; color: white; }
+    .activity-actions .btn-outline-success:hover { background: #10b981; color: white; }
+    .activity-actions .btn-outline-warning:hover { background: #f59e0b; color: white; }
+    .activity-actions .btn-outline-purple:hover { background: #8b5cf6; color: white; }
+    .activity-actions .btn-outline-danger:hover { background: #ef4444; color: white; }
+    .activity-actions .btn-outline-teal:hover { background: #0ea5e9; color: white; }
+    .activity-actions .btn-outline-indigo:hover { background: #8b5cf6; color: white; }
+    .activity-actions .btn-outline-pink:hover { background: #ec4899; color: white; }
+    .activity-actions .btn-outline-green:hover { background: #22c55e; color: white; }
+
+    /* CSS Variables for Card Colors */
+    :root {
+        --marketplace-color: #3b82f6;
+        --marketplace-dark: #1d4ed8;
+        --marketplace-light: #dbeafe;
+        --marketplace-rgb: 59, 130, 246;
+        --service-color: #10b981;
+        --service-dark: #047857;
+        --service-light: #d1fae5;
+        --service-rgb: 16, 185, 129;
+        --advert-color: #f59e0b;
+        --advert-dark: #d97706;
+        --advert-light: #fef3c7;
+        --advert-rgb: 245, 158, 11;
+        --community-color: #8b5cf6;
+        --community-dark: #7c3aed;
+        --community-light: #f3e8ff;
+        --community-rgb: 139, 92, 246;
+        --housing-color: #ef4444;
+        --housing-dark: #f97316;
+        --housing-light: #fee2e2;
+        --housing-rgb: 239, 68, 68;
+        --hire-color: #0ea5e9;
+        --hire-dark: #0369a1;
+        --hire-light: #e0f2fe;
+        --hire-rgb: 14, 165, 233;
+        --farmers-color: #22c55e;
+        --farmers-dark: #15803d;
+        --farmers-light: #dcfce7;
+        --farmers-rgb: 34, 197, 94;
+        --jobs-color: #8b5cf6;
+        --jobs-dark: #7c3aed;
+        --jobs-light: #f3e8ff;
+        --jobs-rgb: 139, 92, 246;
+        --events-color: #ec4899;
+        --events-dark: #db2777;
+        --events-light: #fce7f3;
+        --events-rgb: 236, 72, 153;
+    }
+
+    .marketplace-card { --card-color: var(--marketplace-color); --card-color-dark: var(--marketplace-dark); --card-color-light: var(--marketplace-light); --card-color-rgb: var(--marketplace-rgb); }
+    .service-card { --card-color: var(--service-color); --card-color-dark: var(--service-dark); --card-color-light: var(--service-light); --card-color-rgb: var(--service-rgb); }
+    .advert-card { --card-color: var(--advert-color); --card-color-dark: var(--advert-dark); --card-color-light: var(--advert-light); --card-color-rgb: var(--advert-rgb); }
+    .community-card { --card-color: var(--community-color); --card-color-dark: var(--community-dark); --card-color-light: var(--community-light); --card-color-rgb: var(--community-rgb); }
+    .housing-card { --card-color: var(--housing-color); --card-color-dark: var(--housing-dark); --card-color-light: var(--housing-light); --card-color-rgb: var(--housing-rgb); }
+    .hire-card { --card-color: var(--hire-color); --card-color-dark: var(--hire-dark); --card-color-light: var(--hire-light); --card-color-rgb: var(--hire-rgb); }
+    .farmers-card { --card-color: var(--farmers-color); --card-color-dark: var(--farmers-dark); --card-color-light: var(--farmers-light); --card-color-rgb: var(--farmers-rgb); }
+    .jobs-card { --card-color: var(--jobs-color); --card-color-dark: var(--jobs-dark); --card-color-light: var(--jobs-light); --card-color-rgb: var(--jobs-rgb); }
+    .events-card { --card-color: var(--events-color); --card-color-dark: var(--events-dark); --card-color-light: var(--events-light); --card-color-rgb: var(--events-rgb); }
+
+    /* ========== RESPONSIVE DESIGN - SHOWS 2.5 CARDS ON MOBILE ========== */
+
+    /* Large Laptops & Desktops */
+    @media (min-width: 1200px) {
+        .phase-card { flex: 0 0 238px; height: 305px; }
+        .phase-image { height: 150px; }
+    }
+
+    /* Tablets & Small Laptops */
+    @media (max-width: 1199px) and (min-width: 768px) {
+        .phase-card { flex: 0 0 187px; height: 255px; }
+        .phase-image { height: 119px; }
+        .phase-card h4 { font-size: 0.9rem; }
+        .phase-card p { font-size: 0.7rem; }
+    }
+
+    /* Mobile Phones - Shows 2.5 cards */
+    @media (max-width: 767px) {
+        .dashboard-container { padding: 1.5rem 1rem; }
+        .header-gradient { padding: 2rem 1rem; border-radius: 15px; }
+        .dashboard-title { font-size: 1.8rem; }
+        .dashboard-subtitle { font-size: 1rem; }
+        .header-stats { gap: 0.5rem; }
+        .stat-badge { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
+        .activity-card { padding: 1.2rem; border-radius: 15px; }
+        .activity-header { gap: 0.8rem; }
+        .activity-icon { font-size: 2rem; }
+        .activity-title h3 { font-size: 1.2rem; }
+        .activity-title p { font-size: 0.8rem; }
+        .activity-badge { font-size: 0.7rem; padding: 0.3rem 0.8rem; }
+
+        /* KEY: Shows ~2.5 cards on mobile */
+        .phase-card { flex: 0 0 160px; height: 230px; border-radius: 12px; }
+        .phase-image { height: 100px; }
+        .phase-content { padding: 0.8rem; }
+        .phase-card h4 { font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .phase-card p { font-size: 0.7rem; margin-bottom: 0.6rem; }
+        .phase-count { padding: 0.25rem 0.6rem; font-size: 0.65rem; }
+        .category-divider { width: 30px; margin-bottom: 0.6rem; }
+
+        .scroll-control { display: none; }
+        .phases-scroll { padding: 1rem 0.5rem; gap: 0.8rem; }
+        .activity-actions { flex-direction: column; gap: 0.8rem; margin-top: 1.5rem; }
+        .activity-actions .btn { min-width: 100%; padding: 0.8rem 1rem; font-size: 0.9rem; }
+    }
+
+    /* Very Small Phones - Shows exactly 2.5 cards */
+    @media (max-width: 480px) {
+        .dashboard-container { padding: 1rem 0.8rem; }
+        .header-gradient { padding: 1.5rem 0.8rem; border-radius: 12px; }
+        .dashboard-title { font-size: 1.5rem; }
+        .activity-card { padding: 1rem; border-radius: 12px; }
+        .activity-icon { font-size: 1.8rem; }
+        .activity-title h3 { font-size: 1.1rem; }
+        .phase-card { flex: 0 0 135px; height: 210px; }
+        .phase-image { height: 85px; }
+        .phase-content { padding: 0.7rem; }
+        .phase-card h4 { font-size: 0.8rem; }
+        .phase-card p { font-size: 0.65rem; }
+        .phase-count { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+        .category-divider { width: 25px; margin-bottom: 0.5rem; }
+    }
+
+    /* Extra Small Devices */
+    @media (max-width: 360px) {
+        .phase-card { flex: 0 0 125px; height: 200px; }
+        .phase-image { height: 78px; }
+    }
+
+    /* Landscape Mode */
+    @media (max-height: 600px) and (orientation: landscape) {
+        .dashboard-container { padding: 1rem; }
+        .phase-card { flex: 0 0 170px; height: 200px; }
+        .phase-image { height: 90px; }
+    }
+
+    /* High DPI Screens */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        .phase-image img { image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; }
+    }
+</style>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling functionality
+        document.querySelectorAll('.phases-scroll-container').forEach(container => {
+            const scrollElement = container.querySelector('.phases-scroll');
+            const leftBtn = container.querySelector('.left-scroll');
+            const rightBtn = container.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    });
+                }
+
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    });
+                }
+
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                updateScrollButtons();
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        });
+
+        // Ripple effect for phase cards
+        document.querySelectorAll('.phase-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                const activityCard = this.closest('.activity-card');
+                let rippleColor = 'rgba(59, 130, 246, 0.2)';
+                if (activityCard) {
+                    const rgb = getComputedStyle(activityCard).getPropertyValue('--card-color-rgb');
+                    if (rgb) rippleColor = `rgba(${rgb}, 0.2)`;
+                }
+                ripple.style.cssText = `position: absolute; border-radius: 50%; background: ${rippleColor}; width: ${size}px; height: ${size}px; left: ${x}px; top: ${y}px; animation: ripple 0.6s ease-out; pointer-events: none; z-index: 1;`;
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => { this.style.transform = ''; }, 200);
+                setTimeout(() => { ripple.remove(); }, 600);
+            });
+        });
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `@keyframes ripple { from { transform: scale(0); opacity: 1; } to { transform: scale(4); opacity: 0; } } .phase-card { -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; } .phases-scroll { -webkit-overflow-scrolling: touch; }`;
+        document.head.appendChild(style);
+
+        // Animate cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.activity-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+
+        // Touch gestures for mobile scrolling
+        let startX, scrollLeft;
+        document.querySelectorAll('.phases-scroll').forEach(scroll => {
+            scroll.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].pageX - scroll.offsetLeft;
+                scrollLeft = scroll.scrollLeft;
+            });
+            scroll.addEventListener('touchmove', (e) => {
+                const x = e.touches[0].pageX - scroll.offsetLeft;
+                const walk = (x - startX) * 2;
+                scroll.scrollLeft = scrollLeft - walk;
+            });
+        });
+    });
+</script>
+{% endblock %}

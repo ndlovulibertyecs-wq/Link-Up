@@ -1,0 +1,1573 @@
+{% extends "base.html" %}
+
+{% block title %}Fitness & Training - Service Hub | Link-Up{% endblock %}
+
+{% block content %}
+<div class="fitness-page">
+    <!-- Header - SMOOTH AND COMPACT like Electronics/Fashion -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Fitness & Training</h1>
+                        <p class="dashboard-subtitle">Find trainers, classes, wellness coaches, and fitness professionals</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling (Instagram Style) -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse Fitness Categories</h2>
+            <p class="section-subtitle">Click on any category to find your perfect trainer or class</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- Category 1: Personal Training -->
+                    <a href="{{ url_for('marketplace.fitness_personal') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Personal Training">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Personal Training</h3>
+                            <p class="category-count">24 trainers</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 3: Boxing & MMA (Martial Arts) -->
+                    <a href="{{ url_for('marketplace.fitness_martialarts') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Boxing & Martial Arts">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Boxing & Martial Arts</h3>
+                            <p class="category-count">15 coaches</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 4: Group Fitness -->
+                    <a href="{{ url_for('marketplace.fitness_group') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Group Fitness">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Group Fitness</h3>
+                            <p class="category-count">22 classes</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 5: Nutrition & Wellness -->
+                    <a href="{{ url_for('marketplace.fitness_nutrition') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nutrition & Wellness">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Nutrition & Wellness</h3>
+                            <p class="category-count">16 coaches</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 7: Running & Cycling -->
+                    <a href="{{ url_for('marketplace.fitness_running') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Running & Cycling">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Running & Cycling</h3>
+                            <p class="category-count">12 coaches</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 9: Online Coaching -->
+                    <a href="{{ url_for('marketplace.fitness_online') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1594882645126-14020914d58d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Online Coaching">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Online Coaching</h3>
+                            <p class="category-count">34 trainers</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Sort -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search trainers, classes, specialties, locations..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="sort-dropdown">
+                    <select class="sort-select">
+                        <option>Sort by: Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Highest Rated</option>
+                        <option>Most Booked</option>
+                        <option>Nearest to You</option>
+                        <option>Experience: Newest</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Trainers Grid -->
+    <div class="trainers-section">
+        <div class="container">
+            <h2 class="section-title">Top Rated Trainers</h2>
+            <p class="section-subtitle">Book sessions with fitness professionals near you</p>
+
+            <div class="trainers-grid">
+                <!-- Trainer Card 1 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1567013127669-3c041e0fba8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Personal Trainer">
+                        <span class="trainer-badge certified">CERTIFIED</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Marcus Johnson</h3>
+                        <p class="trainer-specialty">Personal Trainer • Strength & Conditioning</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$65 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> 2.3 miles</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">HIIT</span>
+                            <span class="tag">Weight Loss</span>
+                            <span class="tag">Muscle Building</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 8+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 142 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 2 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1579752799153-66b3d3f09c6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Yoga Instructor">
+                        <span class="trainer-badge premium">PREMIUM</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 5.0
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Sarah Chen</h3>
+                        <p class="trainer-specialty">Yoga Instructor • Vinyasa & Meditation</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$50 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> 1.8 miles</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">Vinyasa</span>
+                            <span class="tag">Hatha</span>
+                            <span class="tag">Mindfulness</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 6+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 98 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 3 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Boxing Coach">
+                        <span class="trainer-badge trending">TRENDING</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 4.8
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Mike Torres</h3>
+                        <p class="trainer-specialty">Boxing Coach • Kickboxing & MMA</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$70 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> 3.1 miles</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">Boxing</span>
+                            <span class="tag">Kickboxing</span>
+                            <span class="tag">Self Defense</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 10+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 215 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 4 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Nutritionist">
+                        <span class="trainer-badge certified">CERTIFIED</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 4.9
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Dr. Lisa Wong</h3>
+                        <p class="trainer-specialty">Nutrition Coach • Sports Nutrition</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$85 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> Virtual</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">Meal Plans</span>
+                            <span class="tag">Weight Loss</span>
+                            <span class="tag">Supplements</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 12+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 176 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 5 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pilates Instructor">
+                        <span class="trainer-badge new">NEW</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 4.7
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Emma Davis</h3>
+                        <p class="trainer-specialty">Pilates • Barre • Core Strength</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$55 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> 2.5 miles</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">Pilates</span>
+                            <span class="tag">Barre</span>
+                            <span class="tag">Posture</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 4+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 67 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 6 -->
+                <div class="trainer-card">
+                    <div class="trainer-image">
+                        <img src="https://images.unsplash.com/photo-1550345332-09e3ac987658?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Recovery Specialist">
+                        <span class="trainer-badge premium">PREMIUM</span>
+                        <span class="trainer-rating">
+                            <i class="fas fa-star"></i> 5.0
+                        </span>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">James Wilson</h3>
+                        <p class="trainer-specialty">Sports Massage • Recovery Therapy</p>
+                        <div class="trainer-meta">
+                            <span class="trainer-price">$80 <span>/ session</span></span>
+                            <span class="trainer-location"><i class="fas fa-map-marker-alt"></i> 4.0 miles</span>
+                        </div>
+                        <div class="trainer-tags">
+                            <span class="tag">Massage</span>
+                            <span class="tag">Cupping</span>
+                            <span class="tag">Stretching</span>
+                        </div>
+                        <div class="trainer-footer">
+                            <span class="trainer-experience">
+                                <i class="fas fa-clock"></i> 9+ years
+                            </span>
+                            <span class="trainer-bookings">
+                                <i class="fas fa-calendar-check"></i> 203 sessions
+                            </span>
+                        </div>
+                        <button class="book-btn">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Load More Trainers
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Classes Grid -->
+    <div class="classes-section">
+        <div class="container">
+            <h2 class="section-title">Popular Group Classes</h2>
+            <p class="section-subtitle">Join live sessions and workout together</p>
+
+            <div class="classes-grid">
+                <!-- Class Card 1 -->
+                <div class="class-card">
+                    <div class="class-image">
+                        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="HIIT Class">
+                        <span class="class-badge">🔥 5 spots left</span>
+                    </div>
+                    <div class="class-info">
+                        <div class="class-header">
+                            <h3 class="class-title">Morning HIIT Blast</h3>
+                            <span class="class-price">$25</span>
+                        </div>
+                        <p class="class-trainer">with Marcus Johnson</p>
+                        <div class="class-details">
+                            <span><i class="fas fa-clock"></i> 7:00 AM • 45 min</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Downtown</span>
+                        </div>
+                        <div class="class-footer">
+                            <span class="class-attendees">
+                                <i class="fas fa-users"></i> 12/15 booked
+                            </span>
+                            <button class="join-btn">Join Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Card 2 -->
+                <div class="class-card">
+                    <div class="class-image">
+                        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Yoga Class">
+                        <span class="class-badge green">🌿 New</span>
+                    </div>
+                    <div class="class-info">
+                        <div class="class-header">
+                            <h3 class="class-title">Sunrise Vinyasa Flow</h3>
+                            <span class="class-price">$20</span>
+                        </div>
+                        <p class="class-trainer">with Sarah Chen</p>
+                        <div class="class-details">
+                            <span><i class="fas fa-clock"></i> 6:30 AM • 60 min</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Yoga Studio</span>
+                        </div>
+                        <div class="class-footer">
+                            <span class="class-attendees">
+                                <i class="fas fa-users"></i> 8/12 booked
+                            </span>
+                            <button class="join-btn">Join Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Card 3 -->
+                <div class="class-card">
+                    <div class="class-image">
+                        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Boxing Class">
+                        <span class="class-badge">🥊 Full</span>
+                    </div>
+                    <div class="class-info">
+                        <div class="class-header">
+                            <h3 class="class-title">Beginner Boxing</h3>
+                            <span class="class-price">$30</span>
+                        </div>
+                        <p class="class-trainer">with Mike Torres</p>
+                        <div class="class-details">
+                            <span><i class="fas fa-clock"></i> 5:30 PM • 50 min</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Boxing Gym</span>
+                        </div>
+                        <div class="class-footer">
+                            <span class="class-attendees">
+                                <i class="fas fa-users"></i> 10/10 booked
+                            </span>
+                            <button class="join-btn" disabled>Join Waitlist</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-all-link">
+                <a href="#" class="btn btn-outline">
+                    <i class="fas fa-calendar-alt"></i> View All Classes
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Service CTA -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Offer Your Fitness Services</h2>
+                <p>Are you a trainer, coach, or wellness professional? List your services and grow your client base.</p>
+                <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Become a Trainer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Fitness Page Styles - EXACT SAME LAYOUT as Electronics */
+    .fitness-page {
+        background: #f0fdf4;
+        min-height: 100vh;
+    }
+
+    /* Header - COMPACT AND SMOOTH like Electronics */
+    .page-header {
+        color: white;
+    }
+
+    .header-background {
+        padding: 1.5rem 0;
+        border-radius: 0 0 20px 20px;
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .back-btn {
+        color: rgba(255,255,255,0.9);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-size: 0.9rem;
+    }
+
+    .back-btn:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+    .header-main {
+        text-align: center;
+    }
+
+    .header-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .header-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-bottom: 1.2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.3;
+    }
+
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-top: 0.3rem;
+    }
+
+    /* Categories Horizontal Scrolling - EXACT same as Electronics */
+    .categories-scroll-section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .categories-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .categories-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: #10b981;
+    }
+
+    .left-scroll {
+        left: -20px;
+    }
+
+    .right-scroll {
+        right: -20px;
+    }
+
+    .categories-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: #10b981;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Category Cards - EXACT same layout as Electronics */
+    .category-card {
+        flex: 0 0 220px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+        border-color: #10b981;
+    }
+
+    .category-image {
+        height: 140px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-content {
+        padding: 1.5rem;
+        text-align: center;
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .category-divider {
+        width: 40px;
+        height: 2px;
+        background: #10b981;
+        margin: 0 auto 1rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .category-card:hover .category-divider {
+        width: 60px;
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        color: #1f2937;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .category-count {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #d1fae5;
+        color: #047857;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+        background: #10b981;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Search and Sort Section - EXACT same as Electronics */
+    .search-sort-section {
+        background: white;
+        padding: 2rem 0;
+        margin-top: 1rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: relative;
+        z-index: 10;
+        margin: 0 auto 2rem;
+        max-width: 1200px;
+    }
+
+    .search-sort-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem 1.5rem 1rem 3.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .search-btn {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .sort-dropdown {
+        text-align: right;
+    }
+
+    .sort-select {
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+    }
+
+    /* Trainers Grid - Custom for Fitness */
+    .trainers-section {
+        padding: 3rem 0;
+    }
+
+    .trainers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .trainer-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .trainer-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+    }
+
+    .trainer-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .trainer-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .trainer-card:hover .trainer-image img {
+        transform: scale(1.05);
+    }
+
+    .trainer-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .trainer-badge.certified {
+        background: #10b981;
+        color: white;
+    }
+
+    .trainer-badge.premium {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .trainer-badge.trending {
+        background: #f59e0b;
+        color: white;
+    }
+
+    .trainer-badge.new {
+        background: #3b82f6;
+        color: white;
+    }
+
+    .trainer-rating {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .trainer-rating i {
+        color: #fbbf24;
+    }
+
+    .trainer-info {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .trainer-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        color: #1f2937;
+    }
+
+    .trainer-specialty {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .trainer-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .trainer-price {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #10b981;
+    }
+
+    .trainer-price span {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: #6b7280;
+    }
+
+    .trainer-location {
+        color: #6b7280;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .trainer-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+
+    .tag {
+        padding: 0.2rem 0.8rem;
+        background: #f3f4f6;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    .trainer-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+        margin-bottom: 1rem;
+    }
+
+    .trainer-experience,
+    .trainer-bookings {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .book-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .book-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Classes Grid */
+    .classes-section {
+        padding: 3rem 0;
+        background: #f8fafc;
+    }
+
+    .classes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .class-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+    }
+
+    .class-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+    }
+
+    .class-image {
+        height: 160px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .class-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .class-card:hover .class-image img {
+        transform: scale(1.05);
+    }
+
+    .class-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        background: #ef4444;
+        color: white;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 700;
+    }
+
+    .class-badge.green {
+        background: #10b981;
+    }
+
+    .class-info {
+        padding: 1.5rem;
+    }
+
+    .class-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .class-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .class-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #10b981;
+    }
+
+    .class-trainer {
+        color: #6b7280;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .class-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    .class-details i {
+        width: 16px;
+        margin-right: 0.3rem;
+    }
+
+    .class-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .class-attendees {
+        font-size: 0.8rem;
+        color: #6b7280;
+    }
+
+    .join-btn {
+        padding: 0.5rem 1.2rem;
+        background: #10b981;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .join-btn:hover:not(:disabled) {
+        background: #047857;
+        transform: scale(1.05);
+    }
+
+    .join-btn:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+    }
+
+    .view-all-link {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 2px solid #10b981;
+        color: #10b981;
+        padding: 0.8rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-outline:hover {
+        background: #10b981;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Load More Button */
+    .load-more {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .load-more .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        border: none;
+        color: white;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+    }
+
+    .load-more .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    /* Create CTA */
+    .create-cta {
+        background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .cta-content .btn {
+        background: white;
+        color: #10b981;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .cta-content .btn:hover {
+        background: #d1fae5;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Fitness-specific enhancements */
+    .fitness-page .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #10b981, #047857);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .fitness-page .category-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Responsive - EXACT same as Electronics */
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .header-icon {
+            font-size: 1.5rem;
+        }
+
+        .header-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        .category-card {
+            flex: 0 0 180px;
+        }
+
+        .category-image {
+            height: 120px;
+        }
+
+        .category-content {
+            padding: 1rem;
+        }
+
+        .category-title {
+            font-size: 1rem;
+        }
+
+        .trainers-grid,
+        .classes-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .sort-dropdown {
+            text-align: center;
+        }
+
+        .scroll-control {
+            display: none;
+        }
+
+        .create-cta {
+            padding: 3rem 1rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-background {
+            padding: 1rem 0;
+        }
+
+        .header-title {
+            font-size: 1.3rem;
+        }
+
+        .header-icon {
+            font-size: 1.2rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .header-stats {
+            gap: 0.8rem;
+        }
+
+        .stat-number {
+            font-size: 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        .category-card {
+            flex: 0 0 150px;
+        }
+
+        .category-image {
+            height: 100px;
+        }
+
+        .category-title {
+            font-size: 0.9rem;
+        }
+
+        .trainer-card {
+            margin: 0 1rem;
+        }
+
+        .search-sort-section {
+            margin: 0 1rem 2rem;
+        }
+
+        .trainers-grid,
+        .classes-grid {
+            padding: 0 1rem;
+        }
+
+        .trainer-name {
+            font-size: 1.1rem;
+        }
+
+        .trainer-price {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling functionality for categories
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                updateScrollButtons();
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        }
+
+        // Trainer card booking functionality
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const trainerName = this.closest('.trainer-card').querySelector('.trainer-name').textContent;
+                console.log(`Booking session with: ${trainerName}`);
+
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Booked!';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-calendar-plus"></i> Book Now';
+                        this.disabled = false;
+                    }, 2000);
+                }, 1500);
+            });
+        });
+
+        // Join class functionality
+        document.querySelectorAll('.join-btn:not(:disabled)').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const className = this.closest('.class-card').querySelector('.class-title').textContent;
+                console.log(`Joining class: ${className}`);
+
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Joining...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Joined!';
+                    setTimeout(() => {
+                        this.innerHTML = 'Join Now';
+                        this.disabled = false;
+                    }, 2000);
+                }, 1500);
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.querySelector('.search-btn');
+        const searchInput = document.querySelector('.search-input');
+
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    console.log(`Searching fitness for: ${query}`);
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-search"></i> Search';
+                    }, 1000);
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        console.log(`Searching fitness for: ${query}`);
+                    }
+                }
+            });
+        }
+
+        // Load more button
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Trainers';
+                    this.disabled = false;
+                    console.log('Loading more trainers...');
+                    alert('More trainers loaded!');
+                }, 1500);
+            });
+        }
+
+        // Sort dropdown
+        const sortSelect = document.querySelector('.sort-select');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                console.log(`Sorting fitness by: ${this.value}`);
+            });
+        }
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+            
+            .fitness-pulse {
+                animation: pulse 2s ease-in-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+{% endblock %}

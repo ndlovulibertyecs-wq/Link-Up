@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>MarketCenter – Create listing (Brand + Model)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fb;
+      color: #1e293b;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    /* Hero / Market Center */
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    }
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      line-height: 1.5;
+      opacity: 0.9;
+      max-width: 80%;
+    }
+    .hero-badge {
+      background: #f97316;
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    /* Form card */
+    .form-card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.05);
+      padding: 1.8rem 2rem 2rem;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-left: 4px solid #f97316;
+      padding-left: 1rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .full-width {
+      grid-column: span 2;
+    }
+    label {
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #334155;
+    }
+    label .required {
+      color: #ef4444;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      background: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    /* Image upload */
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 1rem;
+      padding: 1rem;
+      background: #fafcff;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .upload-area:hover {
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+    .image-preview-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .preview-item {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #f1f5f9;
+    }
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .remove-img {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      border: 2px solid white;
+    }
+    .price-negotiable {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .btn-submit {
+      background: #f97316;
+      color: white;
+      border: none;
+      padding: 1rem;
+      width: 100%;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-submit:hover {
+      background: #ea580c;
+      transform: translateY(-2px);
+    }
+    hr {
+      margin: 1.5rem 0;
+      border-color: #edf2f7;
+    }
+    .info-note {
+      background: #fef9c3;
+      border-radius: 0.8rem;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #854d0e;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      .hero p {
+        max-width: 100%;
+      }
+      .form-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Market Center summary -->
+  <div class="hero">
+    <h1>🛒 MarketCenter</h1>
+    <p><strong>Your local marketplace</strong> — sell anything from electronics to furniture. Choose a category, pick the brand from our list, add the exact model, upload photos, and reach buyers instantly.</p>
+    <div class="hero-badge">
+      <i class="fas fa-store"></i> 5 categories · Dynamic brand list
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="section-title">
+      <i class="fas fa-plus-circle" style="color:#f97316"></i> Create a new listing
+    </div>
+
+    <form id="listingForm">
+      <div class="form-grid">
+        <!-- Section -->
+        <div class="full-width">
+          <label>Section <span class="required">*</span></label>
+          <select id="sectionSelect" required>
+            <option value="" disabled selected>– Choose a section –</option>
+            <option value="electronics">📱 Electronics</option>
+            <option value="fashion">👕 Fashion</option>
+            <option value="vehicles">🚗 Vehicles</option>
+            <option value="home">🏠 Home & Garden</option>
+            <option value="books">📚 Books & Media</option>
+          </select>
+        </div>
+
+        <!-- Subcategory -->
+        <div class="full-width">
+          <label>Subcategory <span class="required">*</span></label>
+          <select id="subcategorySelect" required disabled>
+            <option value="">First select a section</option>
+          </select>
+        </div>
+
+        <!-- TWO COLUMNS: Brand (system) + Model (user input) -->
+        <div>
+          <label>Brand / Make <span class="required">*</span><br><small style="font-weight:normal;">(from system list)</small></label>
+          <select id="brandSelect" required disabled>
+            <option value="">Select section & subcategory first</option>
+          </select>
+        </div>
+        <div>
+          <label>Model / Specific name <span class="required">*</span><br><small style="font-weight:normal;">(you type)</small></label>
+          <input type="text" id="modelInput" placeholder="e.g., iPhone 14 Pro Max, LandCruiser, Air Max 90" required>
+        </div>
+
+        <!-- Description -->
+        <div class="full-width">
+          <label>Description <span class="required">*</span></label>
+          <textarea id="description" placeholder="Describe condition, features, reason for selling..." required></textarea>
+        </div>
+
+        <!-- Condition -->
+        <div>
+          <label>Condition <span class="required">*</span></label>
+          <select id="condition" required>
+            <option value="">Select</option>
+            <option value="new">New with tags/box</option>
+            <option value="like-new">Like new</option>
+            <option value="good">Good (minor wear)</option>
+            <option value="fair">Fair (visible wear)</option>
+            <option value="parts">For parts / not working</option>
+          </select>
+        </div>
+
+        <!-- Price & negotiable -->
+        <div>
+          <label>Price (USD / your currency) <span class="required">*</span></label>
+          <input type="number" id="price" step="0.01" placeholder="e.g., 49.99" required>
+          <div class="price-negotiable">
+            <input type="checkbox" id="negotiable">
+            <label for="negotiable" style="margin-bottom:0;">Price negotiable</label>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div>
+          <label>City <span class="required">*</span></label>
+          <input type="text" id="city" placeholder="e.g., Austin" required>
+        </div>
+        <div>
+          <label>Area / Neighborhood</label>
+          <input type="text" id="area" placeholder="Downtown, East side...">
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <label>Phone (optional)</label>
+          <input type="tel" id="phone" placeholder="+1 555 123 4567">
+        </div>
+        <div>
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <!-- Pictures -->
+        <div class="full-width">
+          <label>Add pictures (max 5) <span class="required">*</span></label>
+          <div class="upload-area" id="uploadArea">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; color:#f97316;"></i>
+            <p style="margin-top: 5px;">Click or drag & drop images</p>
+            <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" multiple style="display: none;">
+          </div>
+          <div id="imagePreviewContainer" class="image-preview-grid"></div>
+          <div class="info-note">
+            <i class="fas fa-info-circle"></i> First image will be the cover. Max 5 images, 5MB each.
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">
+        <i class="fas fa-check-circle"></i> Publish listing
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // 1. Subcategory mapping
+  // --------------------------------------------------------------
+  const categoryMap = {
+    electronics: ["Smartphones", "Laptops", "Accessories", "Wearables", "Audio", "Cameras"],
+    fashion: ["Men's Clothing", "Women's Clothing", "Kids", "Shoes", "Bags", "Accessories"],
+    vehicles: ["Cars", "Motorcycles", "Bicycles", "Commercial Vehicles", "Spare Parts"],
+    home: ["Furniture", "Tools", "Decor", "Appliances", "Plants & Gardening"],
+    books: ["Books", "DVDs & Blu-ray", "Music (CD/Vinyl)", "Video Games", "Magazines"]
+  };
+
+  // --------------------------------------------------------------
+  // 2. BRAND DATABASE (system managed) per section+subcategory
+  //    Structure: brandsDB[section][subcategory_key] = array of brands
+  // --------------------------------------------------------------
+  const brandsDB = {
+    electronics: {
+      smartphones: ["Apple", "Samsung", "Google Pixel", "OnePlus", "Xiaomi", "Nokia", "Motorola", "Sony", "Huawei"],
+      laptops: ["Apple", "Dell", "HP", "Lenovo", "Asus", "Acer", "Microsoft", "Razer", "MSI"],
+      accessories: ["Apple", "Samsung", "Belkin", "Anker", "Logitech", "Sony", "Bose", "JBL"],
+      wearables: ["Apple", "Samsung", "Garmin", "Fitbit", "Xiaomi", "Amazfit", "Google"],
+      audio: ["Sony", "Bose", "JBL", "Apple", "Sennheiser", "Beats", "Audio-Technica", "Marshall"],
+      cameras: ["Canon", "Nikon", "Sony", "Fujifilm", "GoPro", "DJI", "Panasonic", "Leica"]
+    },
+    fashion: {
+      "men's_clothing": ["Nike", "Adidas", "Levi's", "Zara", "H&M", "Calvin Klein", "Tommy Hilfiger", "Under Armour", "Puma"],
+      "women's_clothing": ["Zara", "H&M", "Nike", "Adidas", "Forever 21", "Mango", "Levi's", "Victoria's Secret"],
+      kids: ["Nike", "Adidas", "Carter's", "Gap", "H&M", "Disney", "Puma"],
+      shoes: ["Nike", "Adidas", "Puma", "New Balance", "Reebok", "Converse", "Vans", "Timberland", "Clarks"],
+      bags: ["Nike", "Adidas", "Gucci", "Louis Vuitton", "Herschel", "Samsonite", "Prada", "Michael Kors"],
+      accessories: ["Nike", "Adidas", "Fossil", "Casio", "Ray-Ban", "Oakley", "Swatch", "Rolex"]
+    },
+    vehicles: {
+      cars: ["Toyota", "Honda", "Ford", "Chevrolet", "BMW", "Mercedes-Benz", "Audi", "Tesla", "Nissan", "Hyundai", "Kia", "Volkswagen", "Lexus", "Jeep", "Subaru"],
+      motorcycles: ["Harley-Davidson", "Yamaha", "Honda", "Kawasaki", "Suzuki", "Ducati", "BMW", "KTM", "Triumph"],
+      bicycles: ["Trek", "Giant", "Specialized", "Cannondale", "Scott", "Merida", "Bianchi", "Cervélo"],
+      "commercial_vehicles": ["Ford", "Mercedes-Benz", "Ram", "Chevrolet", "Toyota", "Nissan", "Isuzu", "Hino"],
+      "spare_parts": ["Bosch", "Denso", "Brembo", "Magnaflow", "Bilstein", "ZF", "Valeo", "Continental"]
+    },
+    home: {
+      furniture: ["IKEA", "Ashley", "Wayfair", "West Elm", "Crate & Barrel", "Pottery Barn", "Ethan Allen", "Bob's Discount"],
+      tools: ["DeWalt", "Bosch", "Stanley", "Makita", "Black+Decker", "Craftsman", "Milwaukee", "Ryobi"],
+      decor: ["IKEA", "Target", "HomeGoods", "Kirkland's", "Anthropologie", "Pier 1"],
+      appliances: ["Samsung", "LG", "Whirlpool", "GE", "Bosch", "Maytag", "Frigidaire", "KitchenAid"],
+      "plants_&_gardening": ["Fiskars", "Miracle-Gro", "Scotts", "Gardena", "Husqvarna", "Corona"]
+    },
+    books: {
+      books: ["Penguin Random House", "HarperCollins", "Simon & Schuster", "Hachette", "Macmillan", "Scholastic"],
+      "dvds_&_blu-ray": ["Warner Bros", "Disney", "Universal", "Sony Pictures", "Paramount", "20th Century Fox"],
+      "music_(cd/vinyl)": ["Sony Music", "Universal Music", "Warner Music", "Atlantic", "Columbia", "Capitol"],
+      "video_games": ["Nintendo", "Sony PlayStation", "Microsoft Xbox", "Electronic Arts", "Ubisoft", "Activision", "Rockstar", "Sega"],
+      magazines: ["Time", "National Geographic", "Forbes", "Vogue", "Sports Illustrated", "The Economist"]
+    }
+  };
+
+  // Helper to convert subcategory name to key (lowercase, underscores)
+  function subcategoryToKey(subcategoryName) {
+    return subcategoryName.toLowerCase().replace(/\s/g, '_').replace(/[()]/g, '');
+  }
+
+  // DOM elements
+  const sectionSelect = document.getElementById('sectionSelect');
+  const subcategorySelect = document.getElementById('subcategorySelect');
+  const brandSelect = document.getElementById('brandSelect');
+  const modelInput = document.getElementById('modelInput');
+
+  // Image upload logic
+  let selectedFiles = [];
+  const imageInput = document.getElementById('imageInput');
+  const uploadArea = document.getElementById('uploadArea');
+  const previewContainer = document.getElementById('imagePreviewContainer');
+  const form = document.getElementById('listingForm');
+
+  // Update subcategory dropdown based on section
+  function updateSubcategories() {
+    const section = sectionSelect.value;
+    if (!section || !categoryMap[section]) {
+      subcategorySelect.disabled = true;
+      subcategorySelect.innerHTML = '<option value="">First select a section</option>';
+      brandSelect.disabled = true;
+      brandSelect.innerHTML = '<option value="">Select section & subcategory first</option>';
+      return;
+    }
+    subcategorySelect.disabled = false;
+    const subs = categoryMap[section];
+    let options = '<option value="" disabled selected>– Choose subcategory –</option>';
+    subs.forEach(sub => {
+      options += `<option value="${subcategoryToKey(sub)}">${sub}</option>`;
+    });
+    subcategorySelect.innerHTML = options;
+    // reset brand and model when section changes
+    brandSelect.disabled = true;
+    brandSelect.innerHTML = '<option value="">Select subcategory first</option>';
+    modelInput.value = '';
+  }
+
+  // Update brand dropdown based on selected section + subcategory
+  function updateBrands() {
+    const section = sectionSelect.value;
+    const subcategoryKey = subcategorySelect.value;
+    if (!section || !subcategoryKey) {
+      brandSelect.disabled = true;
+      brandSelect.innerHTML = '<option value="">Select subcategory first</option>';
+      return;
+    }
+    const sectionBrands = brandsDB[section];
+    if (!sectionBrands || !sectionBrands[subcategoryKey]) {
+      // fallback: no predefined brands for this combo
+      brandSelect.disabled = false;
+      brandSelect.innerHTML = '<option value="" disabled selected>No brand list – type any</option><option value="Other">Other (type manually)</option>';
+      return;
+    }
+    const brands = sectionBrands[subcategoryKey];
+    let options = '<option value="" disabled selected>– Choose brand –</option>';
+    brands.forEach(b => {
+      options += `<option value="${b}">${b}</option>`;
+    });
+    options += `<option value="Other">Other (not listed)</option>`;
+    brandSelect.innerHTML = options;
+    brandSelect.disabled = false;
+  }
+
+  // Event listeners
+  sectionSelect.addEventListener('change', () => {
+    updateSubcategories();
+    brandSelect.disabled = true;
+    brandSelect.innerHTML = '<option value="">Select subcategory first</option>';
+    modelInput.value = '';
+  });
+
+  subcategorySelect.addEventListener('change', () => {
+    updateBrands();
+    modelInput.value = '';
+  });
+
+  // Image handling (same as before)
+  function handleImageUpload(files) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const newFiles = Array.from(files).filter(f => allowedTypes.includes(f.type));
+    if (selectedFiles.length + newFiles.length > 5) {
+      alert("Maximum 5 images allowed.");
+      return;
+    }
+    selectedFiles = [...selectedFiles, ...newFiles];
+    renderImagePreviews();
+  }
+
+  function renderImagePreviews() {
+    previewContainer.innerHTML = '';
+    selectedFiles.forEach((file, idx) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const div = document.createElement('div');
+        div.className = 'preview-item';
+        div.innerHTML = `
+          <img src="${e.target.result}" alt="preview">
+          <div class="remove-img" data-index="${idx}">✕</div>
+        `;
+        previewContainer.appendChild(div);
+        div.querySelector('.remove-img').addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          removeImageAtIndex(idx);
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function removeImageAtIndex(idx) {
+    selectedFiles.splice(idx, 1);
+    renderImagePreviews();
+  }
+
+  uploadArea.addEventListener('click', () => imageInput.click());
+  imageInput.addEventListener('change', (e) => {
+    if (e.target.files.length) handleImageUpload(e.target.files);
+    imageInput.value = '';
+  });
+  uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.style.background = '#fff7ed';
+  });
+  uploadArea.addEventListener('dragleave', () => {
+    uploadArea.style.background = '#fafcff';
+  });
+  uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.style.background = '#fafcff';
+    const files = e.dataTransfer.files;
+    if (files.length) handleImageUpload(files);
+  });
+
+  // Form submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Validation
+    const section = sectionSelect.value;
+    const subcategoryKey = subcategorySelect.value;
+    const brand = brandSelect.value;
+    const model = modelInput.value.trim();
+    const description = document.getElementById('description').value.trim();
+    const condition = document.getElementById('condition').value;
+    const price = document.getElementById('price').value;
+    const city = document.getElementById('city').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (!section || !subcategoryKey || !brand || !model || !description || !condition || !price || !city || !email) {
+      alert("Please fill all required fields (*) before publishing.");
+      return;
+    }
+    if (selectedFiles.length === 0) {
+      alert("Add at least one picture.");
+      return;
+    }
+
+    // Get readable subcategory name
+    const subcategoryReadable = subcategorySelect.options[subcategorySelect.selectedIndex]?.text;
+
+    const listingData = {
+      section: sectionSelect.options[sectionSelect.selectedIndex]?.text,
+      subcategory: subcategoryReadable,
+      brand: brand === "Other" ? "Other (user provided)" : brand,
+      model: model,
+      full_item_name: `${brand} ${model}`,
+      description: description,
+      condition: condition,
+      price: parseFloat(price),
+      negotiable: document.getElementById('negotiable').checked,
+      location: {
+        city: city,
+        area: document.getElementById('area').value.trim() || null
+      },
+      contact: {
+        phone: document.getElementById('phone').value.trim() || null,
+        email: email
+      },
+      images_count: selectedFiles.length,
+      image_filenames: selectedFiles.map(f => f.name),
+      created_at: new Date().toISOString()
+    };
+
+    console.log("📦 Listing ready for database:", listingData);
+    alert(`✅ Listing published!\n\nBrand: ${listingData.brand}\nModel: ${listingData.model}\nPrice: $${listingData.price}\nImages: ${selectedFiles.length}`);
+    // Here you would send listingData + images (FormData) to your backend API
+  });
+
+  // Initial load
+  updateSubcategories();
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Service Hub – Offer a Service (Images + Videos)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fb;
+      color: #1e293b;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .hero p { line-height: 1.5; opacity: 0.9; max-width: 80%; }
+    .hero-badge {
+      background: #10b981;
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 1rem;
+    }
+    .form-card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.05);
+      padding: 1.8rem 2rem 2rem;
+    }
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-left: 4px solid #10b981;
+      padding-left: 1rem;
+    }
+    .path-preview {
+      background: #f1f5f9;
+      border-radius: 1rem;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      border-left: 4px solid #10b981;
+    }
+    .path-preview i { color: #10b981; margin-right: 0.5rem; }
+    .breadcrumb { font-weight: 500; word-break: break-all; }
+    .breadcrumb strong { color: #0f172a; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .full-width { grid-column: span 2; }
+    label {
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #334155;
+    }
+    label .required { color: #ef4444; }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      background: #fff;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.2);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    /* Upload area for images + videos */
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 1rem;
+      padding: 1rem;
+      background: #fafcff;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .upload-area:hover { border-color: #10b981; background: #ecfdf5; }
+    .media-preview-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .preview-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .preview-item img, .preview-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-item video {
+      background: #000;
+    }
+    .remove-media {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      border: 2px solid white;
+      z-index: 2;
+    }
+    .media-type-badge {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .price-negotiable {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .btn-submit {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 1rem;
+      width: 100%;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.2s;
+    }
+    .btn-submit:hover { background: #059669; transform: translateY(-2px); }
+    .info-note {
+      background: #fef9c3;
+      border-radius: 0.8rem;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #854d0e;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .full-width { grid-column: span 1; }
+      .hero p { max-width: 100%; }
+      .form-card { padding: 1.5rem; }
+      .preview-item { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🔧 Service Hub</h1>
+    <p><strong>Offer your professional service</strong> – add photos AND videos to showcase your work. Clients love seeing real results.</p>
+    <div class="hero-badge"><i class="fas fa-video"></i> Images + Videos supported (max 5 files)</div>
+  </div>
+
+  <div class="form-card">
+    <div class="section-title">
+      <i class="fas fa-briefcase" style="color:#10b981"></i> Offer a service
+    </div>
+
+    <!-- Live breadcrumb -->
+    <div class="path-preview">
+      <i class="fas fa-link"></i> Clients will find your service at:<br>
+      <div class="breadcrumb" id="breadcrumbDisplay">
+        🏠 Service Hub › <span class="placeholder">Select category</span>
+      </div>
+    </div>
+
+    <form id="serviceForm">
+      <div class="form-grid">
+        <!-- 1. Service Category -->
+        <div class="full-width">
+          <label>1. Service Category <span class="required">*</span></label>
+          <select id="categorySelect" required>
+            <option value="" disabled selected>– Choose a category –</option>
+            <option value="fitness">💪 Fitness & Training</option>
+            <option value="auto">🔧 Auto Repair</option>
+            <option value="tutoring">📚 Tutoring</option>
+            <option value="beauty">💇 Beauty & Wellness</option>
+            <option value="home">🏡 Home Services</option>
+          </select>
+        </div>
+
+        <!-- 2. Subcategory -->
+        <div class="full-width">
+          <label>2. Subcategory <span class="required">*</span></label>
+          <select id="subcategorySelect" required disabled>
+            <option value="">First select a category</option>
+          </select>
+        </div>
+
+        <!-- 3. Provider / Business -->
+        <div>
+          <label>3. Provider / Business <span class="required">*</span></label>
+          <select id="providerSelect" required disabled>
+            <option value="">Select category & subcategory first</option>
+          </select>
+        </div>
+
+        <!-- 4. Service Title -->
+        <div>
+          <label>Service Title <span class="required">*</span></label>
+          <input type="text" id="serviceTitle" placeholder="e.g., 1-on-1 Personal Training, Oil Change, Math Tutoring" required>
+        </div>
+
+        <!-- Description -->
+        <div class="full-width">
+          <label>Description <span class="required">*</span></label>
+          <textarea id="description" placeholder="Describe what you offer, experience, duration, what’s included..." required></textarea>
+        </div>
+
+        <!-- Pricing -->
+        <div>
+          <label>Pricing model</label>
+          <select id="priceModel">
+            <option value="hourly">Hourly rate</option>
+            <option value="fixed">Fixed price</option>
+            <option value="quote">Free quote / negotiable</option>
+          </select>
+        </div>
+        <div>
+          <label>Price / Rate <span class="required">*</span></label>
+          <input type="number" id="price" step="0.01" placeholder="e.g., 49.99" required>
+          <div class="price-negotiable">
+            <input type="checkbox" id="negotiable">
+            <label for="negotiable" style="margin-bottom:0;">Price negotiable</label>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div>
+          <label>City <span class="required">*</span></label>
+          <input type="text" id="city" placeholder="e.g., Austin" required>
+        </div>
+        <div>
+          <label>Area / Neighborhood</label>
+          <input type="text" id="area" placeholder="Downtown, East side...">
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <label>Phone (optional)</label>
+          <input type="tel" id="phone" placeholder="+1 555 123 4567">
+        </div>
+        <div>
+          <label>Email <span class="required">*</span></label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <!-- Media Upload (Images + Videos) -->
+        <div class="full-width">
+          <label>Photos & Videos (max 5 files) <span class="required">*</span></label>
+          <div class="upload-area" id="uploadArea">
+            <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; color:#10b981;"></i>
+            <p style="margin-top:5px;">Click or drag & drop images or videos</p>
+            <p style="font-size:0.7rem; margin-top:4px;">Supported: JPG, PNG, WebP, MP4, MOV, WebM</p>
+            <input type="file" id="mediaInput" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" multiple style="display:none;">
+          </div>
+          <div id="mediaPreviewContainer" class="media-preview-grid"></div>
+          <div class="info-note"><i class="fas fa-info-circle"></i> First file will be the cover. Max 5 files total (images+videos).</div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit"><i class="fas fa-check-circle"></i> Publish service</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // 1. Subcategory mapping (same as before)
+  // --------------------------------------------------------------
+  const subcategoryMap = {
+    fitness: ["Personal Training", "Yoga", "Group Fitness", "Nutrition Coaching", "Online Coaching"],
+    auto: ["Oil Change", "Brake Repair", "Engine Diagnostics", "Tire Services", "Detailing"],
+    tutoring: ["Math", "Science", "Languages", "Test Prep", "Music Lessons", "Homework Help"],
+    beauty: ["Hair Styling", "Massage Therapy", "Facials", "Nail Care", "Makeup Artistry"],
+    home: ["Plumbing", "Electrical", "Cleaning", "Gardening", "Painting", "Moving Help"]
+  };
+
+  // --------------------------------------------------------------
+  // 2. Provider database (third level)
+  // --------------------------------------------------------------
+  const providersDB = {
+    fitness: {
+      personal_training: ["Elite Fitness", "Body & Soul", "Peak Performance", "TransformU", "FitPros"],
+      yoga: ["Zen Den Yoga", "Flow Studio", "Yoga Roots", "Urban Asanas"],
+      group_fitness: ["Camp Gladiator", "Orange Theory", "F45 Training", "CrossFit Box"],
+      nutrition_coaching: ["NutriGuide", "Wellness Kitchen", "Evolve Nutrition"],
+      online_coaching: ["CoachAnywhere", "VirtualFit", "Remote Results"]
+    },
+    auto: {
+      oil_change: ["Speedy Lube", "AutoCare Express", "Quick Oil", "Midas Touch"],
+      brake_repair: ["Brake Masters", "Safe Stop Garage", "Certified Auto"],
+      engine_diagnostics: ["DiagPro", "Engine Experts", "CarMedic"],
+      tire_services: ["Tire Town", "Rubber Road", "WheelWorks"],
+      detailing: ["Shine & Polish", "Detail Kings", "Eco Shine"]
+    },
+    tutoring: {
+      math: ["Math Masters", "Number Ninjas", "Algebra Ace", "Calculus Club"],
+      science: ["Science Squad", "Lab Leaders", "BioTutors"],
+      languages: ["Lingua Lab", "SpeakEasy Tutors", "Global Tongue"],
+      test_prep: ["PrepPros", "Exam Elite", "Score Boosters"],
+      music_lessons: ["Melody Makers", "Rhythm School", "Note by Note"],
+      homework_help: ["Study Buddies", "Smart Homework", "Academic Aid"]
+    },
+    beauty: {
+      hair_styling: ["Gloss & Shear", "Curl Up", "Blowout Bar", "Studio Noir"],
+      massage_therapy: ["Healing Hands", "Tension Release", "Spa Serenity", "Deep Tissue Co"],
+      facials: ["Glow Skin", "Radiance Studio", "Clear Complexion"],
+      nail_care: ["Polish Perfect", "Nail Artistry", "Tip & Toe"],
+      makeup_artistry: ["Face Forward", "Belle Makeup", "Glam Lab"]
+    },
+    home: {
+      plumbing: ["Pipe Pros", "Drain Doctors", "Plumb Perfect", "Rapid Fix"],
+      electrical: ["Wired Right", "Spark Safe", "Circuit Solutions"],
+      cleaning: ["Shine Squad", "Maid in Heaven", "Eco Cleaners"],
+      gardening: ["Green Thumb", "Lawn & Order", "Garden Gurus"],
+      painting: ["Color Crew", "Brush Masters", "Precision Paint"],
+      moving_help: ["Move Easy", "Lift & Load", "Swift Haul"]
+    }
+  };
+
+  function subcategoryToKey(str) {
+    return str.toLowerCase().replace(/ /g, '_').replace(/[&]/g, '');
+  }
+
+  // DOM elements for form
+  const categorySelect = document.getElementById('categorySelect');
+  const subcategorySelect = document.getElementById('subcategorySelect');
+  const providerSelect = document.getElementById('providerSelect');
+  const serviceTitleInput = document.getElementById('serviceTitle');
+  const breadcrumbDisplay = document.getElementById('breadcrumbDisplay');
+
+  // Update breadcrumb
+  function updateBreadcrumb() {
+    const category = categorySelect.value;
+    const categoryText = categorySelect.options[categorySelect.selectedIndex]?.text || '';
+    const subText = subcategorySelect.options[subcategorySelect.selectedIndex]?.text || '';
+    const providerText = providerSelect.options[providerSelect.selectedIndex]?.text || '';
+
+    let path = '🏠 Service Hub';
+    if (category) path += ` › <strong>${categoryText}</strong>`;
+    else { breadcrumbDisplay.innerHTML = path + ' › <span class="placeholder">Select category</span>'; return; }
+
+    if (subText && subText !== '– Choose subcategory –') path += ` › <strong>${subText}</strong>`;
+    else { breadcrumbDisplay.innerHTML = path + ' › <span class="placeholder">Select subcategory</span>'; return; }
+
+    if (providerText && providerText !== '– Choose provider –' && providerText !== 'Select category & subcategory first') path += ` › <strong>${providerText}</strong>`;
+    else { breadcrumbDisplay.innerHTML = path + ' › <span class="placeholder">Select provider</span>'; return; }
+
+    breadcrumbDisplay.innerHTML = path;
+  }
+
+  function updateSubcategories() {
+    const category = categorySelect.value;
+    if (!category || !subcategoryMap[category]) {
+      subcategorySelect.disabled = true;
+      subcategorySelect.innerHTML = '<option value="">First select a category</option>';
+      providerSelect.disabled = true;
+      providerSelect.innerHTML = '<option value="">Select category & subcategory first</option>';
+      updateBreadcrumb();
+      return;
+    }
+    subcategorySelect.disabled = false;
+    const subs = subcategoryMap[category];
+    let options = '<option value="" disabled selected>– Choose subcategory –</option>';
+    subs.forEach(sub => {
+      options += `<option value="${subcategoryToKey(sub)}">${sub}</option>`;
+    });
+    subcategorySelect.innerHTML = options;
+    providerSelect.disabled = true;
+    providerSelect.innerHTML = '<option value="">Select subcategory first</option>';
+    serviceTitleInput.value = '';
+    updateBreadcrumb();
+  }
+
+  function updateProviders() {
+    const category = categorySelect.value;
+    const subKey = subcategorySelect.value;
+    if (!category || !subKey) {
+      providerSelect.disabled = true;
+      providerSelect.innerHTML = '<option value="">Select subcategory first</option>';
+      updateBreadcrumb();
+      return;
+    }
+    const categoryProviders = providersDB[category];
+    if (!categoryProviders || !categoryProviders[subKey]) {
+      providerSelect.disabled = false;
+      providerSelect.innerHTML = '<option value="" disabled selected>No provider list – type any</option><option value="Other">Other (type manually)</option>';
+      updateBreadcrumb();
+      return;
+    }
+    const providers = categoryProviders[subKey];
+    let options = '<option value="" disabled selected>– Choose provider –</option>';
+    providers.forEach(p => { options += `<option value="${p}">${p}</option>`; });
+    options += `<option value="Other">Other (not listed)</option>`;
+    providerSelect.innerHTML = options;
+    providerSelect.disabled = false;
+    updateBreadcrumb();
+  }
+
+  categorySelect.addEventListener('change', () => {
+    updateSubcategories();
+    updateBreadcrumb();
+  });
+  subcategorySelect.addEventListener('change', () => {
+    updateProviders();
+    updateBreadcrumb();
+  });
+  providerSelect.addEventListener('change', updateBreadcrumb);
+  serviceTitleInput.addEventListener('input', updateBreadcrumb);
+
+  // --------------------------------------------------------------
+  // MEDIA UPLOAD (Images + Videos)
+  // --------------------------------------------------------------
+  let selectedFiles = []; // stores File objects (image or video)
+  const mediaInput = document.getElementById('mediaInput');
+  const uploadArea = document.getElementById('uploadArea');
+  const previewContainer = document.getElementById('mediaPreviewContainer');
+
+  function isVideo(file) {
+    return file.type.startsWith('video/');
+  }
+
+  function handleMediaUpload(files) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/quicktime', 'video/webm'];
+    const newFiles = Array.from(files).filter(f => allowedTypes.includes(f.type));
+    if (selectedFiles.length + newFiles.length > 5) {
+      alert("Maximum 5 files allowed (images + videos combined).");
+      return;
+    }
+    selectedFiles = [...selectedFiles, ...newFiles];
+    renderMediaPreviews();
+  }
+
+  function renderMediaPreviews() {
+    previewContainer.innerHTML = '';
+    selectedFiles.forEach((file, idx) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const div = document.createElement('div');
+        div.className = 'preview-item';
+        if (isVideo(file)) {
+          // Video preview with controls
+          const video = document.createElement('video');
+          video.src = e.target.result;
+          video.controls = true;
+          video.loop = false;
+          video.muted = true;
+          video.style.width = '100%';
+          video.style.height = '100%';
+          video.style.objectFit = 'cover';
+          // optional: autoplay muted on hover? not needed.
+          div.appendChild(video);
+          const badge = document.createElement('div');
+          badge.className = 'media-type-badge';
+          badge.innerHTML = '<i class="fas fa-video"></i> video';
+          div.appendChild(badge);
+        } else {
+          // Image preview
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.alt = 'preview';
+          div.appendChild(img);
+          const badge = document.createElement('div');
+          badge.className = 'media-type-badge';
+          badge.innerHTML = '<i class="fas fa-image"></i> photo';
+          div.appendChild(badge);
+        }
+        const removeBtn = document.createElement('div');
+        removeBtn.className = 'remove-media';
+        removeBtn.innerHTML = '✕';
+        removeBtn.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          removeMediaAtIndex(idx);
+        });
+        div.appendChild(removeBtn);
+        previewContainer.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function removeMediaAtIndex(idx) {
+    selectedFiles.splice(idx, 1);
+    renderMediaPreviews();
+  }
+
+  uploadArea.addEventListener('click', () => mediaInput.click());
+  mediaInput.addEventListener('change', (e) => {
+    if (e.target.files.length) handleMediaUpload(e.target.files);
+    mediaInput.value = '';
+  });
+  uploadArea.addEventListener('dragover', e => e.preventDefault());
+  uploadArea.addEventListener('drop', e => {
+    e.preventDefault();
+    if (e.dataTransfer.files.length) handleMediaUpload(e.dataTransfer.files);
+  });
+
+  // --------------------------------------------------------------
+  // Form submission
+  // --------------------------------------------------------------
+  const form = document.getElementById('serviceForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const category = categorySelect.value;
+    const subKey = subcategorySelect.value;
+    const provider = providerSelect.value;
+    const serviceTitle = serviceTitleInput.value.trim();
+    const desc = document.getElementById('description').value.trim();
+    const priceModel = document.getElementById('priceModel').value;
+    const price = document.getElementById('price').value;
+    const city = document.getElementById('city').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (!category || !subKey || !provider || !serviceTitle || !desc || !price || !city || !email) {
+      alert("Please fill all required fields (*).");
+      return;
+    }
+    if (selectedFiles.length === 0) {
+      alert("Add at least one photo or video.");
+      return;
+    }
+
+    const categoryText = categorySelect.options[categorySelect.selectedIndex]?.text;
+    const subText = subcategorySelect.options[subcategorySelect.selectedIndex]?.text;
+    const providerText = providerSelect.options[providerSelect.selectedIndex]?.text;
+
+    // Prepare file list summary (actual files would be sent via FormData)
+    const fileSummary = selectedFiles.map(f => ({
+      name: f.name,
+      type: f.type,
+      size: f.size
+    }));
+
+    const serviceData = {
+      service_category: categoryText,
+      subcategory: subText,
+      provider: providerText === "Other" ? "Other (user provided)" : providerText,
+      service_title: serviceTitle,
+      full_service_name: `${providerText} – ${serviceTitle}`,
+      browsing_path: `${categoryText} › ${subText} › ${providerText}`,
+      description: desc,
+      pricing_model: priceModel,
+      price: parseFloat(price),
+      negotiable: document.getElementById('negotiable').checked,
+      location: {
+        city: city,
+        area: document.getElementById('area').value.trim() || null
+      },
+      contact: {
+        phone: document.getElementById('phone').value.trim() || null,
+        email: email
+      },
+      media_files: fileSummary, // replace with actual upload logic
+      total_files: selectedFiles.length,
+      created_at: new Date().toISOString()
+    };
+
+    console.log("📦 Service listing with media ready for database:", serviceData);
+    alert(`✅ Service published!\nPath: ${serviceData.browsing_path}\nService: ${serviceData.service_title}\nPrice: ${serviceData.price} (${priceModel})\nMedia: ${selectedFiles.length} file(s) (images+videos)`);
+    // In real implementation, use FormData to send selectedFiles to server
+  });
+
+  // Initial load
+  updateSubcategories();
+</script>
+</body>
+</html>

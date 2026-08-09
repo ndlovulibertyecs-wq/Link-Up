@@ -1,0 +1,971 @@
+{% extends "base.html" %}
+
+{% block title %}Wearables - Electronics | Link-Up{% endblock %}
+
+{% block content %}
+<div class="electronics-page">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Wearables & Smartwatches</h1>
+                        <p class="dashboard-subtitle">Smartwatches, fitness trackers, and health monitoring devices</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single Row Scrollable Brand Buttons -->
+    <div class="brand-scroll-section">
+        <div class="container">
+            <div class="brand-scroll-container">
+                <div class="scroll-control left-scroll">
+    &#8249;
+</div>
+
+                <div class="brand-scroll-wrapper">
+                    <div class="brand-buttons">
+                        <!-- All Brands Button -->
+                        <a href="{{ url_for('marketplace.wearables') }}"
+                           class="brand-btn {% if not selected_brand %}active{% endif %}">
+                            All Brands
+                            <span class="brand-count">{{ listings|length if listings else 0 }}</span>
+                        </a>
+
+                        <!-- Sample Wearable Brands -->
+                        <a href="{{ url_for('marketplace.wearables', brand='Digital') }}"
+                           class="brand-btn {% if selected_brand == 'Digital' %}active{% endif %}">
+                            Digital
+                            <span class="brand-count">75</span>
+                        </a>
+                        <a href="{{ url_for('marketplace.wearables', brand='Analogue') }}"
+                           class="brand-btn {% if selected_brand == 'Analogue' %}active{% endif %}">
+                            Analogue
+                            <span class="brand-count">62</span>
+                        </a>
+                        <a href="{{ url_for('marketplace.wearables', brand='Smartwatches') }}"
+                           class="brand-btn {% if selected_brand == 'Smartwatches' %}active{% endif %}">
+                            SmartWatches
+                            <span class="brand-count">58</span>
+                        </a>
+                        <a href="{{ url_for('marketplace.wearables', brand='Other') }}"
+                           class="brand-btn {% if selected_brand == 'Other' %}active{% endif %}">
+                            Other
+                            <span class="brand-count">52</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="scroll-control right-scroll">
+    &#8250;
+</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instagram Style Products Grid - ALWAYS 3 COLUMNS -->
+    <div class="instagram-grid-section">
+        <div class="container">
+            <div class="grid-header">
+                <h2 class="section-title" id="filter-title">
+                    {% if selected_brand %}
+                    {{ selected_brand }} Wearables
+                    {% else %}
+                    All Wearables & Smartwatches
+                    {% endif %}
+                </h2>
+                <p class="section-subtitle" id="filter-subtitle">
+                    {% if selected_brand %}
+                    Browse all {{ selected_brand }} wearables and smart devices
+                    {% else %}
+                    Browse smartwatches, fitness trackers, and health devices from all brands
+                    {% endif %}
+                </p>
+            </div>
+
+            <!-- Instagram Style Grid - ALWAYS 3 COLUMNS -->
+            <div class="instagram-grid-three-col" id="instagram-grid">
+                {% if listings %}
+                    {% for listing in listings %}
+                    <div class="instagram-card-three-col" data-brand="{{ listing.brand|lower if listing.brand else '' }}">
+                        <div class="instagram-image-three-col">
+                            {% if listing.images %}
+                            <img src="{{ listing.images.split(',')[0] if ',' in listing.images else listing.images }}"
+                                 alt="{{ listing.title }}"
+                                 class="grid-image-three-col">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                                 alt="{{ listing.title }}"
+                                 class="grid-image-three-col">
+                            {% endif %}
+
+                            <!-- Image Overlay -->
+                            <div class="image-overlay-three-col">
+                                <div class="overlay-content-three-col">
+                                    <span class="price-badge-three-col">${{ "%.2f"|format(listing.price) }}</span>
+                                    {% if not listing.is_sold %}
+                                    <span class="status-badge-three-col available">Available</span>
+                                    {% else %}
+                                    <span class="status-badge-three-col sold">Sold</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Quick View Button -->
+                            <a href="{{ url_for('marketplace.listing_detail', listing_id=listing.id) }}"
+                               class="quick-view-btn-three-col">
+                                <i class="fas fa-eye"></i> Quick View
+                            </a>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="instagram-footer-three-col">
+                            <div class="listing-info-three-col">
+                                <h4 class="listing-title-three-col">{{ listing.title[:30] }}{% if listing.title|length > 30 %}...{% endif %}</h4>
+                                <p class="listing-location-three-col">
+                                    <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
+                                </p>
+                            </div>
+                            <div class="listing-actions-three-col">
+                                <button class="like-btn-three-col" data-listing-id="{{ listing.id }}">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="share-btn-three-col" data-listing-id="{{ listing.id }}">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Empty State -->
+                    <div class="empty-grid-state-three-col">
+                        <div class="empty-icon-three-col">
+                            <i class="fas fa-smartwatch"></i>
+                        </div>
+                        <h3>No wearables found</h3>
+                        <p>
+                            {% if selected_brand %}
+                            No {{ selected_brand }} wearables available right now.
+                            {% else %}
+                            No wearables available. Be the first to list one!
+                            {% endif %}
+                        </p>
+                        {% if not selected_brand %}
+                        <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> List Your Wearable
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Load More (for infinite scroll feel) -->
+            {% if listings and listings|length >= 12 %}
+            <div class="load-more-container-three-col">
+                <button class="load-more-btn-three-col" id="load-more-btn">
+                    <i class="fas fa-sync-alt"></i> Load More
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Create Listing CTA -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Sell Your Wearable Device</h2>
+                <p>Have a smartwatch or fitness tracker to sell? List it for free and reach thousands of tech enthusiasts.</p>
+                <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Listing
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Instagram Grid Styles - ALWAYS 3 COLUMNS */
+    .instagram-grid-section {
+        padding: 20px 0 40px;
+    }
+
+    .grid-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+        color: #6b7280;
+        font-size: 1rem;
+    }
+
+    /* Instagram Grid Layout - ALWAYS 3 COLUMNS */
+    .instagram-grid-three-col {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* Ensure 3 columns on ALL devices - columns will shrink but remain 3 */
+    @media (max-width: 1200px) {
+        .instagram-grid-three-col {
+            gap: 10px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .instagram-grid-three-col {
+            gap: 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .instagram-grid-three-col {
+            gap: 6px;
+        }
+    }
+
+    /* Instagram Card - Scales with 3-column layout */
+    .instagram-card-three-col {
+        background: white;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        aspect-ratio: 3/4; /* Maintain card proportion */
+    }
+
+    .instagram-card-three-col:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+    }
+
+    /* Image Container */
+    .instagram-image-three-col {
+        position: relative;
+        width: 100%;
+        height: 65%; /* Fixed percentage of card height */
+        overflow: hidden;
+        background: #f3f4f6;
+    }
+
+    .grid-image-three-col {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .instagram-card-three-col:hover .grid-image-three-col {
+        transform: scale(1.05);
+    }
+
+    /* Image Overlay */
+    .image-overlay-three-col {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .instagram-card-three-col:hover .image-overlay-three-col {
+        opacity: 1;
+    }
+
+    .overlay-content-three-col {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price-badge-three-col {
+        background: #ec4899;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    .status-badge-three-col {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .status-badge-three-col.available {
+        background: #10b981;
+        color: white;
+    }
+
+    .status-badge-three-col.sold {
+        background: #ef4444;
+        color: white;
+    }
+
+    /* Quick View Button - Hidden on very small screens */
+    .quick-view-btn-three-col {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background: rgba(255, 255, 255, 0.95);
+        color: #1f2937;
+        padding: 6px 12px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.8rem;
+        opacity: 0;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .instagram-card-three-col:hover .quick-view-btn-three-col {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .quick-view-btn-three-col:hover {
+        background: white;
+        color: #ec4899;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    /* Hide quick view on very small screens */
+    @media (max-width: 400px) {
+        .quick-view-btn-three-col {
+            display: none;
+        }
+    }
+
+    /* Instagram Footer */
+    .instagram-footer-three-col {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        height: 35%; /* Fixed percentage of card height */
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .listing-info-three-col {
+        flex: 1;
+        min-width: 0; /* Allow text truncation */
+    }
+
+    .listing-title-three-col {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 4px 0;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .listing-location-three-col {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .listing-actions-three-col {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+
+    .like-btn-three-col, .share-btn-three-col {
+        background: none;
+        border: none;
+        color: #9ca3af;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 3px;
+        transition: color 0.2s ease;
+        min-width: 24px;
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .like-btn-three-col:hover {
+        color: #ef4444;
+    }
+
+    .share-btn-three-col:hover {
+        color: #ec4899;
+    }
+
+    /* Make buttons smaller on mobile */
+    @media (max-width: 480px) {
+        .like-btn-three-col, .share-btn-three-col {
+            font-size: 0.8rem;
+            padding: 2px;
+            min-width: 20px;
+            min-height: 20px;
+        }
+
+        .listing-title-three-col {
+            font-size: 0.8rem;
+        }
+
+        .listing-location-three-col {
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Single Row Scrollable Brand Buttons */
+    .brand-scroll-section {
+        background: white;
+        padding: 15px 0;
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand-scroll-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .scroll-control {
+    background: #ec4899;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.scroll-control:hover {
+    background: #db2777;
+    color: white;
+}
+
+    .brand-scroll-wrapper {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .brand-buttons {
+        display: flex;
+        gap: 8px;
+        padding: 5px 0;
+        transition: transform 0.3s ease;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    .brand-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        background: #f3f4f6;
+        border: 2px solid transparent;
+        border-radius: 20px;
+        color: #4b5563;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .brand-btn:hover {
+        background: #e5e7eb;
+        color: #374151;
+        transform: translateY(-1px);
+    }
+
+    .brand-btn.active {
+        background: #ec4899;
+        color: white;
+        border-color: #ec4899;
+    }
+
+    .brand-btn.active:hover {
+        background: #db2777;
+        border-color: #db2777;
+    }
+
+    .brand-count {
+        background: rgba(0, 0, 0, 0.1);
+        color: inherit;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .brand-btn.active .brand-count {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Make brand buttons responsive */
+    @media (max-width: 768px) {
+        .brand-btn {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .brand-count {
+            padding: 1px 6px;
+            font-size: 0.75rem;
+        }
+
+        .scroll-control {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .brand-btn {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .brand-count {
+            padding: 1px 4px;
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Empty State */
+    .empty-grid-state-three-col {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 40px 15px;
+    }
+
+    .empty-grid-state-three-col .empty-icon-three-col {
+        font-size: 2.5rem;
+        color: #d1d5db;
+        margin-bottom: 15px;
+    }
+
+    .empty-grid-state-three-col h3 {
+        color: #1f2937;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    .empty-grid-state-three-col p {
+        color: #6b7280;
+        margin-bottom: 20px;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.9rem;
+    }
+
+    /* Load More Button */
+    .load-more-container-three-col {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .load-more-btn-three-col {
+        background: white;
+        border: 2px solid #ec4899;
+        color: #ec4899;
+        padding: 10px 25px;
+        border-radius: 25px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .load-more-btn-three-col:hover {
+        background: #ec4899;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    /* Create Listing CTA */
+    .create-cta {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 30px 0;
+        margin-top: 30px;
+        border-radius: 12px;
+    }
+
+    .cta-content {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .cta-content h2 {
+        color: #1f2937;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
+    .cta-content p {
+        color: #6b7280;
+        margin-bottom: 20px;
+        font-size: 1rem;
+    }
+
+    /* Responsive adjustments for very small screens */
+    @media (max-width: 320px) {
+        .instagram-grid-three-col {
+            gap: 4px;
+        }
+
+        .instagram-card-three-col {
+            border-radius: 4px;
+        }
+
+        .instagram-footer-three-col {
+            padding: 6px;
+        }
+
+        .listing-title-three-col {
+            font-size: 0.75rem;
+        }
+
+        .listing-location-three-col {
+            font-size: 0.65rem;
+        }
+
+        .price-badge-three-col,
+        .status-badge-three-col {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+        }
+    }
+
+    /* Container responsiveness */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+        margin: 0 auto;
+    }
+
+    /* Ensure grid doesn't overflow on small screens */
+    .instagram-grid-three-col {
+        max-width: 100%;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling for brand buttons
+        const brandScrollContainer = document.querySelector('.brand-scroll-container');
+        const brandButtons = document.querySelector('.brand-buttons');
+        const leftScroll = document.querySelector('.left-scroll');
+        const rightScroll = document.querySelector('.right-scroll');
+
+        if (brandScrollContainer && brandButtons) {
+            const scrollAmount = 200;
+
+            // Update scroll buttons visibility
+            const updateScrollButtons = () => {
+                if (!brandButtons) return;
+
+                const scrollWrapper = brandButtons.parentElement;
+                if (leftScroll) {
+                    leftScroll.style.opacity = brandButtons.scrollLeft > 0 ? '1' : '0.5';
+                    leftScroll.style.pointerEvents = brandButtons.scrollLeft > 0 ? 'auto' : 'none';
+                }
+
+                if (rightScroll) {
+                    const maxScroll = brandButtons.scrollWidth - scrollWrapper.clientWidth;
+                    rightScroll.style.opacity = brandButtons.scrollLeft < maxScroll - 10 ? '1' : '0.5';
+                    rightScroll.style.pointerEvents = brandButtons.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                }
+            };
+
+            // Left scroll
+            if (leftScroll) {
+                leftScroll.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    brandButtons.scrollBy({
+                        left: -scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Right scroll
+            if (rightScroll) {
+                rightScroll.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    brandButtons.scrollBy({
+                        left: scrollAmount,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Initialize scroll buttons
+            updateScrollButtons();
+
+            // Update on scroll
+            brandButtons.addEventListener('scroll', updateScrollButtons);
+            window.addEventListener('resize', updateScrollButtons);
+
+            // Auto-scroll to active brand button
+            const activeBrand = document.querySelector('.brand-btn.active');
+            if (activeBrand) {
+                setTimeout(() => {
+                    const scrollWrapper = brandButtons.parentElement;
+                    const buttonLeft = activeBrand.offsetLeft;
+                    const buttonWidth = activeBrand.offsetWidth;
+                    const wrapperWidth = scrollWrapper.clientWidth;
+
+                    brandButtons.scrollTo({
+                        left: buttonLeft - (wrapperWidth / 2) + (buttonWidth / 2),
+                        behavior: 'smooth'
+                    });
+                }, 300);
+            }
+        }
+
+        // Like button functionality
+        document.querySelectorAll('.like-btn-three-col').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const icon = this.querySelector('i');
+                const listingId = this.getAttribute('data-listing-id');
+
+                // Toggle like state
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    this.style.color = '#ef4444';
+
+                    // In a real app, you would send an AJAX request here
+                    console.log(`Liked listing ${listingId}`);
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    this.style.color = '#9ca3af';
+
+                    // In a real app, you would send an AJAX request here
+                    console.log(`Unliked listing ${listingId}`);
+                }
+
+                // Add animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Share button functionality
+        document.querySelectorAll('.share-btn-three-col').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const listingId = this.getAttribute('data-listing-id');
+                const listingUrl = window.location.origin + '/marketplace/' + listingId;
+
+                // In a real app, you would implement actual sharing
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Check out this wearable!',
+                        text: 'I found this great wearable device on Link-Up',
+                        url: listingUrl
+                    });
+                } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(listingUrl).then(() => {
+                        alert('Link copied to clipboard!');
+                    });
+                }
+
+                // Add animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Load more button
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                const originalHTML = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+
+                // Simulate loading more items
+                setTimeout(() => {
+                    this.innerHTML = originalHTML;
+                    this.disabled = false;
+
+                    // In a real app, you would fetch more items from the server
+                    // and append them to the grid
+                    alert('In a real implementation, this would load more wearables from the server.');
+                }, 1500);
+            });
+        }
+
+        // Card hover effects
+        document.querySelectorAll('.instagram-card-three-col').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Update active count based on filtered listings
+        function updateActiveCount() {
+            const activeCount = document.querySelectorAll('.instagram-card-three-col:not([style*="display: none"])').length;
+            const activeCountElement = document.getElementById('active-count');
+            if (activeCountElement) {
+                activeCountElement.textContent = activeCount;
+            }
+        }
+
+        // Initialize active count
+        updateActiveCount();
+
+        // Adjust grid gap based on screen size
+        function adjustGridGap() {
+            const grid = document.querySelector('.instagram-grid-three-col');
+            if (!grid) return;
+
+            const screenWidth = window.innerWidth;
+            if (screenWidth < 480) {
+                grid.style.gap = '6px';
+            } else if (screenWidth < 768) {
+                grid.style.gap = '8px';
+            } else {
+                grid.style.gap = '12px';
+            }
+        }
+
+        // Adjust grid on resize
+        window.addEventListener('resize', adjustGridGap);
+        adjustGridGap(); // Initial adjustment
+    });
+
+    // Make brand buttons draggable for touch devices
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandButtons = document.querySelector('.brand-buttons');
+        if (brandButtons && 'ontouchstart' in window) {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            brandButtons.addEventListener('mousedown', (e) => {
+                isDown = true;
+                brandButtons.classList.add('active');
+                startX = e.pageX - brandButtons.offsetLeft;
+                scrollLeft = brandButtons.scrollLeft;
+            });
+
+            brandButtons.addEventListener('mouseleave', () => {
+                isDown = false;
+                brandButtons.classList.remove('active');
+            });
+
+            brandButtons.addEventListener('mouseup', () => {
+                isDown = false;
+                brandButtons.classList.remove('active');
+            });
+
+            brandButtons.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - brandButtons.offsetLeft;
+                const walk = (x - startX) * 2;
+                brandButtons.scrollLeft = scrollLeft - walk;
+            });
+
+            // Touch events for mobile
+            brandButtons.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - brandButtons.offsetLeft;
+                scrollLeft = brandButtons.scrollLeft;
+            });
+
+            brandButtons.addEventListener('touchend', () => {
+                isDown = false;
+            });
+
+            brandButtons.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - brandButtons.offsetLeft;
+                const walk = (x - startX) * 2;
+                brandButtons.scrollLeft = scrollLeft - walk;
+            });
+        }
+    });
+</script>
+{% endblock %}

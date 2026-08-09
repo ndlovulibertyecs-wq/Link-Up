@@ -1,0 +1,1291 @@
+{% extends "base.html" %}
+
+{% block title %}Vehicles - Marketplace | Link-Up{% endblock %}
+
+{% block content %}
+<div class="vehicles-page">
+    <!-- Header - MODIFIED: removed back button and icon -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <!-- Back button removed completely -->
+                    <!-- Header icon removed completely -->
+                    <div class="header-main">
+                        <h1 class="header-title">Vehicles & Transport</h1>
+                        <p class="dashboard-subtitle">Discover cars, trucks, motorcycles, boats and all types of vehicles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling (Instagram Style) -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse Vehicle Categories</h2>
+            <p class="section-subtitle">Click on any category to explore available vehicles</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+
+                <div class="categories-scroll">
+                    <!-- Category 1: Cars -->
+                    <a href="{{ url_for('marketplace.cars') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cars">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Cars</h3>
+                            <p class="category-count">68 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 3: Pickup Trucks -->
+                    <a href="{{ url_for('marketplace.trucks') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pickup Trucks">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Trucks</h3>
+                            <p class="category-count">31 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 4: Motorcycles -->
+                    <a href="{{ url_for('marketplace.motorcycles') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Motorcycles">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Motorcycles</h3>
+                            <p class="category-count">27 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 5: Commercial Vehicles -->
+                    <a href="{{ url_for('marketplace.vehicles_commercial') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Commercial Vehicles">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Commercial</h3>
+                            <p class="category-count">18 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 9: Caravans & Campers -->
+                    <a href="{{ url_for('marketplace.caravans') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Watercraft">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Caravans & Watercraft</h3>
+                            <p class="category-count">11 items</p>
+                        </div>
+                    </a>
+
+                    <!-- Category 11: Parts & Accessories -->
+                    <a href="{{ url_for('marketplace.parts') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Parts & Accessories">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Parts & Accessories</h3>
+                            <p class="category-count">53 items</p>
+                        </div>
+                    </a>
+
+
+
+                </div>
+
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Sort -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search vehicles, makes, models, years..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="sort-dropdown">
+                    <select class="sort-select">
+                        <option>Sort by: Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Newest First</option>
+                        <option>Year: New to Old</option>
+                        <option>Year: Old to New</option>
+                        <option>Mileage: Low to High</option>
+                        <option>Brand Name</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Grid - MODIFIED: 2 columns, 3 rows -->
+    <div class="products-section">
+        <div class="container">
+            <h2 class="section-title">Featured Vehicles</h2>
+            <p class="section-subtitle">Discover quality vehicles from trusted sellers</p>
+
+            <div class="products-grid">
+                <!-- Vehicle Card 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Toyota Hilux">
+                        <span class="product-badge new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Toyota Hilux 2.8 GD-6</h3>
+                        <p class="product-description">2022 Model, 45,000 km, Automatic, 4x4, Full service history</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 589,000</span>
+                            <div class="vehicle-specs">
+                                <span class="spec">2022 • 45K km • Diesel</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Johannesburg</span>
+                            <span class="vehicle-condition">Excellent</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Auto Traders</span>
+                            </span>
+                            <span class="product-time">2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BMW 3 Series">
+                        <span class="product-badge luxury">LUXURY</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">BMW 330i M Sport</h3>
+                        <p class="product-description">2020 Model, 32,500 km, Automatic, Sunroof, Leather seats</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 699,000</span>
+                            <div class="vehicle-specs">
+                                <span class="spec">2020 • 32K km • Petrol</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Cape Town</span>
+                            <span class="vehicle-condition">Like New</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>BMW Premium</span>
+                            </span>
+                            <span class="product-time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1563720223485-8d6d5c5f4c8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Range Rover">
+                        <span class="product-badge discount">-15%</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Range Rover Sport HSE</h3>
+                        <p class="product-description">2019 Model, 68,000 km, Automatic, Full options, Air suspension</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 1,050,000</span>
+                            <span class="product-original-price">R 1,235,000</span>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Durban</span>
+                            <span class="vehicle-condition">Very Good</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Luxury Motors</span>
+                            </span>
+                            <span class="product-time">3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Harley Davidson">
+                        <span class="product-badge trending">TRENDING</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Harley Davidson Sportster</h3>
+                        <p class="product-description">2021 Model, 8,500 km, 1200cc, Custom pipes, Excellent condition</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 185,000</span>
+                            <div class="vehicle-specs">
+                                <span class="spec">2021 • 8K km • 1200cc</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Pretoria</span>
+                            <span class="vehicle-condition">Excellent</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Bike Masters</span>
+                            </span>
+                            <span class="product-time">5 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ford Ranger">
+                        <span class="product-badge new">NEW</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ford Ranger Wildtrak 3.0</h3>
+                        <p class="product-description">2023 Model, 12,000 km, Automatic, 4x4, Loaded with extras</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 865,000</span>
+                            <div class="vehicle-specs">
+                                <span class="spec">2023 • 12K km • Diesel</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Bloemfontein</span>
+                            <span class="vehicle-condition">Brand New</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Ford Dealers</span>
+                            </span>
+                            <span class="product-time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Card 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="VW Beetle Classic">
+                        <span class="product-badge discount">-20%</span>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">VW Beetle Classic 1972</h3>
+                        <p class="product-description">Fully restored, Original engine, New paint, Collector's item</p>
+                        <div class="product-meta">
+                            <span class="product-price">R 240,000</span>
+                            <span class="product-original-price">R 300,000</span>
+                        </div>
+                        <div class="vehicle-details">
+                            <span class="vehicle-location"><i class="fas fa-map-marker-alt"></i> Port Elizabeth</span>
+                            <span class="vehicle-condition">Restored</span>
+                        </div>
+                        <div class="product-footer">
+                            <span class="product-seller">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Seller" class="seller-avatar">
+                                <span>Classic Restorations</span>
+                            </span>
+                            <span class="product-time">4 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Load More Vehicles
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Listing CTA -->
+    <div class="create-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Sell Your Vehicle</h2>
+                <p>Have a car, truck, motorcycle or boat to sell? List it for free and reach buyers nationwide.</p>
+                <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create Vehicle Listing
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Vehicles Page Styles */
+    .vehicles-page {
+        background: #f0f9ff;
+        min-height: 100vh;
+    }
+
+    /* Header - MODIFIED: removed back button, removed icon, three rows layout */
+    .page-header {
+        color: white;
+    }
+
+    .header-background {
+        padding: 2rem 0;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Back button completely removed */
+
+    .header-main {
+        text-align: center;
+    }
+
+    /* Header icon completely removed */
+
+    .header-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dashboard-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.4;
+    }
+
+    /* Three rows: Vehicles & Transport title, description, then stats */
+    .header-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-top: 0.3rem;
+    }
+
+    /* Categories Horizontal Scrolling Section */
+    .categories-scroll-section {
+        padding: 2rem 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+
+    .categories-scroll-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .categories-scroll {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem 0;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 1.2rem;
+        color: #1e40af;
+    }
+
+    .left-scroll {
+        left: -20px;
+    }
+
+    .right-scroll {
+        right: -20px;
+    }
+
+    .categories-scroll-container:hover .scroll-control {
+        opacity: 1;
+    }
+
+    .scroll-control:hover {
+        background: #1e40af;
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.3);
+    }
+
+    /* Category Cards - Vehicle Style */
+    .category-card {
+        flex: 0 0 220px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        text-decoration: none !important;
+        color: inherit !important;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(30, 64, 175, 0.15);
+        border-color: #1e40af;
+    }
+
+    .category-image {
+        height: 140px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-image img {
+        transform: scale(1.05);
+    }
+
+    .category-content {
+        padding: 1.5rem;
+        text-align: center;
+        background: white;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .category-divider {
+        width: 40px;
+        height: 2px;
+        background: #1e40af;
+        margin: 0 auto 1rem auto;
+        border-radius: 2px;
+        transition: width 0.3s ease;
+    }
+
+    .category-card:hover .category-divider {
+        width: 60px;
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        color: #1f2937;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .category-count {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #dbeafe;
+        color: #1e40af;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-count {
+        background: #1e40af;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* Search and Sort Section */
+    .search-sort-section {
+        background: white;
+        padding: 2rem 0;
+        margin-top: 1rem;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: relative;
+        z-index: 10;
+        margin: 0 auto 2rem;
+        max-width: 1200px;
+    }
+
+    .search-sort-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .search-box i {
+        position: absolute;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6b7280;
+        z-index: 2;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 1rem 1.5rem 1rem 3.5rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #1e40af;
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    }
+
+    .search-btn {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+
+    .sort-dropdown {
+        text-align: right;
+    }
+
+    .sort-select {
+        padding: 0.8rem 2rem 0.8rem 1rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        background: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1rem;
+    }
+
+    /* Products Grid - MODIFIED: 2 columns */
+    .products-section {
+        padding: 3rem 0;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .product-badge.new {
+        background: #10b981;
+        color: white;
+    }
+
+    .product-badge.trending {
+        background: #f59e0b;
+        color: white;
+    }
+
+    .product-badge.discount {
+        background: #ef4444;
+        color: white;
+    }
+
+    .product-badge.luxury {
+        background: #8b5cf6;
+        color: white;
+    }
+
+    .product-info {
+        padding: 1.5rem;
+    }
+
+    .product-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+    }
+
+    .product-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+    }
+
+    .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e40af;
+    }
+
+    .product-original-price {
+        text-decoration: line-through;
+        color: #9ca3af;
+        margin-left: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .vehicle-specs {
+        text-align: right;
+    }
+
+    .spec {
+        font-size: 0.8rem;
+        color: #6b7280;
+        background: #f3f4f6;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+    }
+
+    .vehicle-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0;
+        border-top: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .vehicle-location {
+        color: #6b7280;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .vehicle-condition {
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .product-seller {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .seller-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .product-time {
+        font-size: 0.8rem;
+        color: #9ca3af;
+    }
+
+    .load-more {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .load-more .btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        border: none;
+    }
+
+    .load-more .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+
+    /* Create CTA */
+    .create-cta {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-top: 3rem;
+        text-align: center;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-content p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+    }
+
+    .cta-content .btn {
+        background: white;
+        color: #1e40af;
+        border: none;
+        padding: 1rem 2.5rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .cta-content .btn:hover {
+        background: #dbeafe;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 1.8rem;
+        }
+
+        .header-stats {
+            flex-direction: row;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+        }
+
+        .products-grid {
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            flex: 0 0 180px;
+        }
+
+        .category-image {
+            height: 120px;
+        }
+
+        .category-content {
+            padding: 1rem;
+        }
+
+        .category-title {
+            font-size: 1rem;
+        }
+
+        .search-box {
+            flex-direction: column;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+
+        .search-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .sort-dropdown {
+            text-align: center;
+        }
+
+        .scroll-control {
+            display: none;
+        }
+
+        .create-cta {
+            padding: 3rem 1rem;
+        }
+
+        .cta-content h2 {
+            font-size: 2rem;
+        }
+
+        .vehicle-details {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-background {
+            padding: 1.5rem 0;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-stats {
+            gap: 0.8rem;
+        }
+
+        .stat-number {
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+        }
+
+        .category-card {
+            flex: 0 0 150px;
+        }
+
+        .category-image {
+            height: 100px;
+        }
+
+        .category-title {
+            font-size: 0.9rem;
+        }
+
+        .product-card {
+            margin: 0;
+        }
+
+        .search-sort-section {
+            margin: 0 1rem 2rem;
+        }
+
+        .products-grid {
+            padding: 0 1rem;
+        }
+
+        .product-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .vehicle-specs {
+            text-align: left;
+        }
+    }
+
+    /* Vehicles-specific enhancements */
+    .vehicles-page .product-image {
+        background: linear-gradient(45deg, #f0f9ff, #e0f2fe);
+    }
+
+    .vehicles-page .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #1e40af, #3b82f6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .vehicles-page .category-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Vehicle badge styling */
+    .vehicle-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+
+    .badge-automatic {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .badge-manual {
+        background: #fef3c7;
+        color: #92400e;
+    }
+
+    .badge-diesel {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .badge-petrol {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Horizontal scrolling functionality for categories
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+
+            if (scrollElement) {
+                const scrollAmount = 300;
+
+                // Left scroll button
+                if (leftBtn) {
+                    leftBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: -scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                // Right scroll button
+                if (rightBtn) {
+                    rightBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        scrollElement.scrollBy({
+                            left: scrollAmount,
+                            behavior: 'smooth'
+                        });
+                    });
+                }
+
+                // Show/hide scroll buttons based on scroll position
+                const updateScrollButtons = () => {
+                    if (leftBtn) {
+                        leftBtn.style.opacity = scrollElement.scrollLeft > 0 ? '1' : '0';
+                        leftBtn.style.pointerEvents = scrollElement.scrollLeft > 0 ? 'auto' : 'none';
+                    }
+
+                    if (rightBtn) {
+                        const maxScroll = scrollElement.scrollWidth - scrollElement.clientWidth;
+                        rightBtn.style.opacity = scrollElement.scrollLeft < maxScroll - 10 ? '1' : '0';
+                        rightBtn.style.pointerEvents = scrollElement.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+                    }
+                };
+
+                // Initial update
+                updateScrollButtons();
+
+                // Update on scroll
+                scrollElement.addEventListener('scroll', updateScrollButtons);
+
+                // Update on window resize
+                window.addEventListener('resize', updateScrollButtons);
+            }
+        }
+
+        // Vehicle card click
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // In a real app, this would navigate to vehicle detail page
+                const vehicleTitle = this.querySelector('.product-title').textContent;
+                console.log(`Opening vehicle: ${vehicleTitle}`);
+
+                // Add click animation
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Search functionality
+        const searchBtn = document.querySelector('.search-btn');
+        const searchInput = document.querySelector('.search-input');
+
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    console.log(`Searching vehicles for: ${query}`);
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        console.log(`Searching vehicles for: ${query}`);
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        // Load more button
+        const loadMoreBtn = document.querySelector('.load-more .btn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+
+                // Simulate loading
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Vehicles';
+                    this.disabled = false;
+
+                    // In a real app, this would load more vehicles
+                    console.log('Loading more vehicles...');
+                    alert('More vehicles loaded!');
+                }, 1500);
+            });
+        }
+
+        // Sort dropdown
+        const sortSelect = document.querySelector('.sort-select');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', function() {
+                console.log(`Sorting vehicles by: ${this.value}`);
+            });
+        }
+
+        // Add hover effects for vehicle categories
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '20';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Vehicle-specific search suggestions
+        const vehicleKeywords = [
+            'toyota', 'ford', 'bmw', 'mercedes', 'honda', 'volkswagen',
+            'suv', 'truck', 'sedan', 'hatchback', 'motorcycle', 'boat',
+            'automatic', 'manual', 'diesel', 'petrol', '4x4', 'awd',
+            'low mileage', 'excellent condition', 'service history'
+        ];
+
+        if (searchInput) {
+            searchInput.addEventListener('focus', function() {
+                console.log('Vehicle search focused. Keywords:', vehicleKeywords);
+            });
+        }
+
+        // Add CSS for vehicle animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes vehicleRipple {
+                from {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes vehicleFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+
+            .vehicle-float {
+                animation: vehicleFloat 3s ease-in-out infinite;
+            }
+
+            .vehicle-sparkle {
+                animation: vehicleRipple 2s ease-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+</script>
+{% endblock %}

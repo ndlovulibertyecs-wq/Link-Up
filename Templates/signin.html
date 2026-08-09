@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+
+{% set nav_state = 'landing' %}
+
+{% block title %}Welcome Back - Link-Up{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Smooth animations and transitions */
+    .smooth-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: slideUpFade 0.6s ease-out;
+    }
+
+    .smooth-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
+    }
+
+    @keyframes slideUpFade {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulseGlow {
+        0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+    }
+
+    /* Gradient animation for header */
+    .animated-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+        background-size: 200% 200%;
+        animation: gradientFlow 15s ease infinite;
+    }
+
+    @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Floating animation for icon */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+    }
+
+    .float-icon {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    /* Smooth input focus effects */
+    .smooth-input {
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+    }
+
+    .smooth-input:focus {
+        border-color: #667eea !important;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+        transform: scale(1.01);
+    }
+
+    /* Button hover effects */
+    .smooth-btn {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .smooth-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3) !important;
+    }
+
+    .smooth-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Social button hover effects */
+    .social-btn {
+        transition: all 0.3s ease;
+        border-width: 2px;
+    }
+
+    .social-btn:hover {
+        transform: scale(1.02);
+        background: linear-gradient(135deg, #667eea15, #764ba215);
+    }
+
+    /* Feature card animations */
+    .feature-item {
+        transition: all 0.3s ease;
+        border-radius: 12px;
+    }
+
+    .feature-item:hover {
+        background: linear-gradient(135deg, #667eea08, #764ba208);
+        transform: scale(1.05);
+    }
+
+    /* Loading animation for submit */
+    @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
+    }
+
+    .loading {
+        animation: shimmer 2s infinite;
+        background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+        background-size: 1000px 100%;
+    }
+
+    /* Custom alert animation */
+    .smooth-alert {
+        animation: slideInRight 0.5s ease-out;
+        border-left: 4px solid #667eea;
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Divider animation */
+    .divider {
+        position: relative;
+        text-align: center;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #dee2e6, transparent);
+        transition: width 0.3s ease;
+    }
+
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .divider:hover::before,
+    .divider:hover::after {
+        width: 42%;
+    }
+
+    /* Role selection cards */
+    .role-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .role-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+    }
+
+    .role-card.active {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea08, #764ba208);
+    }
+
+    .role-card .role-icon {
+        transition: all 0.3s ease;
+    }
+
+    .role-card:hover .role-icon {
+        transform: scale(1.1);
+        color: #667eea;
+    }
+
+    .role-card.active .role-icon {
+        color: #667eea;
+    }
+
+    .role-input:checked + .role-card {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #667eea0c, #764ba20c);
+    }
+
+    /* Hide radio inputs visually but keep them accessible */
+    .role-input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7 col-xl-6">
+            <!-- Main Card - Smooth Entry -->
+            <div class="card smooth-card border-0 rounded-4 overflow-hidden shadow-lg">
+
+                <!-- Animated Gradient Header -->
+                <div class="card-header py-4 text-center text-white animated-gradient border-0">
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="rounded-circle bg-white p-3 float-icon" style="width: 85px; height: 85px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                            <i class="fas fa-link fa-2x" style="color: #667eea;"></i>
+                        </div>
+                    </div>
+                    <h2 class="display-6 fw-bold mb-2 animate__animated animate__fadeIn">Welcome Back</h2>
+                    <p class="mb-0 opacity-90 animate__animated animate__fadeIn animate__delay-1s">Sign in to your Link-Up account</p>
+
+                    <!-- Live status indicator -->
+                    <div class="mt-3 d-inline-flex align-items-center bg-white bg-opacity-20 px-3 py-1 rounded-pill">
+                        <span class="bg-success rounded-circle me-2" style="width: 10px; height: 10px; animation: pulseGlow 2s infinite;"></span>
+                        <span class="small text-white">Secure Connection</span>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-4 p-lg-5 bg-white">
+
+                    <!-- Smooth Alert with Icon -->
+                    <div class="alert smooth-alert bg-gradient-light border-0 rounded-3 mb-4 d-flex align-items-center" role="alert" style="background: linear-gradient(135deg, #667eea05, #764ba205);">
+                        <div class="rounded-circle bg-primary bg-opacity-10 p-2 me-3">
+                            <i class="fas fa-shield-alt text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="alert-heading mb-1 fw-bold" style="color: #667eea;">End-to-end encrypted</h6>
+                            <p class="mb-0 small text-muted">Your credentials are protected with enterprise-grade security.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sign In Form -->
+                    <form method="POST" action="{{ url_for('main.signin') }}" class="needs-validation" novalidate>
+
+                        <!-- Role Selection - Host or Customer -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-user-tag me-2 text-primary"></i>Sign in as
+                            </label>
+                            <div class="row g-3">
+                                <!-- Customer Role -->
+                                <div class="col-6">
+                                    <input type="radio" class="role-input" name="role" id="roleCustomer" value="customer" checked>
+                                    <label for="roleCustomer" class="role-card w-100 h-100 p-3 rounded-3 border bg-white d-block">
+                                        <div class="text-center">
+                                            <div class="role-icon mb-2">
+                                                <i class="fas fa-user fa-2x text-secondary"></i>
+                                            </div>
+                                            <h5 class="fw-bold mb-1" style="color: #667eea;">Customer</h5>
+                                            <p class="small text-muted mb-0">Browse & purchase items</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                <!-- Host Role -->
+                                <div class="col-6">
+                                    <input type="radio" class="role-input" name="role" id="roleHost" value="host">
+                                    <label for="roleHost" class="role-card w-100 h-100 p-3 rounded-3 border bg-white d-block">
+                                        <div class="text-center">
+                                            <div class="role-icon mb-2">
+                                                <i class="fas fa-store fa-2x text-secondary"></i>
+                                            </div>
+                                            <h5 class="fw-bold mb-1" style="color: #667eea;">Host</h5>
+                                            <p class="small text-muted mb-0">Sell items & offer services</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-text text-muted mt-2 small">
+                                <i class="fas fa-info-circle me-1"></i>Select your account type to access your personalized dashboard.
+                            </div>
+                        </div>
+
+                        <!-- Email Field with Floating Label -->
+                        <div class="form-floating mb-4 position-relative">
+                            <input type="email" class="form-control smooth-input rounded-3 border"
+                                   id="email" name="email"
+                                   placeholder="name@example.com"
+                                   style="height: 60px; padding-left: 45px;"
+                                   required>
+                            <label for="email" class="ps-5">
+                                <i class="fas fa-envelope me-2 text-primary opacity-75"></i>Email Address
+                            </label>
+                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
+                                <i class="fas fa-user text-muted opacity-50"></i>
+                            </div>
+                            <div class="invalid-feedback ps-4">
+                                <i class="fas fa-exclamation-circle me-1"></i>Please enter a valid email address.
+                            </div>
+                        </div>
+
+                        <!-- Password Field with Floating Label -->
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control smooth-input rounded-3 border"
+                                   id="password" name="password"
+                                   placeholder="Enter your password"
+                                   style="height: 60px; padding-left: 45px; padding-right: 45px;"
+                                   required>
+                            <label for="password" class="ps-5">
+                                <i class="fas fa-lock me-2 text-primary opacity-75"></i>Password
+                            </label>
+                            <div class="position-absolute top-50 start-0 translate-middle-y ms-3">
+                                <i class="fas fa-key text-muted opacity-50"></i>
+                            </div>
+                            <button class="btn position-absolute top-50 end-0 translate-middle-y me-2 border-0"
+                                    type="button" id="togglePassword"
+                                    style="z-index: 10;">
+                                <i class="fas fa-eye text-muted"></i>
+                            </button>
+                            <div class="invalid-feedback ps-4">
+                                <i class="fas fa-exclamation-circle me-1"></i>Please enter your password.
+                            </div>
+                        </div>
+
+                        <!-- Password Strength Indicator -->
+                        <div class="mb-4" id="passwordStrength" style="display: none;">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="small text-muted">Password strength</span>
+                                <span class="small fw-bold" id="strengthText">Weak</span>
+                            </div>
+                            <div class="progress" style="height: 6px;">
+                                <div id="strengthBar" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Remember Me and Forgot Password -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                                <label class="form-check-label text-muted small" for="remember">
+                                    <i class="far fa-check-circle me-1"></i>Remember me for 30 days
+                                </label>
+                            </div>
+                            <a href="{{ url_for('main.forgot_password') }}" class="text-decoration-none small">
+                                <i class="fas fa-question-circle me-1"></i>Forgot password?
+                            </a>
+                        </div>
+
+                        <!-- Submit Button with Loading State -->
+                        <div class="d-grid mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold py-3 rounded-3 smooth-btn" id="submitBtn">
+                                <span class="normal-state">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                </span>
+                                <span class="loading-state d-none">
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    Signing in...
+                                </span>
+                            </button>
+                        </div>
+
+                        <!-- Smooth Divider -->
+                        <div class="divider mb-4">
+                            <span class="bg-white px-4 text-muted small fw-bold">
+                                <i class="fas fa-ellipsis-h me-2"></i>OR CONTINUE WITH
+                            </span>
+                        </div>
+
+                        <!-- Social Login - Animated Hover -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <a href="#" class="btn btn-outline-dark btn-lg w-100 rounded-3 social-btn py-2">
+                                    <i class="fab fa-google me-2"></i>
+                                    <span class="fw-normal">Google</span>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="#" class="btn btn-outline-primary btn-lg w-100 rounded-3 social-btn py-2">
+                                    <i class="fab fa-linkedin me-2"></i>
+                                    <span class="fw-normal">LinkedIn</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Quick Sign-up -->
+                        <div class="text-center">
+                            <span class="text-muted small">New to Link-Up? </span>
+                            <a href="{{ url_for('main.signin') }}" class="text-decoration-none fw-bold" style="color: #667eea;">
+                                Create account <i class="fas fa-arrow-right ms-1 small"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Trust Badge -->
+            <div class="text-center mt-4">
+                <span class="badge bg-light text-dark py-2 px-3 rounded-pill">
+                    <i class="fas fa-check-circle text-success me-1"></i>
+                    Trusted by professionals worldwide
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Smooth password visibility toggle with icon animation
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye', 'text-muted');
+            icon.classList.add('fa-eye-slash', 'text-primary');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash', 'text-primary');
+            icon.classList.add('fa-eye', 'text-muted');
+        }
+    });
+
+    // Simple password strength indicator (for demo)
+    document.getElementById('password').addEventListener('input', function() {
+        const strengthDiv = document.getElementById('passwordStrength');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+        const password = this.value;
+
+        if (password.length > 0) {
+            strengthDiv.style.display = 'block';
+
+            let strength = 0;
+            let color = '#dc3545';
+            let text = 'Weak';
+
+            if (password.length >= 8) strength += 33;
+            if (password.match(/[a-z]+/)) strength += 11;
+            if (password.match(/[A-Z]+/)) strength += 11;
+            if (password.match(/[0-9]+/)) strength += 11;
+            if (password.match(/[$@#&!]+/)) strength += 34;
+
+            strength = Math.min(100, strength);
+
+            if (strength > 66) {
+                color = '#28a745';
+                text = 'Strong';
+            } else if (strength > 33) {
+                color = '#ffc107';
+                text = 'Medium';
+            }
+
+            strengthBar.style.width = strength + '%';
+            strengthBar.style.backgroundColor = color;
+            strengthText.textContent = text;
+            strengthText.style.color = color;
+        } else {
+            strengthDiv.style.display = 'none';
+        }
+    });
+
+    // Role selection visual enhancement
+    document.querySelectorAll('.role-input').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.role-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            if (this.checked) {
+                this.nextElementSibling.classList.add('active');
+            }
+        });
+    });
+
+    // Set initial active state
+    document.querySelectorAll('.role-input:checked').forEach(radio => {
+        radio.nextElementSibling.classList.add('active');
+    });
+
+    // ============================================================
+    // FIXED: INSTANT ROLE-BASED REDIRECT (No auth, No delay)
+    // ============================================================
+    document.querySelectorAll('.needs-validation').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            // Stop the form from actually submitting to Flask
+            event.preventDefault();
+
+            // Get the selected role (host or customer)
+            const selectedRole = document.querySelector('input[name="role"]:checked').value;
+
+            // OPTIONAL: Show loading spinner for a split second (200ms) for UX feedback
+            const submitBtn = document.getElementById('submitBtn');
+            const normalState = submitBtn.querySelector('.normal-state');
+            const loadingState = submitBtn.querySelector('.loading-state');
+
+            if (normalState && loadingState) {
+                normalState.classList.add('d-none');
+                loadingState.classList.remove('d-none');
+                submitBtn.disabled = true;
+            }
+
+            // Redirect instantly based on role (200ms delay lets the spinner show up)
+            setTimeout(() => {
+                if (selectedRole === 'host') {
+                    window.location.href = "{{ url_for('main.hostdashboard') }}";
+                } else {
+                    window.location.href = "{{ url_for('main.dashboard') }}";
+                }
+            }, 200); // Set to 0 if you want zero delay
+        });
+    });
+
+    // Input field animation
+    document.querySelectorAll('.smooth-input').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.querySelector('label').style.color = '#667eea';
+        });
+
+        input.addEventListener('blur', function() {
+            this.parentElement.querySelector('label').style.color = '';
+        });
+    });
+
+    // Add smooth reveal animation on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'all 0.5s ease-out';
+        observer.observe(el);
+    });
+</script>{% endblock %}

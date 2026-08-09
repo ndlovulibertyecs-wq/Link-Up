@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}Search Results - Link-Up{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Results for “{{ query }}”</h1>
+
+    {% if not listings and not services %}
+        <div class="alert alert-info">No results found for your search.</div>
+    {% endif %}
+
+    {% if listings %}
+        <h2 class="mt-4">Listings ({{ listings|length }})</h2>
+        <div class="row">
+            {% for item in listings %}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('marketplace.listing_detail', listing_id=item.id) }}">
+                                    {{ item.title }}
+                                </a>
+                            </h5>
+                            <span class="badge bg-primary">{{ item.category }}</span>
+                            {% if item.subcategory %}
+                                <span class="badge bg-secondary">{{ item.subcategory }}</span>
+                            {% endif %}
+                            <p class="card-text mt-2">{{ item.description[:120] }}…</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">📍 {{ item.location or 'N/A' }}</small>
+                                {% if item.price %}
+                                    <span class="fw-bold text-success">${{ item.price }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if services %}
+        <h2 class="mt-4">Services ({{ services|length }})</h2>
+        <div class="row">
+            {% for item in services %}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('services.book_service', service_id=item.id) }}">
+                                    {{ item.title }}
+                                </a>
+                            </h5>
+                            <span class="badge bg-success">{{ item.category }}</span>
+                            {% if item.subcategory %}
+                                <span class="badge bg-secondary">{{ item.subcategory }}</span>
+                            {% endif %}
+                            <p class="card-text mt-2">{{ item.description[:120] }}…</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">📍 {{ item.location or 'N/A' }}</small>
+                                {% if item.hourly_rate %}
+                                    <span class="fw-bold text-success">${{ item.hourly_rate }}/hr</span>
+                                {% elif item.fixed_price %}
+                                    <span class="fw-bold text-success">${{ item.fixed_price }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

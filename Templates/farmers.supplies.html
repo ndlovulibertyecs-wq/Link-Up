@@ -1,0 +1,430 @@
+{% extends "base.html" %}
+
+{% block title %}Fertilizers & Seedlings - Farm Supplies | Farmers' Room | Link-Up{% endblock %}
+
+{% block content %}
+<div class="farmers-page">
+    <!-- Header -->
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Fertilizers & Seedlings</h1>
+                        <p class="dashboard-subtitle">High-quality seedlings, fertilizers, and soil conditioners for maximum yield.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Horizontal Scrolling -->
+    <div class="categories-scroll-section">
+        <div class="container">
+            <h2 class="section-title">Browse by Supply Type</h2>
+            <p class="section-subtitle">Everything you need for healthy crops</p>
+
+            <div class="categories-scroll-container">
+                <div class="scroll-control left-scroll">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="categories-scroll">
+                    <!-- Organic Fertilizers -->
+                    <a href="{{ url_for('farmers.organic_fertilizers') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Organic Fertilizer">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Organic Fertilizers</h3>
+                            <p class="category-count">15 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Chemical Fertilizers -->
+                    <a href="{{ url_for('farmers.chemical_fertilizers') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chemical Fertilizer">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Chemical Fertilizers</h3>
+                            <p class="category-count">12 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Vegetable Seedlings -->
+                    <a href="{{ url_for('farmers.vegetable_seedlings') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vegetable Seeds">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Vegetable Seedlings</h3>
+                            <p class="category-count">14 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Grain Seedlings -->
+                    <a href="{{ url_for('farmers.grain_seedlings') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Grain Seeds">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Grain Seedlings</h3>
+                            <p class="category-count">8 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Herbs & Bulbs Seedlings -->
+                    <a href="{{ url_for('farmers.herbs_bulbs_seedlings') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Herbs">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Herbs & Bulbs Seedlings</h3>
+                            <p class="category-count">6 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Fruit Seedlings -->
+                    <a href="{{ url_for('farmers.fruit_seedlings') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Fruit">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Fruit Seedlings</h3>
+                            <p class="category-count">7 listings</p>
+                        </div>
+                    </a>
+
+                    <!-- Pesticides -->
+                    <a href="{{ url_for('farmers.pesticides') }}" class="category-card">
+                        <div class="category-image">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pesticides">
+                        </div>
+                        <div class="category-content">
+                            <div class="category-divider"></div>
+                            <h3 class="category-title">Pesticides</h3>
+                            <p class="category-count">10 listings</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="scroll-control right-scroll">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Sort -->
+    <div class="search-sort-section">
+        <div class="container">
+            <div class="search-sort-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search seeds, fertilizers, or supplies..." class="search-input" id="searchInput">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                <div class="filter-dropdowns">
+                    <select class="filter-select" id="typeFilter">
+                        <option value="">Supply Type</option>
+                        <option value="organic">Organic Fertilizers</option>
+                        <option value="chemical">Chemical Fertilizers</option>
+                        <option value="veg">Vegetable Seeds</option>
+                        <option value="grain">Grain Seeds</option>
+                        <option value="fruit">Fruit Seeds</option>
+                        <option value="pesticide">Pesticides</option>
+                        <option value="soil">Soil Conditioners</option>
+                    </select>
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">Price Range</option>
+                        <option value="under50">Under $50</option>
+                        <option value="50-100">$50 - $100</option>
+                        <option value="100-200">$100 - $200</option>
+                        <option value="200-500">$200 - $500</option>
+                        <option value="500plus">$500+</option>
+                    </select>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="recommended">Sort by: Recommended</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="listings-section">
+        <div class="container">
+            <h2 class="section-title">Featured Supplies</h2>
+            <p class="section-subtitle">Quality products for maximum yield</p>
+
+            <div class="listings-grid">
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Organic Fertilizer">
+                        <span class="listing-badge featured">ORGANIC</span>
+                    </div>
+                    <div class="listing-info">
+                        <h3 class="listing-title">Organic Compost Fertilizer - 50lb</h3>
+                        <p class="listing-description">Premium organic compost, OMRI certified, great for all crops</p>
+                        <div class="listing-meta">
+                            <span class="listing-price">$45<span>/bag</span></span>
+                            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> Portland, OR</span>
+                        </div>
+                        <div class="listing-footer">
+                            <span class="listing-seller">
+                                <i class="fas fa-leaf"></i>
+                                <span>Green Earth Organics</span>
+                            </span>
+                            <span class="listing-rating">⭐ 4.9 (234 reviews)</span>
+                        </div>
+                        <div class="listing-specs">
+                            <span class="spec-tag"><i class="fas fa-leaf"></i> OMRI Certified</span>
+                            <span class="spec-tag"><i class="fas fa-weight-hanging"></i> 50lb bag</span>
+                            <span class="spec-tag"><i class="fas fa-truck"></i> Bulk discount</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Vegetable Seeds">
+                        <span class="listing-badge trending">BEST SELLER</span>
+                    </div>
+                    <div class="listing-info">
+                        <h3 class="listing-title">Heirloom Vegetable Seed Bundle</h3>
+                        <p class="listing-description">20 varieties of heirloom vegetable seeds, non-GMO, high germination</p>
+                        <div class="listing-meta">
+                            <span class="listing-price">$65</span>
+                            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> Madison, WI</span>
+                        </div>
+                        <div class="listing-footer">
+                            <span class="listing-seller">
+                                <i class="fas fa-seedling"></i>
+                                <span>Heritage Seeds Co.</span>
+                            </span>
+                            <span class="listing-rating">⭐ 4.8 (312 reviews)</span>
+                        </div>
+                        <div class="listing-specs">
+                            <span class="spec-tag"><i class="fas fa-heart"></i> Heirloom</span>
+                            <span class="spec-tag"><i class="fas fa-leaf"></i> Non-GMO</span>
+                            <span class="spec-tag"><i class="fas fa-box"></i> 20 varieties</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pesticides">
+                        <span class="listing-badge new">ECO-FRIENDLY</span>
+                    </div>
+                    <div class="listing-info">
+                        <h3 class="listing-title">Natural Pesticide - Neem Oil Concentrate</h3>
+                        <p class="listing-description">Organic neem oil, safe for bees and beneficial insects</p>
+                        <div class="listing-meta">
+                            <span class="listing-price">$28<span>/gallon</span></span>
+                            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> Boulder, CO</span>
+                        </div>
+                        <div class="listing-footer">
+                            <span class="listing-seller">
+                                <i class="fas fa-bug"></i>
+                                <span>Eco Pest Control</span>
+                            </span>
+                            <span class="listing-rating">⭐ 4.7 (189 reviews)</span>
+                        </div>
+                        <div class="listing-specs">
+                            <span class="spec-tag"><i class="fas fa-leaf"></i> Organic</span>
+                            <span class="spec-tag"><i class="fas fa-bug"></i> Broad spectrum</span>
+                            <span class="spec-tag"><i class="fas fa-tint"></i> Concentrate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Grain Seeds">
+                        <span class="listing-badge trending">HIGH YIELD</span>
+                    </div>
+                    <div class="listing-info">
+                        <h3 class="listing-title">Hybrid Corn Seeds - 50lb bag</h3>
+                        <p class="listing-description">High-yield hybrid corn seeds, drought-resistant, treated</p>
+                        <div class="listing-meta">
+                            <span class="listing-price">$180<span>/bag</span></span>
+                            <span class="listing-location"><i class="fas fa-map-marker-alt"></i> Omaha, NE</span>
+                        </div>
+                        <div class="listing-footer">
+                            <span class="listing-seller">
+                                <i class="fas fa-wheat-alt"></i>
+                                <span>Midwest Seed Supply</span>
+                            </span>
+                            <span class="listing-rating">⭐ 4.9 (156 reviews)</span>
+                        </div>
+                        <div class="listing-specs">
+                            <span class="spec-tag"><i class="fas fa-chart-line"></i> High yield</span>
+                            <span class="spec-tag"><i class="fas fa-tint"></i> Drought-resistant</span>
+                            <span class="spec-tag"><i class="fas fa-weight-hanging"></i> 50lb bag</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="load-more">
+                <button class="btn btn-primary" id="loadMoreBtn">
+                    <i class="fas fa-sync-alt"></i> Load More Supplies
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="post-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Sell Your Supplies</h2>
+                <p>Have seeds, fertilizers, or farm supplies to sell? List them for free and reach thousands of farmers.</p>
+                <a href="{{ url_for('farmers.post_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Post Your Supplies
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .farmers-page {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+    .page-header { color: white; }
+    .header-background { padding: 2rem 0; border-radius: 0 0 20px 20px; }
+    .header-content { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    .header-main { text-align: center; }
+    .header-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .dashboard-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.4; }
+    .header-stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; }
+    .stat { text-align: center; }
+    .stat-number { display: block; font-size: 1.8rem; font-weight: 700; }
+    .stat-label { display: block; font-size: 0.9rem; opacity: 0.9; margin-top: 0.3rem; }
+    .categories-scroll-section { padding: 2rem 0; }
+    .section-title { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #1f2937; }
+    .section-subtitle { text-align: center; color: #6b7280; margin-bottom: 2rem; font-size: 1.1rem; }
+    .categories-scroll-container { position: relative; margin: 2rem 0; max-width: 1200px; margin-left: auto; margin-right: auto; }
+    .categories-scroll { display: flex; gap: 1rem; padding: 1rem 0; overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .categories-scroll::-webkit-scrollbar { display: none; }
+    .scroll-control { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; opacity: 0; transition: all 0.3s ease; font-size: 1.2rem; color: #22c55e; }
+    .left-scroll { left: -20px; }
+    .right-scroll { right: -20px; }
+    .categories-scroll-container:hover .scroll-control { opacity: 1; }
+    .scroll-control:hover { background: #22c55e; color: white; transform: translateY(-50%) scale(1.1); }
+
+    /* ===== FIX: no underline on category cards ===== */
+    .category-card {
+        flex: 0 0 200px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;  /* ← removes underline */
+    }
+    .category-card .category-title {
+        text-decoration: none;  /* ← extra safety */
+    }
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.15);
+        border-color: #22c55e;
+    }
+
+    .category-image { height: 120px; position: relative; overflow: hidden; }
+    .category-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .category-card:hover .category-image img { transform: scale(1.05); }
+    .category-content { padding: 1rem; text-align: center; background: white; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .category-divider { width: 40px; height: 2px; background: #22c55e; margin: 0 auto 0.8rem auto; border-radius: 2px; transition: width 0.3s ease; }
+    .category-card:hover .category-divider { width: 60px; }
+    .category-title { font-size: 1rem; font-weight: 700; margin: 0 0 0.3rem; color: #1f2937; }
+    .category-count { display: inline-block; padding: 0.2rem 0.6rem; background: #dcfce7; color: #15803d; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-top: 0.3rem; transition: all 0.3s ease; }
+    .category-card:hover .category-count { background: #22c55e; color: white; transform: scale(1.05); }
+
+    .search-sort-section { background: white; padding: 2rem 0; margin-top: 1rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin: 0 auto 2rem; max-width: 1200px; }
+    .search-sort-container { display: flex; flex-direction: column; gap: 1.5rem; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    .search-box { position: relative; display: flex; gap: 1rem; }
+    .search-box i { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: #6b7280; z-index: 2; }
+    .search-input { flex: 1; padding: 1rem 1.5rem 1rem 3.5rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; }
+    .search-input:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1); }
+    .search-btn { padding: 1rem 2rem; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
+    .search-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3); }
+    .filter-dropdowns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .filter-select, .sort-select { padding: 0.8rem 2rem 0.8rem 1rem; border: 2px solid #e5e7eb; border-radius: 8px; background: white; font-size: 0.9rem; cursor: pointer; flex: 1; }
+    .listings-section { padding: 3rem 0; }
+    .listings-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+    .listing-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; }
+    .listing-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .listing-image { height: 200px; position: relative; overflow: hidden; }
+    .listing-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .listing-card:hover .listing-image img { transform: scale(1.05); }
+    .listing-badge { position: absolute; top: 1rem; right: 1rem; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+    .listing-badge.featured { background: #22c55e; color: white; }
+    .listing-badge.trending { background: #f59e0b; color: white; }
+    .listing-badge.new { background: #10b981; color: white; }
+    .listing-info { padding: 1.5rem; }
+    .listing-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; color: #1f2937; }
+    .listing-description { color: #6b7280; font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.4; }
+    .listing-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .listing-price { font-size: 1.3rem; font-weight: 700; color: #15803d; }
+    .listing-price span { font-size: 0.8rem; font-weight: 400; color: #6b7280; }
+    .listing-location { color: #6b7280; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem; }
+    .listing-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; border-top: 1px solid #e5e7eb; margin-bottom: 0.8rem; }
+    .listing-seller { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #1f2937; font-weight: 500; }
+    .listing-rating { font-size: 0.8rem; color: #f59e0b; font-weight: 600; }
+    .listing-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .spec-tag { background: #f1f5f9; color: #475569; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 500; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .load-more { text-align: center; margin-top: 3rem; }
+    .load-more .btn { padding: 1rem 2.5rem; font-size: 1.1rem; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; color: white; border-radius: 40px; cursor: pointer; }
+    .load-more .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3); }
+    .post-cta { background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white; padding: 4rem 0; margin-top: 3rem; text-align: center; border-radius: 20px 20px 0 0; }
+    .cta-content { max-width: 600px; margin: 0 auto; padding: 0 1rem; }
+    .cta-content h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .cta-content p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem; }
+    .cta-content .btn { background: white; color: #22c55e; border: none; padding: 1rem 2.5rem; font-weight: 600; font-size: 1.1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; border-radius: 40px; }
+    .cta-content .btn:hover { background: #f0fdf4; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2); }
+    @media (max-width: 768px) { .listings-grid { grid-template-columns: 1fr; } .category-card { flex: 0 0 160px; } .scroll-control { display: none; } .header-title { font-size: 1.8rem; } }
+    @media (max-width: 480px) { .category-card { flex: 0 0 140px; } .header-title { font-size: 1.5rem; } }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const scrollContainer = document.querySelector('.categories-scroll-container');
+        if (scrollContainer) {
+            const scrollElement = scrollContainer.querySelector('.categories-scroll');
+            const leftBtn = scrollContainer.querySelector('.left-scroll');
+            const rightBtn = scrollContainer.querySelector('.right-scroll');
+            if (scrollElement) {
+                const scrollAmount = 300;
+                if (leftBtn) leftBtn.addEventListener('click', () => scrollElement.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
+                if (rightBtn) rightBtn.addEventListener('click', () => scrollElement.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
+            }
+        }
+        document.querySelectorAll('.listing-card').forEach(card => {
+            card.addEventListener('click', function() { alert(`Viewing details for ${this.querySelector('.listing-title').textContent}`); });
+        });
+        const loadMoreBtn = document.querySelector('#loadMoreBtn');
+        if (loadMoreBtn) loadMoreBtn.addEventListener('click', function() { this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...'; this.disabled = true; setTimeout(() => { this.innerHTML = '<i class="fas fa-sync-alt"></i> Load More Supplies'; this.disabled = false; alert('More supplies loaded!'); }, 1500); });
+    });
+</script>
+{% endblock %}

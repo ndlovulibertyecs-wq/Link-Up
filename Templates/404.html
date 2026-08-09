@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found - Link-Up{% endblock %}
+{% block content %}
+<div style="text-align: center; padding: 5rem 2rem; min-height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <h1 style="font-size: 6rem; margin: 0; color: #3b82f6;">404</h1>
+    <p style="font-size: 1.5rem; color: #6b7280; margin: 1rem 0;">Oops! The page you're looking for doesn't exist.</p>
+    <p style="color: #9ca3af; margin-bottom: 2rem;">It might have been moved or you may have typed the wrong address.</p>
+    <a href="{{ url_for('dashboard') }}" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 0.8rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+        Go to Homepage
+    </a>
+</div>
+{% endblock %}

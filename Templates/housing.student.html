@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Student Accommodation - Housing | Link-Up{% endblock %}
+
+{% block content %}
+<div class="electronics-page">
+    <div class="page-header">
+        <div class="header-background" style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="header-title">Student Accommodation</h1>
+                        <p class="dashboard-subtitle">Studio apartments, shared rooms, residence halls, and student housing near campus</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="brand-scroll-section">
+        <div class="container">
+            <div class="brand-scroll-container">
+                <div class="scroll-control left-scroll">&#8249;</div>
+                <div class="brand-scroll-wrapper">
+                    <div class="brand-buttons">
+                        <a href="{{ url_for('housing.student') }}" class="brand-btn {% if not selected_brand %}active{% endif %}">All <span class="brand-count">{{ listings|length if listings else 0 }}</span></a>
+                        {% for brand in brands %}
+                        {% set brand_count = namespace(count=0) %}
+                        {% for listing in listings if listing.brand == brand %}{% set brand_count.count = brand_count.count + 1 %}{% endfor %}
+                        <a href="{{ url_for('housing.student', brand=brand) }}" class="brand-btn {% if selected_brand == brand %}active{% endif %}">{{ brand }} <span class="brand-count">{{ brand_count.count }}</span></a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="scroll-control right-scroll">&#8250;</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instagram-grid-section">
+        <div class="container">
+            <div class="grid-header">
+                <h2 class="section-title" id="filter-title">{% if selected_brand %}{{ selected_brand }} Student Accommodation{% else %}All Student Accommodation{% endif %}</h2>
+                <p class="section-subtitle" id="filter-subtitle">{% if selected_brand %}Browse {{ selected_brand }} options{% else %}Find the perfect student housing near campus{% endif %}</p>
+            </div>
+            <div class="instagram-grid-three-col" id="instagram-grid">
+                {% if listings %}
+                    {% for listing in listings %}
+                    <div class="instagram-card-three-col" data-brand="{{ listing.brand|lower if listing.brand else '' }}">
+                        <div class="instagram-image-three-col">
+                            {% if listing.images %}<img src="{{ listing.images.split(',')[0] if ',' in listing.images else listing.images }}" alt="{{ listing.title }}" class="grid-image-three-col">
+                            {% else %}<img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Student Accommodation" class="grid-image-three-col">{% endif %}
+                            <div class="image-overlay-three-col"><div class="overlay-content-three-col"><span class="price-badge-three-col">${{ "%.2f"|format(listing.price) }}/mo</span>{% if not listing.is_sold %}<span class="status-badge-three-col available">Available</span>{% else %}<span class="status-badge-three-col sold">Rented</span>{% endif %}</div></div>
+                            <a href="{{ url_for('marketplace.listing_detail', listing_id=listing.id) }}" class="quick-view-btn-three-col"><i class="fas fa-eye"></i> Quick View</a>
+                        </div>
+                        <div class="instagram-footer-three-col">
+                            <div class="listing-info-three-col"><h4 class="listing-title-three-col">{{ listing.title[:30] }}{% if listing.title|length > 30 %}...{% endif %}</h4><p class="listing-location-three-col"><i class="fas fa-map-marker-alt"></i> {{ listing.location }}</p></div>
+                            <div class="listing-actions-three-col"><button class="like-btn-three-col" data-listing-id="{{ listing.id }}"><i class="far fa-heart"></i></button><button class="share-btn-three-col" data-listing-id="{{ listing.id }}"><i class="fas fa-share-alt"></i></button></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-grid-state-three-col"><div class="empty-icon-three-col"><i class="fas fa-graduation-cap"></i></div><h3>No student accommodation listed yet</h3><p>{% if selected_brand %}No {{ selected_brand }} options available right now.{% else %}Be the first to list student housing!{% endif %}</p>{% if not selected_brand %}<a href="{{ url_for('listings.housing') }}" class="btn btn-primary"><i class="fas fa-plus"></i> List Your Property</a>{% endif %}</div>
+                {% endif %}
+            </div>
+            {% if listings and listings|length >= 12 %}<div class="load-more-container-three-col"><button class="load-more-btn-three-col" id="load-more-btn"><i class="fas fa-sync-alt"></i> Load More</button></div>{% endif %}
+        </div>
+    </div>
+
+    <div class="create-cta"><div class="container"><div class="cta-content"><h2>List Student Accommodation</h2><p>Rent out your student-friendly property to students.</p><a href="{{ url_for('listings.housing') }}" class="btn btn-primary"><i class="fas fa-plus"></i> List Your Property</a></div></div></div>
+</div>
+
+<style>
+    /* Full blue style block – identical to other housing templates */
+    .instagram-grid-section { padding: 20px 0 40px; }
+    .grid-header { text-align: center; margin-bottom: 30px; }
+    .section-title { font-size: 1.8rem; font-weight: 700; color: #1f2937; margin-bottom: 8px; }
+    .section-subtitle { color: #6b7280; font-size: 1rem; }
+    .instagram-grid-three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+    @media (max-width: 1200px) { .instagram-grid-three-col { gap: 10px; } }
+    @media (max-width: 768px) { .instagram-grid-three-col { gap: 8px; } }
+    @media (max-width: 480px) { .instagram-grid-three-col { gap: 6px; } }
+    .instagram-card-three-col { background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; position: relative; aspect-ratio: 3/4; }
+    .instagram-card-three-col:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; }
+    .instagram-image-three-col { position: relative; width: 100%; height: 65%; overflow: hidden; background: #f3f4f6; }
+    .grid-image-three-col { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .instagram-card-three-col:hover .grid-image-three-col { transform: scale(1.05); }
+    .image-overlay-three-col { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7)); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .instagram-card-three-col:hover .image-overlay-three-col { opacity: 1; }
+    .overlay-content-three-col { position: absolute; bottom: 8px; left: 8px; right: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .price-badge-three-col { background: #0ea5e9; color: white; padding: 3px 8px; border-radius: 12px; font-weight: 600; font-size: 0.8rem; white-space: nowrap; }
+    .status-badge-three-col { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+    .status-badge-three-col.available { background: #10b981; color: white; }
+    .status-badge-three-col.sold { background: #ef4444; color: white; }
+    .quick-view-btn-three-col { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); background: rgba(255,255,255,0.95); color: #1f2937; padding: 6px 12px; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 0.8rem; opacity: 0; transition: all 0.3s; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .instagram-card-three-col:hover .quick-view-btn-three-col { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .quick-view-btn-three-col:hover { background: white; color: #0ea5e9; transform: translate(-50%, -50%) scale(1.05); }
+    @media (max-width: 400px) { .quick-view-btn-three-col { display: none; } }
+    .instagram-footer-three-col { padding: 10px; display: flex; justify-content: space-between; align-items: center; background: white; height: 35%; border-top: 1px solid #f3f4f6; }
+    .listing-info-three-col { flex: 1; min-width: 0; }
+    .listing-title-three-col { font-size: 0.85rem; font-weight: 600; margin: 0 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .listing-location-three-col { font-size: 0.75rem; color: #6b7280; margin: 0; display: flex; align-items: center; gap: 3px; }
+    .listing-actions-three-col { display: flex; gap: 6px; flex-shrink: 0; margin-left: 8px; }
+    .like-btn-three-col, .share-btn-three-col { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 0.9rem; padding: 3px; transition: color 0.2s; min-width: 24px; min-height: 24px; display: flex; align-items: center; justify-content: center; }
+    .like-btn-three-col:hover { color: #ef4444; }
+    .share-btn-three-col:hover { color: #3b82f6; }
+    @media (max-width: 480px) {
+        .like-btn-three-col, .share-btn-three-col { font-size: 0.8rem; padding: 2px; min-width: 20px; min-height: 20px; }
+        .listing-title-three-col { font-size: 0.8rem; }
+        .listing-location-three-col { font-size: 0.7rem; }
+    }
+    .brand-scroll-section { background: white; padding: 15px 0; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .brand-scroll-container { display: flex; align-items: center; gap: 10px; }
+    .scroll-control { background: #0ea5e9; border: none; border-radius: 6px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: white; font-size: 1.5rem; font-weight: 300; line-height: 1; transition: all 0.2s; flex-shrink: 0; }
+    .scroll-control:hover { background: #0369a1; }
+    .brand-scroll-wrapper { flex: 1; overflow: hidden; }
+    .brand-buttons { display: flex; gap: 8px; padding: 5px 0; white-space: nowrap; overflow-x: auto; scroll-behavior: smooth; }
+    .brand-buttons::-webkit-scrollbar { height: 4px; }
+    .brand-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #f3f4f6; border: 2px solid transparent; border-radius: 20px; color: #4b5563; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: all 0.2s; flex-shrink: 0; }
+    .brand-btn.active { background: #0ea5e9; color: white; border-color: #0ea5e9; }
+    .brand-count { background: rgba(0,0,0,0.08); padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; }
+    .brand-btn.active .brand-count { background: rgba(255,255,255,0.2); }
+    @media (max-width: 768px) {
+        .brand-btn { padding: 6px 12px; font-size: 0.85rem; }
+        .brand-count { padding: 1px 6px; font-size: 0.75rem; }
+        .scroll-control { width: 32px; height: 32px; }
+    }
+    @media (max-width: 480px) {
+        .brand-btn { padding: 5px 10px; font-size: 0.8rem; }
+        .brand-count { padding: 1px 4px; font-size: 0.7rem; }
+    }
+    .empty-grid-state-three-col { grid-column: 1 / -1; text-align: center; padding: 40px 15px; }
+    .empty-icon-three-col { font-size: 2.5rem; color: #d1d5db; margin-bottom: 15px; }
+    .load-more-container-three-col { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+    .load-more-btn-three-col { background: white; border: 2px solid #0ea5e9; color: #0ea5e9; padding: 10px 25px; border-radius: 25px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; }
+    .load-more-btn-three-col:hover { background: #0ea5e9; color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14,165,233,0.3); }
+    .create-cta { background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); padding: 30px 0; margin-top: 30px; border-radius: 12px; color: white; }
+    .create-cta .btn-primary { background: white; color: #0ea5e9; border: none; padding: 12px 30px; border-radius: 40px; font-weight: 600; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+    .create-cta .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,255,255,0.2); background: #e0f2fe; }
+    .container { width: 100%; max-width: 1200px; padding-left: 15px; padding-right: 15px; margin: 0 auto; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 30px; color: white; text-decoration: none; font-size: 0.9rem; margin-bottom: 1rem; }
+    .header-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .header-title { font-size: 2rem; color: white; margin-bottom: 0.5rem; }
+    .dashboard-subtitle { color: rgba(255,255,255,0.9); margin-bottom: 1rem; }
+    .header-stats { display: flex; justify-content: center; gap: 2rem; }
+    .stat { text-align: center; }
+    .stat-number { display: block; font-size: 1.5rem; font-weight: bold; color: white; }
+    .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandButtons = document.querySelector('.brand-buttons');
+        const leftScroll = document.querySelector('.left-scroll');
+        const rightScroll = document.querySelector('.right-scroll');
+        if (brandButtons && leftScroll && rightScroll) {
+            const scrollAmount = 200;
+            const updateButtons = () => {
+                leftScroll.style.opacity = brandButtons.scrollLeft > 0 ? '1' : '0.5';
+                leftScroll.style.pointerEvents = brandButtons.scrollLeft > 0 ? 'auto' : 'none';
+                const maxScroll = brandButtons.scrollWidth - brandButtons.clientWidth;
+                rightScroll.style.opacity = brandButtons.scrollLeft < maxScroll - 10 ? '1' : '0.5';
+                rightScroll.style.pointerEvents = brandButtons.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
+            };
+            leftScroll.addEventListener('click', () => brandButtons.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
+            rightScroll.addEventListener('click', () => brandButtons.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
+            brandButtons.addEventListener('scroll', updateButtons);
+            window.addEventListener('resize', updateButtons);
+            updateButtons();
+            const active = document.querySelector('.brand-btn.active');
+            if (active) {
+                setTimeout(() => {
+                    const left = active.offsetLeft - (brandButtons.clientWidth / 2) + (active.offsetWidth / 2);
+                    brandButtons.scrollTo({ left: left, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+        document.querySelectorAll('.like-btn-three-col').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far'); icon.classList.add('fas');
+                    this.style.color = '#ef4444';
+                } else {
+                    icon.classList.remove('fas'); icon.classList.add('far');
+                    this.style.color = '#9ca3af';
+                }
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => this.style.transform = '', 200);
+            });
+        });
+        document.querySelectorAll('.share-btn-three-col').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = window.location.origin + '/marketplace/' + this.getAttribute('data-listing-id');
+                if (navigator.share) navigator.share({ title: 'Check this out', url: url });
+                else navigator.clipboard.writeText(url).then(() => alert('Link copied!'));
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => this.style.transform = '', 200);
+            });
+        });
+        const loadBtn = document.getElementById('load-more-btn');
+        if (loadBtn) {
+            loadBtn.addEventListener('click', function() {
+                const orig = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                this.disabled = true;
+                setTimeout(() => {
+                    this.innerHTML = orig;
+                    this.disabled = false;
+                    alert('More listings would load here.');
+                }, 1500);
+            });
+        }
+        function updateActiveCount() {
+            const count = document.querySelectorAll('.instagram-card-three-col').length;
+            const el = document.getElementById('active-count');
+            if (el) el.textContent = count;
+        }
+        updateActiveCount();
+    });
+</script>
+{% endblock %}
