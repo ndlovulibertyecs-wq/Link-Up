@@ -1392,7 +1392,7 @@ def gaming():
 @marketplace_bp.route('/accessories')
 def accessories():
     selected_brand = request.args.get('brand', '')
-    brands = ['Phone Accessories', 'Laptop Accessories', 'Watches', 'Other']
+    brands = ['Phone Accessories', 'Laptop Accessories', 'Airpods', 'Earbuds/(pods)', 'Earphones', 'Headphones', 'Watches', 'Other']
     listings = []
     if selected_brand:
         try:
@@ -1424,7 +1424,7 @@ def tablets():
 @marketplace_bp.route('/home-tech')
 def home_tech():
     selected_brand = request.args.get('brand', '')
-    brands = ['Climate', 'Security', 'Lighting', 'Entertainment', 'Kitchen', 'Cleaning', 'Power', 'Other']
+    brands = ['Entertainment', 'Speakers', 'Soundbars', 'Climate', 'Security', 'Lighting', 'Kitchen', 'Cleaning', 'Power', 'Drones', 'Other']
     listings = []
     if selected_brand:
         try:
@@ -1470,7 +1470,7 @@ def fashion():
 @marketplace_bp.route('/fashion/bags')
 def bags():
     selected_brand = request.args.get('brand', '')
-    brands = ['Travelling Bags', 'Wallets', 'Sling Bags', 'Back Packs', 'Hand Bags']
+    brands = ['Travelling Bags', 'Wallets', 'Sling Bags', 'Back Packs', 'Hand Bags', 'Other']
 
     listings = []
     try:
@@ -1522,7 +1522,7 @@ def footwear():
     selected_brand = request.args.get('brand', '')
     brands = ['Sneakers', 'Loafers',
               'Sandals', 'Boots',
-              'Crocs', 'School Shoes', 'Slippers & flip-flops', 'Ballet flats', 'Heels & Wedges']
+              'Crocs', 'Slides', 'School Shoes', 'Slippers & flip-flops', 'Ballet flats', 'Heels & Wedges']
 
     listings = []
     try:

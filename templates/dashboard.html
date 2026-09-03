@@ -254,8 +254,8 @@
                         <div class="phase-image"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Student accommodation" loading="lazy"></div>
                         <div class="phase-content">
                             <div class="category-divider"></div>
-                            <h4>Student accommodation</h4>
-                            <p>Buy or rent homes</p>
+                            <h4>Students Accommodation</h4>
+                            <p>Rent rooms for accomodation</p>
                             <span class="phase-count">136 listings</span>
                         </div>
                     </a>
@@ -263,7 +263,7 @@
                         <div class="phase-image"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vacation rentals" loading="lazy"></div>
                         <div class="phase-content">
                             <div class="category-divider"></div>
-                            <h4>Vacation rentals</h4>
+                            <h4>Vacation Rentals</h4>
                             <p>Short-term stays</p>
                             <span class="phase-count">98 listings</span>
                         </div>
@@ -670,7 +670,12 @@
     top: 64px;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 1001;
+    transition: top 0.3s ease;
+}
+
+.header-gradient.scrolled {
+    top: 0;
 }
 
 .dashboard-header.mb-5 {
@@ -1075,6 +1080,20 @@
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+ // Header slide on scroll
+    var headerGradient = document.querySelector('.header-gradient');
+
+    function updateHeaderScrollState() {
+        if (window.scrollY > 0) {
+            headerGradient.classList.add('scrolled');
+        } else {
+            headerGradient.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', updateHeaderScrollState);
+    updateHeaderScrollState();
 
     // Phase 1 / Phase 2 section filtering
     var phaseToggles = document.querySelectorAll('.phase-toggle');
