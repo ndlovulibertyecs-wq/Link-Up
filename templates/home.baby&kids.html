@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Baby & Kids - Home & Garden | Link-Up{% endblock %}
+
+{% block content %}
+{% set cat_route = 'marketplace.baby_kids' %}
+{% set cat_heading = 'Baby & Kids' %}
+{% set cat_title = 'Baby & Kids' %}
+{% set cat_noun = 'baby & kids items' %}
+{% set cat_subtitle = 'Safe and playful essentials for babies and children' %}
+{% set cat_gradient = 'linear-gradient(135deg, #10b981 0%, #047857 100%)' %}
+{% set cat_accent = '#059669' %}
+{% set cat_accent_dark = '#047857' %}
+{% set cat_icon = 'fa-baby' %}
+{% set spec_fields = [
+    {'label': 'Age', 'key': 'age'},
+    {'label': 'Material', 'key': 'material'},
+    {'label': 'Colour', 'key': 'colour'},
+    {'label': 'Safety', 'key': 'safety'}
+] %}
+{% set cat_images = [
+    '1555854871-db586f45256a',
+    '1522708323590-d24dbb6b0267',
+    '1560448204-e02f11c3d0e2',
+    '1511895426328-dc8714191300',
+    '1586023492125-27b2c045efd7'
+] %}
+{% include "_listing_category.html" %}
+{% endblock %}

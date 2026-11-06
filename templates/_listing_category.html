@@ -1,0 +1,937 @@
+{#
+  Shared category listing page: header, brand filter, 2-column cards,
+  client info modal (specs + picture gallery).
+  Expected context:
+    cat_route, cat_title, cat_subtitle, cat_gradient,
+    cat_accent, cat_accent_dark, cat_noun, cat_icon,
+    brands, brand_counts, total_count, selected_brand, listings, spec_fields
+#}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="lt-root" style="--accent: {{ cat_accent }}; --accent-dark: {{ cat_accent_dark }};">
+    <div class="electronics-page">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-background" style="background: {{ cat_gradient }};">
+                <h1 class="header-title">{{ cat_heading }}</h1>
+                <p class="dashboard-subtitle">{{ cat_subtitle }}</p>
+            </div>
+        </div>
+
+        <!-- Single Row Scrollable Brand Buttons -->
+        <div class="brand-scroll-section">
+            <div class="brand-scroll-container">
+                <div class="scroll-control left-scroll">&#8249;</div>
+
+                <div class="brand-scroll-wrapper">
+                    <div class="brand-buttons" id="brandButtons">
+                        <a href="{{ url_for(cat_route) }}"
+                           class="brand-btn {% if not selected_brand %}active{% endif %}">
+                            All Brands
+                            <span class="brand-count">{{ total_count }}</span>
+                        </a>
+
+                        {% for brand in brands %}
+                        <a href="{{ url_for(cat_route, brand=brand) }}"
+                           class="brand-btn {% if selected_brand == brand %}active{% endif %}">
+                            {{ brand }}
+                            <span class="brand-count">{{ brand_counts.get(brand, 0) }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="scroll-control right-scroll">&#8250;</div>
+            </div>
+        </div>
+
+        <!-- 2-Column Listings Grid -->
+        <div class="listings-section">
+            <div class="grid-header">
+                <h2 class="section-title">
+                    {% if selected_brand %}{{ selected_brand }} {{ cat_title }}{% else %}All {{ cat_title }}{% endif %}
+                </h2>
+                <p class="section-subtitle">
+                    {% if selected_brand %}
+                    Browse all {{ selected_brand }} {{ cat_noun }}
+                    {% else %}
+                    Browse {{ cat_noun }} from all brands
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="listings-grid" id="listingsGrid"></div>
+        </div>
+
+        <!-- Create Listing CTA -->
+        <div class="create-cta">
+            <div class="cta-content">
+                <h2>Sell on Link-Up</h2>
+                <p>Have an item to sell? List it for free and reach thousands of buyers.</p>
+                <a href="{{ url_for('marketplace.create_listing') }}" class="btn-create">
+                    <i class="fas fa-plus"></i> Create Listing
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Modal: specs + pictures for the client -->
+    <div class="info-modal-overlay" id="infoModal">
+        <div class="info-modal">
+            <div class="info-modal-header">
+                <h2 id="infoModalTitle">Item Details</h2>
+                <button class="info-modal-close" onclick="closeInfo()">&times;</button>
+            </div>
+
+            <div class="gallery">
+                <img class="info-modal-image" id="infoModalImage" src="" alt="Item">
+                <button class="gal-btn gal-prev" onclick="prevImg()" title="Previous picture">&#8249;</button>
+                <button class="gal-btn gal-next" onclick="nextImg()" title="Next picture">&#8250;</button>
+                <span class="gal-counter" id="infoModalCounter">1 / 1</span>
+                <div class="gal-dots" id="infoModalDots"></div>
+            </div>
+
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Make / Model</div>
+                <div class="info-modal-detail-value" id="infoModalMake">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Price</div>
+                <div class="info-modal-detail-value price" id="infoModalPrice">-</div>
+            </div>
+
+            <div class="spec-grid">
+                {% for f in spec_fields %}
+                <div class="spec-item">
+                    <div class="spec-label">{{ f.label }}</div>
+                    <div class="spec-value" data-spec-key="{{ f.key }}">-</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Condition</div>
+                <div class="info-modal-detail-value" id="infoModalCondition">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Status</div>
+                <div class="info-modal-detail-value" id="infoModalStatus">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Category</div>
+                <div class="info-modal-detail-value" id="infoModalCategory">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Section</div>
+                <div class="info-modal-detail-value" id="infoModalSection">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Location</div>
+                <div class="info-modal-detail-value" id="infoModalLocation">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Created</div>
+                <div class="info-modal-detail-value" id="infoModalCreated">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Description</div>
+                <div class="info-modal-detail-value" id="infoModalDescription">-</div>
+            </div>
+            <div class="info-modal-detail">
+                <div class="info-modal-detail-label">Likes</div>
+                <div class="info-modal-detail-value" id="infoModalLikes">-</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .header-background {
+        color: #fff;
+        border-radius: 14px;
+        padding: 2rem 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .header-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 0.3rem;
+    }
+
+    .dashboard-subtitle {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    /* Single Row Scrollable Brand Buttons */
+    .brand-scroll-section {
+        background: #fff;
+        padding: 14px 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        position: sticky;
+        top: 70px;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
+    }
+
+    .brand-scroll-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 12px;
+    }
+
+    .scroll-control {
+        background: var(--accent);
+        border: none;
+        border-radius: 6px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .scroll-control:hover {
+        background: var(--accent-dark);
+    }
+
+    .brand-scroll-wrapper {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .brand-buttons {
+        display: flex;
+        gap: 8px;
+        padding: 5px 0;
+        white-space: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .brand-buttons::-webkit-scrollbar {
+        display: none;
+    }
+
+    .brand-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        background: #f3f4f6;
+        border: 2px solid transparent;
+        border-radius: 20px;
+        color: #4b5563;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .brand-btn:hover {
+        background: #e5e7eb;
+        color: #1f2937;
+        text-decoration: none;
+    }
+
+    .brand-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+    }
+
+    .brand-count {
+        background: rgba(0, 0, 0, 0.08);
+        padding: 1px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .brand-btn.active .brand-count {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Grid Header */
+    .listings-section {
+        padding-bottom: 20px;
+    }
+
+    .grid-header {
+        text-align: center;
+        margin: 10px 0 20px;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 6px;
+    }
+
+    .section-subtitle {
+        color: #6b7280;
+        margin: 0;
+    }
+
+    /* 2-Column Listings Grid */
+    .listings-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .listing-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .listing-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .listing-image {
+        height: 340px;
+        overflow: hidden;
+        position: relative;
+        background: #f3f4f6;
+    }
+
+    .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .listing-card:hover .listing-image img {
+        transform: scale(1.05);
+    }
+
+    .section-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: var(--accent);
+        color: #fff;
+    }
+
+    .price-tag {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.82rem;
+    }
+
+    .listing-content {
+        padding: 0.8rem 1rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .listing-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 0.3rem;
+        line-height: 1.2;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .listing-category {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 0 0 0.3rem;
+    }
+
+    .listing-description {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 0 0 0.6rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* FOOTER: status · likes · (i) · city — all on one row */
+    .listing-footer {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: nowrap;
+        margin-top: auto;
+        padding-top: 0.5rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .listing-status {
+        padding: 0.18rem 0.5rem;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .listing-status.available {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    .listing-status.sold {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .listing-likes {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .listing-likes:hover,
+    .listing-likes.liked {
+        color: #dc2626;
+    }
+
+    .btn-info {
+        background: transparent;
+        border: none;
+        color: var(--accent);
+        font-size: 1.25rem;
+        padding: 0 0.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        flex-shrink: 0;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-info:hover {
+        color: var(--accent-dark);
+    }
+
+    .listing-city {
+        font-size: 0.8rem;
+        color: #4b5563;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: auto;
+        min-width: 0;
+    }
+
+    .listing-city i {
+        color: #ef4444;
+        margin-right: 3px;
+    }
+
+    /* Empty state */
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem 1.5rem;
+        background: #fff;
+        border: 2px dashed #e5e7eb;
+        border-radius: 12px;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        color: #9ca3af;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.3rem;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        margin: 0;
+    }
+
+    /* Info Modal */
+    .info-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 10001;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .info-modal-overlay.active {
+        display: flex;
+    }
+
+    .info-modal {
+        background: #fff;
+        border-radius: 16px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 24px;
+        animation: ltSlideUp 0.3s ease;
+    }
+
+    @keyframes ltSlideUp {
+        from { transform: translateY(40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .info-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .info-modal-header h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .info-modal-close {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #6b7280;
+        line-height: 1;
+    }
+
+    .info-modal-close:hover {
+        color: #1f2937;
+    }
+
+    /* Image gallery */
+    .gallery {
+        position: relative;
+        margin-bottom: 16px;
+    }
+
+    .info-modal-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+        background: #f3f4f6;
+    }
+
+    .gal-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-size: 1.4rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        padding: 0;
+    }
+
+    .gal-btn:hover {
+        background: rgba(0, 0, 0, 0.75);
+    }
+
+    .gal-prev { left: 8px; }
+    .gal-next { right: 8px; }
+
+    .gal-counter {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.15rem 0.55rem;
+        border-radius: 12px;
+    }
+
+    .gal-dots {
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+        right: 0;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .gal-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.55);
+        cursor: pointer;
+    }
+
+    .gal-dot.active {
+        background: #fff;
+    }
+
+    /* Spec grid */
+    .spec-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 14px;
+        margin-bottom: 14px;
+    }
+
+    .spec-item {
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        border-radius: 8px;
+        padding: 8px 10px;
+    }
+
+    .spec-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .spec-value {
+        font-size: 0.95rem;
+        color: #1f2937;
+    }
+
+    .info-modal-detail {
+        margin-bottom: 10px;
+    }
+
+    .info-modal-detail-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    .info-modal-detail-value {
+        font-size: 1rem;
+        color: #1f2937;
+    }
+
+    .info-modal-detail-value.price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--accent);
+    }
+
+    .cond-pill {
+        display: inline-block;
+        padding: 0.12rem 0.55rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .cond-new { background: #d1fae5; color: #047857; }
+    .cond-likenew { background: #dbeafe; color: #1d4ed8; }
+    .cond-used { background: #fef3c7; color: #b45309; }
+
+    /* Create Listing CTA */
+    .create-cta {
+        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+        padding: 30px 15px;
+        margin: 10px 0 30px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .cta-content h2 {
+        color: #1f2937;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    }
+
+    .cta-content p {
+        color: #6b7280;
+        margin-bottom: 20px;
+    }
+
+    .btn-create {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: var(--accent);
+        color: #fff;
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-create:hover {
+        background: var(--accent-dark);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-title { font-size: 1.7rem; }
+        .listings-grid { gap: 0.7rem; }
+        .listing-image { height: 280px; }
+        .listing-title { font-size: 0.9rem; }
+        .listing-status { font-size: 0.55rem; padding: 0.14rem 0.4rem; }
+        .listing-likes { font-size: 0.72rem; }
+        .listing-city { font-size: 0.65rem; }
+        .btn-info { font-size: 1.1rem; }
+        .brand-btn { padding: 6px 12px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+        .header-title { font-size: 1.4rem; }
+        .listings-grid { gap: 0.5rem; }
+        .listing-image { height: 240px; }
+        .listing-content { padding: 0.6rem 0.7rem; }
+        .listing-title { font-size: 0.85rem; }
+        .listing-footer { gap: 0.25rem; }
+        .brand-btn { padding: 5px 10px; font-size: 0.8rem; }
+        .info-modal { padding: 16px; }
+        .info-modal-image { height: 190px; }
+    }
+</style>
+
+<script>
+    // Listings passed from the route (already filtered by the selected brand, if any)
+    const LISTINGS = {{ listings|tojson }};
+    const EMPTY_ICON = "{{ cat_icon }}";
+    const EMPTY_NOUN = "{{ cat_noun }}";
+
+    // Product photos come from the public Unsplash CDN (same source used
+    // elsewhere in the app) so they load in any browser. Each category page
+    // supplies its own pool of photo ids via `cat_images`.
+    const IMAGES = {{ (cat_images | default([])) | tojson }};
+    const FALLBACK_IMAGES = ["1498049794561-7780e7231661"];
+    const IMAGE_POOL = IMAGES.length ? IMAGES : FALLBACK_IMAGES;
+
+    function imgUrl(seed) {
+        const id = IMAGE_POOL[Math.abs(seed) % IMAGE_POOL.length];
+        return "https://images.unsplash.com/photo-" + id +
+            "?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80";
+    }
+
+    // Each item advertises up to 5 pictures
+    function galleryImages(seed) {
+        const n = Math.min(5, IMAGE_POOL.length);
+        const out = [];
+        for (let k = 0; k < n; k++) out.push(imgUrl(seed + k));
+        return out;
+    }
+
+    let galImages = [];
+    let galIndex = 0;
+
+    function condClass(c) {
+        if (c === "New") return "cond-new";
+        if (c === "Like New") return "cond-likenew";
+        return "cond-used";
+    }
+
+    function cardHTML(l) {
+        return `
+        <div class="listing-card">
+            <div class="listing-image">
+                <img src="${imgUrl(l.id)}" alt="${l.title}" loading="lazy">
+                <span class="section-badge">${l.brand}</span>
+                <span class="price-tag">${l.price}</span>
+            </div>
+            <div class="listing-content">
+                <h3 class="listing-title">${l.title}</h3>
+                <p class="listing-category"><i class="fas fa-tag"></i> ${l.category}</p>
+                <p class="listing-description">${l.description}</p>
+                <div class="listing-footer">
+                    <span class="listing-status ${l.status}">${l.status}</span>
+                    <span class="listing-likes ${l.liked ? 'liked' : ''}" onclick="toggleLike(${l.id})">
+                        <i class="${l.liked ? 'fas' : 'far'} fa-heart"></i> <span id="likes-count-${l.id}">${l.likes || 0}</span>
+                    </span>
+                    <button class="btn-info" onclick="openInfoModal(${l.id})" title="View specs">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <span class="listing-city"><i class="fas fa-map-marker-alt"></i>${l.location}</span>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    function renderGrid() {
+        const grid = document.getElementById('listingsGrid');
+        if (!LISTINGS.length) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas ${EMPTY_ICON}"></i>
+                    <h3>No ${EMPTY_NOUN} found</h3>
+                    <p>Nothing available for this brand right now.</p>
+                </div>`;
+            return;
+        }
+        grid.innerHTML = LISTINGS.map(cardHTML).join('');
+    }
+
+    function toggleLike(id) {
+        const l = LISTINGS.find(x => x.id === id);
+        if (!l) return;
+        l.liked = !l.liked;
+        l.likes = l.liked ? (l.likes || 0) + 1 : (l.likes || 0) - 1;
+
+        const el = document.getElementById('likes-count-' + id);
+        const btn = el ? el.closest('.listing-likes') : null;
+        if (el) el.textContent = l.likes;
+        if (btn) {
+            btn.classList.toggle('liked', l.liked);
+            btn.querySelector('i').className = (l.liked ? 'fas' : 'far') + ' fa-heart';
+        }
+    }
+
+    function showImg() {
+        if (!galImages.length) return;
+        document.getElementById('infoModalImage').src = galImages[galIndex];
+        document.getElementById('infoModalCounter').textContent = (galIndex + 1) + ' / ' + galImages.length;
+        document.getElementById('infoModalDots').innerHTML = galImages
+            .map((_, i) => '<span class="gal-dot ' + (i === galIndex ? 'active' : '') + '" onclick="showImgAt(' + i + ')"></span>')
+            .join('');
+    }
+
+    function showImgAt(i) { galIndex = i; showImg(); }
+    function nextImg() { galIndex = (galIndex + 1) % galImages.length; showImg(); }
+    function prevImg() { galIndex = (galIndex - 1 + galImages.length) % galImages.length; showImg(); }
+
+    function openInfoModal(id) {
+        const l = LISTINGS.find(x => x.id === id);
+        if (!l) return;
+
+        document.getElementById('infoModalTitle').textContent = l.title;
+        galImages = galleryImages(l.id);
+        galIndex = 0;
+        showImg();
+
+        document.getElementById('infoModalMake').textContent = l.brand + ' · ' + l.title;
+        document.getElementById('infoModalPrice').textContent = l.price;
+        document.querySelectorAll('#infoModal [data-spec-key]').forEach(function (el) {
+            el.textContent = l[el.getAttribute('data-spec-key')] || '-';
+        });
+        document.getElementById('infoModalCondition').innerHTML =
+            '<span class="cond-pill ' + condClass(l.condition) + '">' + l.condition + '</span>';
+        document.getElementById('infoModalStatus').textContent = l.status.charAt(0).toUpperCase() + l.status.slice(1);
+        document.getElementById('infoModalCategory').textContent = l.category;
+        document.getElementById('infoModalSection').textContent = l.section;
+        document.getElementById('infoModalLocation').textContent = l.location;
+        document.getElementById('infoModalCreated').textContent = l.created;
+        document.getElementById('infoModalDescription').textContent = l.description;
+        document.getElementById('infoModalLikes').textContent = l.likes || 0;
+
+        document.getElementById('infoModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInfo() {
+        document.getElementById('infoModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        renderGrid();
+
+        const brandButtons = document.getElementById('brandButtons');
+        const leftScroll = document.querySelector('.left-scroll');
+        const rightScroll = document.querySelector('.right-scroll');
+        const scrollAmount = 200;
+
+        if (brandButtons) {
+            if (leftScroll) leftScroll.addEventListener('click', () => brandButtons.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
+            if (rightScroll) rightScroll.addEventListener('click', () => brandButtons.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
+        }
+
+        const overlay = document.getElementById('infoModal');
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeInfo();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (!overlay.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') nextImg();
+            if (e.key === 'ArrowLeft') prevImg();
+            if (e.key === 'Escape') closeInfo();
+        });
+    });
+</script>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Lighting - Home & Garden | Link-Up{% endblock %}
+
+{% block content %}
+{% set cat_route = 'marketplace.lighting' %}
+{% set cat_heading = 'Lighting' %}
+{% set cat_title = 'Lighting' %}
+{% set cat_noun = 'lighting' %}
+{% set cat_subtitle = 'Brighten every room with stylish lighting solutions' %}
+{% set cat_gradient = 'linear-gradient(135deg, #10b981 0%, #047857 100%)' %}
+{% set cat_accent = '#059669' %}
+{% set cat_accent_dark = '#047857' %}
+{% set cat_icon = 'fa-lightbulb' %}
+{% set spec_fields = [
+    {'label': 'Type', 'key': 'type'},
+    {'label': 'Wattage', 'key': 'wattage'},
+    {'label': 'Colour', 'key': 'colour'},
+    {'label': 'Warranty', 'key': 'warranty'}
+] %}
+{% set cat_images = [
+    '1621905251918-48416bd8575a',
+    '1581094794329-c8112a89af12',
+    '1589939705384-5185137a7f0f',
+    '1586023492125-27b2c045efd7',
+    '1560448204-e02f11c3d0e2'
+] %}
+{% include "_listing_category.html" %}
+{% endblock %}

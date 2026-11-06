@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Pet Supplies - Home & Garden | Link-Up{% endblock %}
+
+{% block content %}
+{% set cat_route = 'marketplace.pet_supplies' %}
+{% set cat_heading = 'Pet Supplies' %}
+{% set cat_title = 'Pet Supplies' %}
+{% set cat_noun = 'pet supplies' %}
+{% set cat_subtitle = 'Food, toys and gear to keep your pets happy' %}
+{% set cat_gradient = 'linear-gradient(135deg, #10b981 0%, #047857 100%)' %}
+{% set cat_accent = '#059669' %}
+{% set cat_accent_dark = '#047857' %}
+{% set cat_icon = 'fa-paw' %}
+{% set spec_fields = [
+    {'label': 'Type', 'key': 'type'},
+    {'label': 'Pet', 'key': 'pet'},
+    {'label': 'Material', 'key': 'material'},
+    {'label': 'Warranty', 'key': 'warranty'}
+] %}
+{% set cat_images = [
+    '1569920505660-1b3b71c4e0c3',
+    '1484557985045-edf25e08da73',
+    '1535241749838-299277b6305f',
+    '1516467500423-2d0aecb099e5',
+    '1500595046743-cd271d694d30'
+] %}
+{% include "_listing_category.html" %}
+{% endblock %}

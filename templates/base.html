@@ -59,6 +59,17 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        /* Keep featured/trending product & listing grids at 2 columns on mobile
+           instead of collapsing to a single column. */
+        @media (max-width: 768px) {
+            .products-grid,
+            .listings-grid,
+            .professionals-grid,
+            .trainers-grid,
+            .classes-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
     </style>
 </head>
 <body>

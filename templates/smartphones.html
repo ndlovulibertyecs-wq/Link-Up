@@ -3,492 +3,216 @@
 {% block title %}Smartphones - Electronics | Link-Up{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <div class="electronics-page">
     <!-- Header -->
     <div class="page-header">
-        <div class="header-background" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">
-            <div class="container">
-                <div class="header-content">
-                    <div class="header-main">
-                        <h1 class="header-title">Smartphones</h1>
-                        <p class="dashboard-subtitle">Latest smartphones, great deals, and amazing features</p>
-                    </div>
-                </div>
-            </div>
+        <div class="header-background">
+            <h1 class="header-title">Smartphones</h1>
+            <p class="dashboard-subtitle">Latest smartphones, great deals, and amazing features</p>
         </div>
     </div>
 
     <!-- Single Row Scrollable Brand Buttons -->
     <div class="brand-scroll-section">
-        <div class="container">
-            <div class="brand-scroll-container">
-                <div class="scroll-control left-scroll">
-                   &#8249;
+        <div class="brand-scroll-container">
+            <div class="scroll-control left-scroll">&#8249;</div>
+
+            <div class="brand-scroll-wrapper">
+                <div class="brand-buttons" id="brandButtons">
+                    <!-- All Brands Button -->
+                    <a href="{{ url_for('marketplace.smartphones') }}"
+                       class="brand-btn {% if not selected_brand %}active{% endif %}">
+                        All Brands
+                        <span class="brand-count">{{ total_count }}</span>
+                    </a>
+
+                    <!-- Dynamic Brand Buttons -->
+                    {% for brand in brands %}
+                    <a href="{{ url_for('marketplace.smartphones', brand=brand) }}"
+                       class="brand-btn {% if selected_brand == brand %}active{% endif %}">
+                        {{ brand }}
+                        <span class="brand-count">{{ brand_counts.get(brand, 0) }}</span>
+                    </a>
+                    {% endfor %}
                 </div>
-
-                <div class="brand-scroll-wrapper">
-                    <div class="brand-buttons">
-                        <!-- All Brands Button -->
-                        <a href="{{ url_for('marketplace.smartphones') }}"
-                           class="brand-btn {% if not selected_brand %}active{% endif %}">
-                            All Brands
-                            <span class="brand-count">{{ listings|length if listings else 0 }}</span>
-                        </a>
-
-                        <!-- Dynamic Brand Buttons -->
-                        {% for brand in brands %}
-                        <a href="{{ url_for('marketplace.smartphones', brand=brand) }}"
-                           class="brand-btn {% if selected_brand == brand %}active{% endif %}">
-                            {{ brand }}
-                            {% set brand_count = namespace(count=0) %}
-                            {% for listing in listings if listing.brand == brand %}
-                                {% set brand_count.count = brand_count.count + 1 %}
-                            {% endfor %}
-                            <span class="brand-count">{{ brand_count.count }}</span>
-                        </a>
-                        {% endfor %}
-                    </div>
-                </div>
-
-               <div class="scroll-control right-scroll">
-                  &#8250;
-               </div>
             </div>
+
+            <div class="scroll-control right-scroll">&#8250;</div>
         </div>
     </div>
 
-    <!-- Instagram Style Products Grid - ALWAYS 3 COLUMNS -->
-    <div class="instagram-grid-section">
-        <div class="container">
-            <div class="grid-header">
-                <h2 class="section-title" id="filter-title">
-                    {% if selected_brand %}
-                    {{ selected_brand }} Smartphones
-                    {% else %}
-                    All Smartphones
-                    {% endif %}
-                </h2>
-                <p class="section-subtitle" id="filter-subtitle">
-                    {% if selected_brand %}
-                    Browse all {{ selected_brand }} smartphones
-                    {% else %}
-                    Browse smartphones from all brands
-                    {% endif %}
-                </p>
-            </div>
-
-            <!-- Instagram Style Grid - ALWAYS 3 COLUMNS -->
-            <div class="instagram-grid-three-col" id="instagram-grid">
-                {% if listings %}
-                    {% for listing in listings %}
-                    <div class="instagram-card-three-col" data-brand="{{ listing.brand|lower if listing.brand else '' }}">
-                        <div class="instagram-image-three-col">
-                            {% if listing.images %}
-                            <img src="{{ listing.images.split(',')[0] if ',' in listing.images else listing.images }}"
-                                 alt="{{ listing.title }}"
-                                 class="grid-image-three-col">
-                            {% else %}
-                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                                 alt="{{ listing.title }}"
-                                 class="grid-image-three-col">
-                            {% endif %}
-
-                            <!-- Image Overlay -->
-                            <div class="image-overlay-three-col">
-                                <div class="overlay-content-three-col">
-                                    <span class="price-badge-three-col">${{ "%.2f"|format(listing.price) }}</span>
-                                    {% if not listing.is_sold %}
-                                    <span class="status-badge-three-col available">Available</span>
-                                    {% else %}
-                                    <span class="status-badge-three-col sold">Sold</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <!-- Quick View Button -->
-                            <a href="{{ url_for('marketplace.listing_detail', listing_id=listing.id) }}"
-                               class="quick-view-btn-three-col">
-                                <i class="fas fa-eye"></i> Quick View
-                            </a>
-                        </div>
-
-                        <!-- Card Footer -->
-                        <div class="instagram-footer-three-col">
-                            <div class="listing-info-three-col">
-                                <h4 class="listing-title-three-col">{{ listing.title[:30] }}{% if listing.title|length > 30 %}...{% endif %}</h4>
-                                <p class="listing-location-three-col">
-                                    <i class="fas fa-map-marker-alt"></i> {{ listing.location }}
-                                </p>
-                            </div>
-                            <div class="listing-actions-three-col">
-                                <button class="like-btn-three-col" data-listing-id="{{ listing.id }}">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <button class="share-btn-three-col" data-listing-id="{{ listing.id }}">
-                                    <i class="fas fa-share-alt"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+    <!-- 2-Column Listings Grid -->
+    <div class="listings-section">
+        <div class="grid-header">
+            <h2 class="section-title">
+                {% if selected_brand %}{{ selected_brand }} Smartphones{% else %}All Smartphones{% endif %}
+            </h2>
+            <p class="section-subtitle">
+                {% if selected_brand %}
+                Browse all {{ selected_brand }} smartphones
                 {% else %}
-                    <!-- Empty State -->
-                    <div class="empty-grid-state-three-col">
-                        <div class="empty-icon-three-col">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>No smartphones found</h3>
-                        <p>
-                            {% if selected_brand %}
-                            No {{ selected_brand }} smartphones available right now.
-                            {% else %}
-                            No smartphones available. Be the first to list one!
-                            {% endif %}
-                        </p>
-                        {% if not selected_brand %}
-                        <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
-                            <i class="fas fa-plus"></i> List Your Smartphone
-                        </a>
-                        {% endif %}
-                    </div>
+                Browse smartphones from all brands
                 {% endif %}
-            </div>
-
-            <!-- Load More (for infinite scroll feel) -->
-            {% if listings and listings|length >= 12 %}
-            <div class="load-more-container-three-col">
-                <button class="load-more-btn-three-col" id="load-more-btn">
-                    <i class="fas fa-sync-alt"></i> Load More
-                </button>
-            </div>
-            {% endif %}
+            </p>
         </div>
+
+        <div class="listings-grid" id="listingsGrid"></div>
     </div>
 
     <!-- Create Listing CTA -->
     <div class="create-cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Sell Your Smartphone</h2>
-                <p>Have a phone to sell? List it for free and reach thousands of buyers.</p>
-                <a href="{{ url_for('marketplace.create_listing') }}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Create Listing
-                </a>
+        <div class="cta-content">
+            <h2>Sell Your Smartphone</h2>
+            <p>Have a phone to sell? List it for free and reach thousands of buyers.</p>
+            <a href="{{ url_for('marketplace.create_listing') }}" class="btn-create">
+                <i class="fas fa-plus"></i> Create Listing
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Info Modal: device specs + pictures for the client -->
+<div class="info-modal-overlay" id="infoModal">
+    <div class="info-modal">
+        <div class="info-modal-header">
+            <h2 id="infoModalTitle">Device Details</h2>
+            <button class="info-modal-close" onclick="closeInfo()">&times;</button>
+        </div>
+
+        <div class="gallery">
+            <img class="info-modal-image" id="infoModalImage" src="" alt="Device">
+            <button class="gal-btn gal-prev" onclick="prevImg()" title="Previous picture">&#8249;</button>
+            <button class="gal-btn gal-next" onclick="nextImg()" title="Next picture">&#8250;</button>
+            <span class="gal-counter" id="infoModalCounter">1 / 1</span>
+            <div class="gal-dots" id="infoModalDots"></div>
+        </div>
+
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Make / Model</div>
+            <div class="info-modal-detail-value" id="infoModalMake">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Price</div>
+            <div class="info-modal-detail-value price" id="infoModalPrice">-</div>
+        </div>
+
+        <div class="spec-grid">
+            <div class="spec-item">
+                <div class="spec-label">Year</div>
+                <div class="spec-value" id="infoModalYear">-</div>
             </div>
+            <div class="spec-item">
+                <div class="spec-label">Storage</div>
+                <div class="spec-value" id="infoModalStorage">-</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">RAM</div>
+                <div class="spec-value" id="infoModalRam">-</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Warranty</div>
+                <div class="spec-value" id="infoModalWarranty">-</div>
+            </div>
+        </div>
+
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Condition</div>
+            <div class="info-modal-detail-value" id="infoModalCondition">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Status</div>
+            <div class="info-modal-detail-value" id="infoModalStatus">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Category</div>
+            <div class="info-modal-detail-value" id="infoModalCategory">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Section</div>
+            <div class="info-modal-detail-value" id="infoModalSection">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Location</div>
+            <div class="info-modal-detail-value" id="infoModalLocation">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Created</div>
+            <div class="info-modal-detail-value" id="infoModalCreated">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Description</div>
+            <div class="info-modal-detail-value" id="infoModalDescription">-</div>
+        </div>
+        <div class="info-modal-detail">
+            <div class="info-modal-detail-label">Likes</div>
+            <div class="info-modal-detail-value" id="infoModalLikes">-</div>
         </div>
     </div>
 </div>
 
 <style>
-    /* Instagram Grid Styles - ALWAYS 3 COLUMNS */
-    .instagram-grid-section {
-        padding: 20px 0 40px;
+    /* Header */
+    .header-background {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: #fff;
+        border-radius: 14px;
+        padding: 2rem 1.5rem;
+        margin: 1rem 0;
     }
 
-    .grid-header {
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .section-title {
-        font-size: 1.8rem;
+    .header-title {
+        font-size: 2rem;
         font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 8px;
+        margin: 0 0 0.3rem;
     }
 
-    .section-subtitle {
-        color: #6b7280;
-        font-size: 1rem;
-    }
-
-    /* Instagram Grid Layout - ALWAYS 3 COLUMNS */
-    .instagram-grid-three-col {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    /* Ensure 3 columns on ALL devices - columns will shrink but remain 3 */
-    @media (max-width: 1200px) {
-        .instagram-grid-three-col {
-            gap: 10px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .instagram-grid-three-col {
-            gap: 8px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .instagram-grid-three-col {
-            gap: 6px;
-        }
-    }
-
-    /* Instagram Card - Scales with 3-column layout */
-    .instagram-card-three-col {
-        background: white;
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        aspect-ratio: 3/4; /* Maintain card proportion */
-    }
-
-    .instagram-card-three-col:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        z-index: 10;
-    }
-
-    /* Image Container */
-    .instagram-image-three-col {
-        position: relative;
-        width: 100%;
-        height: 65%; /* Fixed percentage of card height */
-        overflow: hidden;
-        background: #f3f4f6;
-    }
-
-    .grid-image-three-col {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-    .instagram-card-three-col:hover .grid-image-three-col {
-        transform: scale(1.05);
-    }
-
-    /* Image Overlay */
-    .image-overlay-three-col {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.7));
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-    }
-
-    .instagram-card-three-col:hover .image-overlay-three-col {
-        opacity: 1;
-    }
-
-    .overlay-content-three-col {
-        position: absolute;
-        bottom: 8px;
-        left: 8px;
-        right: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .price-badge-three-col {
-        background: #3b82f6;
-        color: white;
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: 0.8rem;
-        white-space: nowrap;
-    }
-
-    .status-badge-three-col {
-        padding: 3px 8px;
-        border-radius: 12px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        white-space: nowrap;
-    }
-
-    .status-badge-three-col.available {
-        background: #10b981;
-        color: white;
-    }
-
-    .status-badge-three-col.sold {
-        background: #ef4444;
-        color: white;
-    }
-
-    /* Quick View Button - Hidden on very small screens */
-    .quick-view-btn-three-col {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
-        background: rgba(255, 255, 255, 0.95);
-        color: #1f2937;
-        padding: 6px 12px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.8rem;
-        opacity: 0;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .instagram-card-three-col:hover .quick-view-btn-three-col {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    .quick-view-btn-three-col:hover {
-        background: white;
-        color: #3b82f6;
-        transform: translate(-50%, -50%) scale(1.05);
-    }
-
-    /* Hide quick view on very small screens */
-    @media (max-width: 400px) {
-        .quick-view-btn-three-col {
-            display: none;
-        }
-    }
-
-    /* Instagram Footer */
-    .instagram-footer-three-col {
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: white;
-        height: 35%; /* Fixed percentage of card height */
-        border-top: 1px solid #f3f4f6;
-    }
-
-    .listing-info-three-col {
-        flex: 1;
-        min-width: 0; /* Allow text truncation */
-    }
-
-    .listing-title-three-col {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #1f2937;
-        margin: 0 0 4px 0;
-        line-height: 1.2;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .listing-location-three-col {
-        font-size: 0.75rem;
-        color: #6b7280;
+    .dashboard-subtitle {
         margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 3px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .listing-actions-three-col {
-        display: flex;
-        gap: 6px;
-        flex-shrink: 0;
-        margin-left: 8px;
-    }
-
-    .like-btn-three-col, .share-btn-three-col {
-        background: none;
-        border: none;
-        color: #9ca3af;
-        cursor: pointer;
-        font-size: 0.9rem;
-        padding: 3px;
-        transition: color 0.2s ease;
-        min-width: 24px;
-        min-height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .like-btn-three-col:hover {
-        color: #ef4444;
-    }
-
-    .share-btn-three-col:hover {
-        color: #3b82f6;
-    }
-
-    /* Make buttons smaller on mobile */
-    @media (max-width: 480px) {
-        .like-btn-three-col, .share-btn-three-col {
-            font-size: 0.8rem;
-            padding: 2px;
-            min-width: 20px;
-            min-height: 20px;
-        }
-
-        .listing-title-three-col {
-            font-size: 0.8rem;
-        }
-
-        .listing-location-three-col {
-            font-size: 0.7rem;
-        }
+        opacity: 0.9;
     }
 
     /* Single Row Scrollable Brand Buttons */
     .brand-scroll-section {
-        background: white;
-        padding: 15px 0;
-        border-bottom: 1px solid #e5e7eb;
+        background: #fff;
+        padding: 14px 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
         position: sticky;
-        top: 0;
+        top: 70px;
         z-index: 100;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 1.5rem;
     }
 
     .brand-scroll-container {
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 0 12px;
     }
 
     .scroll-control {
-    background: #3b82f6;
-    border: none;
-    border-radius: 6px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: 300;
-    line-height: 1;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
+        background: #3b82f6;
+        border: none;
+        border-radius: 6px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 300;
+        line-height: 1;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+    }
 
-.scroll-control:hover {
-    background: #1d4ed8;
-    color: white;
-}
-
-.scroll-control i {
-    font-size: 1rem;
-}
+    .scroll-control:hover {
+        background: #1d4ed8;
+    }
 
     .brand-scroll-wrapper {
         flex: 1;
@@ -499,9 +223,13 @@
         display: flex;
         gap: 8px;
         padding: 5px 0;
-        transition: transform 0.3s ease;
         white-space: nowrap;
         overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .brand-buttons::-webkit-scrollbar {
+        display: none;
     }
 
     .brand-btn {
@@ -520,110 +248,481 @@
         flex-shrink: 0;
     }
 
+    .brand-btn:hover {
+        background: #e5e7eb;
+        color: #1f2937;
+        text-decoration: none;
+    }
+
+    .brand-btn.active {
+        background: #3b82f6;
+        color: #fff;
+        border-color: #3b82f6;
+    }
+
+    .brand-count {
+        background: rgba(0, 0, 0, 0.08);
+        padding: 1px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
     }
 
     .brand-btn.active .brand-count {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.25);
     }
 
-    /* Make brand buttons responsive */
-    @media (max-width: 768px) {
-        .brand-btn {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-        }
-
-        .brand-count {
-            padding: 1px 6px;
-            font-size: 0.75rem;
-        }
-
-        .scroll-control {
-            width: 32px;
-            height: 32px;
-        }
+    /* Grid Header */
+    .listings-section {
+        padding-bottom: 20px;
     }
 
-    @media (max-width: 480px) {
-        .brand-btn {
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
-
-        .brand-count {
-            padding: 1px 4px;
-            font-size: 0.7rem;
-        }
-    }
-
-    /* Empty State */
-    .empty-grid-state-three-col {
-        grid-column: 1 / -1;
+    .grid-header {
         text-align: center;
-        padding: 40px 15px;
+        margin: 10px 0 20px;
     }
 
-    .empty-grid-state-three-col .empty-icon-three-col {
-        font-size: 2.5rem;
-        color: #d1d5db;
-        margin-bottom: 15px;
-    }
-
-    .empty-grid-state-three-col h3 {
+    .section-title {
+        font-size: 1.6rem;
+        font-weight: 700;
         color: #1f2937;
-        margin-bottom: 10px;
-        font-size: 1.3rem;
+        margin: 0 0 6px;
     }
 
-    .empty-grid-state-three-col p {
-        color: #3b82f6;
-        margin-bottom: 20px;
-        max-width: 300px;
-        margin-left: auto;
-        margin-right: auto;
-        font-size: 0.9rem;
+    .section-subtitle {
+        color: #6b7280;
+        margin: 0;
     }
 
-    /* Load More Button */
-    .load-more-container-three-col {
-        text-align: center;
-        margin-top: 30px;
-        padding-top: 20px;
+    /* 2-Column Listings Grid */
+    .listings-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .listing-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+        border: 1px solid #e5e7eb;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .listing-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .listing-image {
+        height: 340px;
+        overflow: hidden;
+        position: relative;
+        background: #f3f4f6;
+    }
+
+    .listing-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .listing-card:hover .listing-image img {
+        transform: scale(1.05);
+    }
+
+    .section-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: #4f46e5;
+        color: #fff;
+    }
+
+    .price-tag {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        background: rgba(37, 99, 235, 0.95);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.82rem;
+    }
+
+    .listing-content {
+        padding: 0.8rem 1rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .listing-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 0.3rem;
+        line-height: 1.2;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .listing-category {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 0 0 0.3rem;
+    }
+
+    .listing-description {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 0 0 0.6rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* FOOTER: status · likes · (i) · city — all on one row */
+    .listing-footer {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        flex-wrap: nowrap;
+        margin-top: auto;
+        padding-top: 0.5rem;
         border-top: 1px solid #e5e7eb;
     }
 
-    .load-more-btn-three-col {
-        background: white;
-        border: 2px solid #3b82f6;
-        color: #3b82f6;
-        padding: 10px 25px;
-        border-radius: 25px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
+    .listing-status {
+        padding: 0.18rem 0.5rem;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
-    .load-more-btn-three-col:hover {
-        background: #3b82f6;
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    .listing-status.available {
+        background: #d1fae5;
+        color: #047857;
     }
+
+    .listing-status.sold {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .listing-likes {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+        font-size: 0.8rem;
+        color: #6b7280;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .listing-likes:hover,
+    .listing-likes.liked {
+        color: #dc2626;
+    }
+
+    .btn-info {
+        background: transparent;
+        border: none;
+        color: #3b82f6;
+        font-size: 1.25rem;
+        padding: 0 0.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        flex-shrink: 0;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-info:hover {
+        color: #1d4ed8;
+    }
+
+    .listing-city {
+        font-size: 0.8rem;
+        color: #4b5563;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: auto;
+        min-width: 0;
+    }
+
+    .listing-city i {
+        color: #ef4444;
+        margin-right: 3px;
+    }
+
+    /* Empty state */
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem 1.5rem;
+        background: #fff;
+        border: 2px dashed #e5e7eb;
+        border-radius: 12px;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        color: #9ca3af;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.3rem;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+        color: #6b7280;
+        margin: 0;
+    }
+
+    /* Info Modal */
+    .info-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 10001;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .info-modal-overlay.active {
+        display: flex;
+    }
+
+    .info-modal {
+        background: #fff;
+        border-radius: 16px;
+        max-width: 500px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 24px;
+        animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .info-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .info-modal-header h2 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .info-modal-close {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: #6b7280;
+        line-height: 1;
+    }
+
+    .info-modal-close:hover {
+        color: #1f2937;
+    }
+
+    /* Image gallery */
+    .gallery {
+        position: relative;
+        margin-bottom: 16px;
+    }
+
+    .info-modal-image {
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+        background: #f3f4f6;
+    }
+
+    .gal-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 34px;
+        height: 34px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-size: 1.4rem;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease;
+        padding: 0;
+    }
+
+    .gal-btn:hover {
+        background: rgba(0, 0, 0, 0.75);
+    }
+
+    .gal-prev { left: 8px; }
+    .gal-next { right: 8px; }
+
+    .gal-counter {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.15rem 0.55rem;
+        border-radius: 12px;
+    }
+
+    .gal-dots {
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+        right: 0;
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .gal-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.55);
+        cursor: pointer;
+    }
+
+    .gal-dot.active {
+        background: #fff;
+    }
+
+    /* Spec grid */
+    .spec-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 14px;
+        margin-bottom: 14px;
+    }
+
+    .spec-item {
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+        border-radius: 8px;
+        padding: 8px 10px;
+    }
+
+    .spec-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .spec-value {
+        font-size: 0.95rem;
+        color: #1f2937;
+    }
+
+    .info-modal-detail {
+        margin-bottom: 10px;
+    }
+
+    .info-modal-detail-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+    }
+
+    .info-modal-detail-value {
+        font-size: 1rem;
+        color: #1f2937;
+    }
+
+    .info-modal-detail-value.price {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2563eb;
+    }
+
+    .cond-pill {
+        display: inline-block;
+        padding: 0.12rem 0.55rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .cond-new { background: #d1fae5; color: #047857; }
+    .cond-likenew { background: #dbeafe; color: #1d4ed8; }
+    .cond-used { background: #fef3c7; color: #b45309; }
 
     /* Create Listing CTA */
     .create-cta {
         background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-        padding: 30px 0;
-        margin-top: 30px;
+        padding: 30px 15px;
+        margin: 10px 0 30px;
         border-radius: 12px;
+        text-align: center;
     }
 
     .cta-content {
-        text-align: center;
         max-width: 600px;
         margin: 0 auto;
-        padding: 0 15px;
     }
 
     .cta-content h2 {
@@ -635,308 +734,219 @@
     .cta-content p {
         color: #6b7280;
         margin-bottom: 20px;
-        font-size: 1rem;
     }
 
-    /* Responsive adjustments for very small screens */
-    @media (max-width: 320px) {
-        .instagram-grid-three-col {
-            gap: 4px;
-        }
-
-        .instagram-card-three-col {
-            border-radius: 4px;
-        }
-
-        .instagram-footer-three-col {
-            padding: 6px;
-        }
-
-        .listing-title-three-col {
-            font-size: 0.75rem;
-        }
-
-        .listing-location-three-col {
-            font-size: 0.65rem;
-        }
-
-        .price-badge-three-col,
-        .status-badge-three-col {
-            font-size: 0.65rem;
-            padding: 2px 6px;
-        }
+    .btn-create {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #2563eb;
+        color: #fff;
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
     }
 
-    /* Container responsiveness */
-    .container {
-        width: 100%;
-        max-width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-        margin: 0 auto;
+    .btn-create:hover {
+        background: #1d4ed8;
+        color: #fff;
+        transform: translateY(-2px);
     }
 
-    /* Ensure grid doesn't overflow on small screens */
-    .instagram-grid-three-col {
-        max-width: 100%;
-        overflow: hidden;
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-title { font-size: 1.7rem; }
+        .listings-grid { gap: 0.7rem; }
+        .listing-image { height: 280px; }
+        .listing-title { font-size: 0.9rem; }
+        .listing-status { font-size: 0.55rem; padding: 0.14rem 0.4rem; }
+        .listing-likes { font-size: 0.72rem; }
+        .listing-city { font-size: 0.65rem; }
+        .btn-info { font-size: 1.1rem; }
+        .brand-btn { padding: 6px 12px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+        .header-title { font-size: 1.4rem; }
+        .listings-grid { gap: 0.5rem; }
+        .listing-image { height: 240px; }
+        .listing-content { padding: 0.6rem 0.7rem; }
+        .listing-title { font-size: 0.85rem; }
+        .listing-footer { gap: 0.25rem; }
+        .brand-btn { padding: 5px 10px; font-size: 0.8rem; }
+        .info-modal { padding: 16px; }
+        .info-modal-image { height: 190px; }
     }
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Horizontal scrolling for brand buttons
-        const brandScrollContainer = document.querySelector('.brand-scroll-container');
-        const brandButtons = document.querySelector('.brand-buttons');
+    // Listings passed from the route (already filtered by the selected brand, if any)
+    const LISTINGS = {{ listings|tojson }};
+
+    // Product photos come from the public Unsplash CDN (same source used
+    // elsewhere in the app) so they load in any browser.
+    const IMAGES = [
+        "1511707171634-5f897ff02aa9",
+        "1484704849700-f032a568e944",
+        "1588872657578-7efd1f1555ed",
+        "1498049794561-7780e7231661",
+        "1523275335684-37898b6baf30"
+    ];
+
+    function imgUrl(seed) {
+        const id = IMAGES[Math.abs(seed) % IMAGES.length];
+        return "https://images.unsplash.com/photo-" + id +
+            "?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80";
+    }
+
+    // Each item advertises up to 5 pictures of the phone
+    function galleryImages(seed) {
+        const n = Math.min(5, IMAGES.length);
+        const out = [];
+        for (let k = 0; k < n; k++) out.push(imgUrl(seed + k));
+        return out;
+    }
+
+    let galImages = [];
+    let galIndex = 0;
+
+    function condClass(c) {
+        if (c === "New") return "cond-new";
+        if (c === "Like New") return "cond-likenew";
+        return "cond-used";
+    }
+
+    function cardHTML(l) {
+        return `
+        <div class="listing-card">
+            <div class="listing-image">
+                <img src="${imgUrl(l.id)}" alt="${l.title}" loading="lazy">
+                <span class="section-badge">${l.brand}</span>
+                <span class="price-tag">${l.price}</span>
+            </div>
+            <div class="listing-content">
+                <h3 class="listing-title">${l.title}</h3>
+                <p class="listing-category"><i class="fas fa-tag"></i> ${l.category}</p>
+                <p class="listing-description">${l.description}</p>
+                <div class="listing-footer">
+                    <span class="listing-status ${l.status}">${l.status}</span>
+                    <span class="listing-likes ${l.liked ? 'liked' : ''}" onclick="toggleLike(${l.id})">
+                        <i class="${l.liked ? 'fas' : 'far'} fa-heart"></i> <span id="likes-count-${l.id}">${l.likes || 0}</span>
+                    </span>
+                    <button class="btn-info" onclick="openInfoModal(${l.id})" title="View specs">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <span class="listing-city"><i class="fas fa-map-marker-alt"></i>${l.location}</span>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    function renderGrid() {
+        const grid = document.getElementById('listingsGrid');
+        if (!LISTINGS.length) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>No smartphones found</h3>
+                    <p>No phones available for this brand right now.</p>
+                </div>`;
+            return;
+        }
+        grid.innerHTML = LISTINGS.map(cardHTML).join('');
+    }
+
+    function toggleLike(id) {
+        const l = LISTINGS.find(x => x.id === id);
+        if (!l) return;
+        l.liked = !l.liked;
+        l.likes = l.liked ? (l.likes || 0) + 1 : (l.likes || 0) - 1;
+
+        const el = document.getElementById('likes-count-' + id);
+        const btn = el ? el.closest('.listing-likes') : null;
+        if (el) el.textContent = l.likes;
+        if (btn) {
+            btn.classList.toggle('liked', l.liked);
+            btn.querySelector('i').className = (l.liked ? 'fas' : 'far') + ' fa-heart';
+        }
+    }
+
+    function showImg() {
+        if (!galImages.length) return;
+        document.getElementById('infoModalImage').src = galImages[galIndex];
+        document.getElementById('infoModalCounter').textContent = (galIndex + 1) + ' / ' + galImages.length;
+        document.getElementById('infoModalDots').innerHTML = galImages
+            .map((_, i) => '<span class="gal-dot ' + (i === galIndex ? 'active' : '') + '" onclick="showImgAt(' + i + ')"></span>')
+            .join('');
+    }
+
+    function showImgAt(i) { galIndex = i; showImg(); }
+    function nextImg() { galIndex = (galIndex + 1) % galImages.length; showImg(); }
+    function prevImg() { galIndex = (galIndex - 1 + galImages.length) % galImages.length; showImg(); }
+
+    function openInfoModal(id) {
+        const l = LISTINGS.find(x => x.id === id);
+        if (!l) return;
+
+        document.getElementById('infoModalTitle').textContent = l.title;
+        galImages = galleryImages(l.id);
+        galIndex = 0;
+        showImg();
+
+        document.getElementById('infoModalMake').textContent = l.brand + ' · ' + l.title;
+        document.getElementById('infoModalPrice').textContent = l.price;
+        document.getElementById('infoModalYear').textContent = l.year;
+        document.getElementById('infoModalStorage').textContent = l.storage;
+        document.getElementById('infoModalRam').textContent = l.ram;
+        document.getElementById('infoModalWarranty').textContent = l.warranty;
+        document.getElementById('infoModalCondition').innerHTML =
+            '<span class="cond-pill ' + condClass(l.condition) + '">' + l.condition + '</span>';
+        document.getElementById('infoModalStatus').textContent = l.status.charAt(0).toUpperCase() + l.status.slice(1);
+        document.getElementById('infoModalCategory').textContent = l.category;
+        document.getElementById('infoModalSection').textContent = l.section;
+        document.getElementById('infoModalLocation').textContent = l.location;
+        document.getElementById('infoModalCreated').textContent = l.created;
+        document.getElementById('infoModalDescription').textContent = l.description;
+        document.getElementById('infoModalLikes').textContent = l.likes || 0;
+
+        document.getElementById('infoModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeInfo() {
+        document.getElementById('infoModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        renderGrid();
+
+        // Brand buttons horizontal scrolling
+        const brandButtons = document.getElementById('brandButtons');
         const leftScroll = document.querySelector('.left-scroll');
         const rightScroll = document.querySelector('.right-scroll');
+        const scrollAmount = 200;
 
-        if (brandScrollContainer && brandButtons) {
-            const scrollAmount = 200;
-
-            // Update scroll buttons visibility
-            const updateScrollButtons = () => {
-                if (!brandButtons) return;
-
-                const scrollWrapper = brandButtons.parentElement;
-                if (leftScroll) {
-                    leftScroll.style.opacity = brandButtons.scrollLeft > 0 ? '1' : '0.5';
-                    leftScroll.style.pointerEvents = brandButtons.scrollLeft > 0 ? 'auto' : 'none';
-                }
-
-                if (rightScroll) {
-                    const maxScroll = brandButtons.scrollWidth - scrollWrapper.clientWidth;
-                    rightScroll.style.opacity = brandButtons.scrollLeft < maxScroll - 10 ? '1' : '0.5';
-                    rightScroll.style.pointerEvents = brandButtons.scrollLeft < maxScroll - 10 ? 'auto' : 'none';
-                }
-            };
-
-            // Left scroll
-            if (leftScroll) {
-                leftScroll.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    brandButtons.scrollBy({
-                        left: -scrollAmount,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            // Right scroll
-            if (rightScroll) {
-                rightScroll.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    brandButtons.scrollBy({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
-                });
-            }
-
-            // Initialize scroll buttons
-            updateScrollButtons();
-
-            // Update on scroll
-            brandButtons.addEventListener('scroll', updateScrollButtons);
-            window.addEventListener('resize', updateScrollButtons);
-
-            // Auto-scroll to active brand button
-            const activeBrand = document.querySelector('.brand-btn.active');
-            if (activeBrand) {
-                setTimeout(() => {
-                    const scrollWrapper = brandButtons.parentElement;
-                    const buttonLeft = activeBrand.offsetLeft;
-                    const buttonWidth = activeBrand.offsetWidth;
-                    const wrapperWidth = scrollWrapper.clientWidth;
-
-                    brandButtons.scrollTo({
-                        left: buttonLeft - (wrapperWidth / 2) + (buttonWidth / 2),
-                        behavior: 'smooth'
-                    });
-                }, 300);
-            }
+        if (brandButtons) {
+            if (leftScroll) leftScroll.addEventListener('click', () => brandButtons.scrollBy({ left: -scrollAmount, behavior: 'smooth' }));
+            if (rightScroll) rightScroll.addEventListener('click', () => brandButtons.scrollBy({ left: scrollAmount, behavior: 'smooth' }));
         }
 
-        // Like button functionality
-        document.querySelectorAll('.like-btn-three-col').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const icon = this.querySelector('i');
-                const listingId = this.getAttribute('data-listing-id');
-
-                // Toggle like state
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    this.style.color = '#ef4444';
-
-                    // In a real app, you would send an AJAX request here
-                    console.log(`Liked listing ${listingId}`);
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    this.style.color = '#9ca3af';
-
-                    // In a real app, you would send an AJAX request here
-                    console.log(`Unliked listing ${listingId}`);
-                }
-
-                // Add animation
-                this.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 200);
-            });
+        // Modal: close on backdrop click
+        const overlay = document.getElementById('infoModal');
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeInfo();
         });
 
-        // Share button functionality
-        document.querySelectorAll('.share-btn-three-col').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const listingId = this.getAttribute('data-listing-id');
-                const listingUrl = window.location.origin + '/marketplace/' + listingId;
-
-                // In a real app, you would implement actual sharing
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Check out this smartphone!',
-                        text: 'I found this great smartphone on Link-Up',
-                        url: listingUrl
-                    });
-                } else {
-                    // Fallback: copy to clipboard
-                    navigator.clipboard.writeText(listingUrl).then(() => {
-                        alert('Link copied to clipboard!');
-                    });
-                }
-
-                // Add animation
-                this.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 200);
-            });
+        // Modal: keyboard navigation between pictures
+        document.addEventListener('keydown', function (e) {
+            if (!overlay.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') nextImg();
+            if (e.key === 'ArrowLeft') prevImg();
+            if (e.key === 'Escape') closeInfo();
         });
-
-        // Load more button
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', function() {
-                const originalHTML = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
-                this.disabled = true;
-
-                // Simulate loading more items
-                setTimeout(() => {
-                    this.innerHTML = originalHTML;
-                    this.disabled = false;
-
-                    // In a real app, you would fetch more items from the server
-                    // and append them to the grid
-                    alert('In a real implementation, this would load more smartphones from the server.');
-                }, 1500);
-            });
-        }
-
-        // Card hover effects
-        document.querySelectorAll('.instagram-card-three-col').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.zIndex = '10';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.zIndex = '1';
-            });
-        });
-
-        // Update active count based on filtered listings
-        function updateActiveCount() {
-            const activeCount = document.querySelectorAll('.instagram-card-three-col:not([style*="display: none"])').length;
-            const activeCountElement = document.getElementById('active-count');
-            if (activeCountElement) {
-                activeCountElement.textContent = activeCount;
-            }
-        }
-
-        // Initialize active count
-        updateActiveCount();
-
-        // Adjust grid gap based on screen size
-        function adjustGridGap() {
-            const grid = document.querySelector('.instagram-grid-three-col');
-            if (!grid) return;
-
-            const screenWidth = window.innerWidth;
-            if (screenWidth < 480) {
-                grid.style.gap = '6px';
-            } else if (screenWidth < 768) {
-                grid.style.gap = '8px';
-            } else {
-                grid.style.gap = '12px';
-            }
-        }
-
-        // Adjust grid on resize
-        window.addEventListener('resize', adjustGridGap);
-        adjustGridGap(); // Initial adjustment
-    });
-
-    // Make brand buttons draggable for touch devices
-    document.addEventListener('DOMContentLoaded', function() {
-        const brandButtons = document.querySelector('.brand-buttons');
-        if (brandButtons && 'ontouchstart' in window) {
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-
-            brandButtons.addEventListener('mousedown', (e) => {
-                isDown = true;
-                brandButtons.classList.add('active');
-                startX = e.pageX - brandButtons.offsetLeft;
-                scrollLeft = brandButtons.scrollLeft;
-            });
-
-            brandButtons.addEventListener('mouseleave', () => {
-                isDown = false;
-                brandButtons.classList.remove('active');
-            });
-
-            brandButtons.addEventListener('mouseup', () => {
-                isDown = false;
-                brandButtons.classList.remove('active');
-            });
-
-            brandButtons.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - brandButtons.offsetLeft;
-                const walk = (x - startX) * 2;
-                brandButtons.scrollLeft = scrollLeft - walk;
-            });
-
-            // Touch events for mobile
-            brandButtons.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - brandButtons.offsetLeft;
-                scrollLeft = brandButtons.scrollLeft;
-            });
-
-            brandButtons.addEventListener('touchend', () => {
-                isDown = false;
-            });
-
-            brandButtons.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - brandButtons.offsetLeft;
-                const walk = (x - startX) * 2;
-                brandButtons.scrollLeft = scrollLeft - walk;
-            });
-        }
     });
 </script>
 {% endblock %}
